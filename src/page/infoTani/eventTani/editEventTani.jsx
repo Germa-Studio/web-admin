@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import InputImage from '@/components/inputImage';
+import MainCard from '@/components/inputImage';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
 import TimeInput from '@/components/uiComponents/inputComponents/timeInputEdit';
 import { GetEventTaniById, updateEventTani } from '@/infrastruture';

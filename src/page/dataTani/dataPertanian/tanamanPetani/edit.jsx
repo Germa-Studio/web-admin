@@ -24,8 +24,7 @@ import { SearchPetani } from '../../../../infrastucture/searchApi';
 import {
   GetListTanaman,
   GetTanamanPetaniById,
-  UpdateTanamanPetani,
-  DeleteTanamanPetani
+  UpdateTanamanPetani
 } from '../../../../infrastucture/index';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';

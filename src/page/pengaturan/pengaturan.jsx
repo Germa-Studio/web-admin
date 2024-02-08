@@ -21,7 +21,7 @@ export default function Pengaturan() {
       </div>
       <div className="flex justify-between">
         <ul className="w-[30%] flex flex-col gap-2">
-          <li className='w-[100%] p-5 rounded-lg bg-green-primary text-white text-lg font-bold'>
+          <li className="w-[100%] p-5 rounded-lg bg-green-primary text-white text-lg font-bold">
             PENGATURAN WEBSITE
           </li>
           <li>
@@ -58,10 +58,10 @@ export default function Pengaturan() {
           </li>
         </ul>
         <div className="w-[68%]">
-          <div className='w-[100%] p-5 rounded-lg bg-green-primary text-white text-lg font-bold capitalize mb-2'>
+          <div className="w-[100%] p-5 rounded-lg bg-green-primary text-white text-lg font-bold capitalize mb-2">
             Ubah {filter} Website
           </div>
-          <div className='bg-white rounded-lg p-7'>
+          <div className="bg-white rounded-lg p-7">
             {filter === 'logo' && <UbahLogo />}
             {filter === 'desain' && <UbahDesain />}
             {filter === 'footer' && <UbahFooter />}

@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import LoadingAnimation from '../../../components/loadingSession';
 import { IoMdListBox } from 'react-icons/io';
 import { BiCategoryAlt } from 'react-icons/bi';
-import { IoEyeOutline, IoPencilOutline } from 'react-icons/io5';
 
 function JurnalKegiatan() {
   const [datas, setDatas] = useState([]);
@@ -19,15 +18,7 @@ function JurnalKegiatan() {
   const [id, setId] = useState();
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
-  // const history = useNavigate();
-  const handleCheckd = (e) => {
-    if (e == true) {
-      setChecekd(true);
-    } else {
-      setChecekd(false);
-    }
-    setId();
-  };
+
   const handleCheckdOne = (ids) => {
     if (id) {
       if (id != ids) {
