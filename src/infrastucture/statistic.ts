@@ -33,6 +33,7 @@ export const GetStatistikTanamanAll = async (poktan_id?: number, query?: TReques
       return response.data;
     }
   } catch (error) {
+    console.log('errors', error);
     SweatAlert(String(error.response.data.message), 'error');
   }
 };

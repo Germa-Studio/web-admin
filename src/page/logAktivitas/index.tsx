@@ -98,9 +98,10 @@ const LogActivity = () => {
         data: resp.data.map((item, index) => {
           const msg = activityType.find((type) => type.type === item.activity)?.message;
           const itemDetailArr = item.detail.split(' ');
+          const itemDetailFirst = itemDetailArr.slice(0, itemDetailArr.length - 1).join(' ');
           const msg2 = itemDetailArr[1]
-            ? itemDetailArr[0] + ' TANI dengan id: ' + itemDetailArr[1]
-            : itemDetailArr[0] + ' TANI';
+            ? itemDetailFirst + ' dengan id: ' + itemDetailArr[itemDetailArr.length - 1]
+            : itemDetailFirst + '';
           return {
             no: index + 1,
             nama: item.tbl_akun.nama,
