@@ -10,12 +10,3 @@ export const getLogActivity = async (page, limit) => {
     SweatAlert(String(error.response.data.message), 'error');
   }
 };
-
-export const postLogActivity = async (data: LogActivity) => {
-  try {
-    const response = await API.post('/log-activity', data);
-    return response.data;
-  } catch (error) {
-    SweatAlert(String(error.response.data.message), 'error');
-  }
-};

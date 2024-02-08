@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { DaftarTaniAdd, select, GetOpsiPenyuluh } from '@/infrastruture';
 import { fecthKecamatan, fecthDesa } from '../../../infrastucture/daerah';
 import Loading from '../../../components/loading';
-import { postLogActivity } from '../../../infrastucture/logActivity';
+
 const TambahDataTani = () => {
   const [NIK, setNIK] = useState('');
   const [nokk, setNokk] = useState('');
@@ -77,12 +77,6 @@ const TambahDataTani = () => {
       formData.append(key, data[key]);
     }
     DaftarTaniAdd(formData).then(() => {
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'CREATE',
-        type: 'PETANI',
-        detail_id: null
-      });
       setLoading(false);
     });
   };

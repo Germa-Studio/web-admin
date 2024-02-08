@@ -19,7 +19,6 @@ import SearchInput from '../../../components/uiComponents/inputComponents/search
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
-import { postLogActivity } from '../../../infrastucture/logActivity';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -110,12 +109,6 @@ const RekapPetani = () => {
   };
   const handleDeleteUser = (ids) => {
     DeleteDaftarTani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'PETANI',
-      detail_id: ids
-    });
   };
   const filteredData = datas.filter((item) => {
     return Object.keys(filters).every((key) => {

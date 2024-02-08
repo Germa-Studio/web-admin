@@ -1,19 +1,15 @@
 import MainCard from '@/components/MainCard';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import InputCrud from '@/components/page/infoTani/IconCrud';
+import { DeleteEventTani, GetEventTani } from '@/infrastruture';
+import { Button, Card, Modal, Text } from '@mantine/core';
 import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
-import { Image } from '@mantine/core';
-import { GetEventTani, DeleteEventTani } from '@/infrastruture';
-import { Text, Button, Modal, Card } from '@mantine/core';
-import LoadingAnimation from '../../../components/loading';
-import { FaClock } from 'react-icons/fa6';
+import { useEffect, useState } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
-import { IoMdListBox } from 'react-icons/io';
-import { BiCategoryAlt } from 'react-icons/bi';
 import { FaBuilding } from 'react-icons/fa';
-import { IoMdPerson } from 'react-icons/io';
-import { postLogActivity } from '../../../infrastucture/logActivity';
+import { FaClock } from 'react-icons/fa6';
+import { IoMdListBox, IoMdPerson } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import LoadingAnimation from '../../../components/loading';
 
 function EventTani() {
   const [datas, setDatas] = useState([]);
@@ -29,12 +25,6 @@ function EventTani() {
 
   const handleDeleteUser = (ids) => {
     DeleteEventTani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'EVENT',
-      detail_id: ids
-    });
     setModalDeleteData(false);
     const updatedDatas = datas.filter((d) => d.id !== ids);
     setDatas(updatedDatas);

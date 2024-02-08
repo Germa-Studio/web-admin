@@ -7,7 +7,6 @@ import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { AddInfoTani } from '@/infrastruture';
 import InputImage from '@/components/inputImage';
 import LoadingAnimation from '../../components/loading';
-import { postLogActivity } from '../../infrastucture/logActivity';
 const TambahInfoTani = () => {
   const [judul, setJudul] = useState('');
   const [kategori, setKategori] = useState('');
@@ -33,12 +32,6 @@ const TambahInfoTani = () => {
         formData.append(key, data[key]);
       }
       AddInfoTani(formData);
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'CREATE',
-        type: 'INFO',
-        detail_id: ''
-      });
     } else {
       window.location.reload();
     }

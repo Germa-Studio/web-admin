@@ -27,7 +27,6 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 // import { TPetani } from "../../../../types/petani";
 import { SearchPetani } from '../../../../infrastucture/searchApi';
-import { postLogActivity } from '../../../../infrastucture/logActivity';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -153,12 +152,6 @@ export default function DetailRekapPetani() {
 
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'TANAMAN',
-      detail_id: ids
-    });
     // delay 6 seconds
     setTimeout(() => {
       window.location.reload();

@@ -13,7 +13,6 @@ import {
 import { fecthKecamatan, fecthDesa } from '../../../infrastucture/daerah';
 import { useParams, Link } from 'react-router-dom';
 import Loading from '../../../components/loading';
-import { postLogActivity } from '../../../infrastucture/logActivity';
 
 const ViewDetailDataPetani = () => {
   const [NIK, setNIK] = useState('');
@@ -126,12 +125,6 @@ const ViewDetailDataPetani = () => {
       formData.append(key, data[key]);
     }
     editDaftarTani(id, formData).then(() => {
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'EDIT',
-        type: 'PETANI',
-        detail_id: id
-      });
       setLoading(false);
     });
   };
