@@ -1,4 +1,4 @@
-import MainCard from '../../MainCard';
+import PropTypes from 'prop-types';
 function IconCrud({ icon, children, onClick }) {
   return (
     <div
@@ -13,5 +13,11 @@ function IconCrud({ icon, children, onClick }) {
     </div>
   );
 }
+
+IconCrud.propTypes = {
+  icon: PropTypes.element,
+  children: PropTypes.string,
+  onClick: PropTypes.func
+};
 
 export default IconCrud;

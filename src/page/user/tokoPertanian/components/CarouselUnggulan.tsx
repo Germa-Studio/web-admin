@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
 import { Carousel } from '@mantine/carousel';
 import Card from './Card';
+import { TokoTani } from '../../../../@types/toko';
 
 type Props = {
   tokoArray: TokoTani[][];

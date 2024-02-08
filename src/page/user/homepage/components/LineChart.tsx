@@ -16,7 +16,7 @@ import { ResponseApiToDataChart } from '../../../../utils/helpers';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export const options: ChartOptions<'line'> = {
+const options: ChartOptions<'line'> = {
   responsive: true,
   plugins: {
     legend: {
@@ -101,7 +101,7 @@ export default function LineChart({
     setUbiKayu(ResponseApiToDataChart(apiData ?? [], 'UBI KAYU', year, month));
     setKacangTanah(ResponseApiToDataChart(apiData ?? [], 'KACANG TANAH', year, month));
     setKacangHijau(ResponseApiToDataChart(apiData ?? [], 'KACANG HIJAU', year, month));
-  }, [apiData]);
+  }, [apiData, month, year]);
 
   useEffect(() => {
     setData((prev) => ({

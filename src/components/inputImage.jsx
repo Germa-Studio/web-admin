@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconPhoto } from '@tabler/icons-react';
+import PropTypes from 'prop-types';
 
 function InputImage({ imageActive, onChange, title }) {
   const [image, setImage] = useState('');
@@ -35,5 +36,10 @@ function InputImage({ imageActive, onChange, title }) {
     </label>
   );
 }
+InputImage.propTypes = {
+  imageActive: PropTypes.string,
+  onChange: PropTypes.func,
+  title: PropTypes.string
+};
 
 export default InputImage;

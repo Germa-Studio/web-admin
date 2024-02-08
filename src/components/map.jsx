@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
@@ -6,7 +6,7 @@ am4core.useTheme(am4themes_animated);
 
 export default function MapIndonesiaChart() {
   useEffect(() => {
-    const chart = am4core.create(chartDiv, am4maps.MapChart);
+    const chart = am4core.create('chartDiv', am4maps.MapChart);
 
     // Set map definition
     chart.geodataSource.url = './src/utils/geoJson.json';

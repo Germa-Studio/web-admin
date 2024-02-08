@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Image } from '@mantine/core';
+import React from 'react';
 // import LinesEllipsis from "react-lines-ellipsis";
 import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
@@ -7,8 +6,8 @@ import { Link } from 'react-router-dom';
 import MainCard from '../../../../components/MainCard';
 import { GetInfoTani } from '../../../../infrastucture';
 const BeritaTani = () => {
-  const [datas, setDatas] = useState([]);
-  useEffect(() => {
+  const [datas, setDatas] = React.useState([]);
+  React.useEffect(() => {
     GetInfoTani().then((data) => {
       setDatas(data.infotani);
       console.log(data);

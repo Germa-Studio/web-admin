@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 function TimeInput({ idMulai, nameMulai, idSelesai, nameSelesai, label, contoh = '', waktu }) {
   const [mulai, setMulai] = useState('0:0');
   const [akhir, setAkhir] = useState('0:0');
   const waktuJam = `${mulai} - ${akhir}`;
+
   useEffect(() => {
     waktu(waktuJam);
-  }, [mulai, akhir]);
+  }, [waktu, waktuJam]);
 
   return (
     <div className="relative z-0 w-full mb-6 group">
@@ -40,5 +42,15 @@ function TimeInput({ idMulai, nameMulai, idSelesai, nameSelesai, label, contoh =
     </div>
   );
 }
+
+TimeInput.propTypes = {
+  idMulai: PropTypes.string,
+  nameMulai: PropTypes.string,
+  idSelesai: PropTypes.string,
+  nameSelesai: PropTypes.string,
+  label: PropTypes.string,
+  contoh: PropTypes.string,
+  waktu: PropTypes.func
+};
 
 export default TimeInput;

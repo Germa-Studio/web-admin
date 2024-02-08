@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Image, Text, Badge, Button, Group, Modal } from '@mantine/core';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GetInfoTaniById } from '@/infrastruture';
+import { GetInfoTaniById, DeleteInfoTani } from '@/infrastruture';
 import MainCard from '@/components/MainCard';
 import LoadingAnimation from '../../components/loading';
 function DetailInfoTani() {
@@ -18,7 +18,7 @@ function DetailInfoTani() {
         setData(data.infotani);
       });
     }
-  }, []);
+  }, [id]);
   const handleDeleteUser = (ids) => {
     DeleteInfoTani(ids);
   };
@@ -81,13 +81,11 @@ function DetailInfoTani() {
           </Text>
           <Group position="right" sx={{ marginTop: '19px' }}>
             <button
-              button
               className="bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white"
               onClick={() => navigateToEdit(data?.id)}>
               Edit
             </button>
             <button
-              button
               className="bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white"
               onClick={() => setModalDeleteData(data?.id)}>
               Delete

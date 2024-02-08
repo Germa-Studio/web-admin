@@ -5,7 +5,7 @@ import { TSummaryKategoriResponse } from '../../../../types/statistik';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const dummyData = {
+const dummyData = {
   labels: ['HOLTIKULTURA', 'TANAMAN PANGAN', 'TANAMAN PERKEBUNAN'],
   datasets: [
     {

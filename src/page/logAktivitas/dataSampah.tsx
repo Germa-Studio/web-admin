@@ -1,5 +1,6 @@
-import { Anchor, Breadcrumbs } from '@mantine/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+import { Anchor, Breadcrumbs } from '@mantine/core';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }, { title: 'Data Sampah' }].map(
   (item, index) => (

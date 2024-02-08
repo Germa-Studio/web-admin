@@ -51,7 +51,7 @@ export function PaginationControl<T extends RowData>({ respData }: PaginationPro
   const sortKey = searchParams.get('sort_key') ?? '';
   const sortType = searchParams.get('sort_type') ?? '';
 
-  const paginationControl = buildPaginationControl(pageIndex, pageCount);
+  const paginationControl = BuildPaginationControl(pageIndex, pageCount);
 
   const arrowBtn =
     'flex justify-center items-center bg-color-3 disabled:text-gray-600 text-gray-400 disabled:hover:bg-color-0 h-[40px] w-[40px] border-[1px] border-[#E4E7EB] drop-shadow hover:text-white active:border-[#E4E7EB] disabled:brightness-100 disabled:cursor-not-allowed rounded-md';
@@ -116,7 +116,7 @@ export function PaginationControl<T extends RowData>({ respData }: PaginationPro
   );
 }
 
-export function buildPaginationControl(currentPage: number, pageCount: number, delta = 1) {
+export function BuildPaginationControl(currentPage: number, pageCount: number, delta = 1) {
   const rangeWithDots: (number | string)[] = [];
 
   if (isNaN(pageCount) || pageCount === 0) {

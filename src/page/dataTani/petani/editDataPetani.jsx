@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from 'react';
-import { faPlus, faSearch, faClose, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from '@/components/inputImage';
 import MainCard from '@/components/MainCard';
 import { GetDaftarTaniById, editDaftarTani, select, GetOpsiPenyuluh } from '@/infrastruture';
@@ -22,7 +22,7 @@ const EditRekapPetani = () => {
   const [alamat, setAlamat] = useState('');
   const [gapoktan, setGapoktan] = useState('');
   const [foto, setFoto] = useState('');
-  const [disable, setDisable] = useState(false);
+  // const [disable, setDisable] = useState(false);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState('');
   const [dafatarDesa, setDafatarDesa] = useState([]);
@@ -51,7 +51,7 @@ const EditRekapPetani = () => {
       setGapoktan(data?.kelompok?.gapoktan);
       setLoading(false);
     });
-  }, []);
+  }, [id]);
   useEffect(() => {
     GetOpsiPenyuluh().then((data) => {
       const filterData = data.map((obj) => {
@@ -80,7 +80,7 @@ const EditRekapPetani = () => {
     // if(kecamatan){
     //   selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
     // }
-  }, [daftarKecamatan, kecamatan]);
+  }, [daftarKecamatan, kecamatan, kecamatanActive]);
   useEffect(() => {
     fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
   }, [idKecamatan]);

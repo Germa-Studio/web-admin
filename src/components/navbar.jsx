@@ -28,16 +28,14 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  useEffect(() => {}, []);
+
   const handleClik = () => {
     Logout();
   };
 
   return (
     <nav
-      className={`w-full shadow fixed top-0 left-0 right-0 z-[99] px-6 md:px-0 ${
-        isScrolled ? 'bg-white' : ''
-      }`}>
+      className={`w-full shadow fixed top-0 left-0 right-0 z-[99] px-6 md:px-0 ${isScrolled ? 'bg-white' : ''}`}>
       <div className="justify-between bg-white mx-auto lg:max-w-7xl md:items-center md:flex">
         <div className="bg-white">
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -87,9 +85,7 @@ const Navbar = () => {
         </div>
         <div>
           <div
-            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-              navbar ? 'block' : 'hidden'
-            }`}>
+            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? 'block' : 'hidden'}`}>
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               {token && (
                 <>
@@ -134,10 +130,10 @@ const Navbar = () => {
                     {activeDropdown === 'toko-tani' && (
                       <ul className="absolute mt-2 py-2 w-36 bg-white border rounded-md shadow-lg px-2">
                         <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/toko-tani/tambah-penjual">Tambah Daftar Penjual</a>
+                          <a href="/toko-tani/tambah">Tambah Daftar Penjual</a>
                         </li>
                         <li className="text-green-primary hover:text-green-primary hover:font-bold">
-                          <a href="/toko-tani/produk-petani">Produk Tani</a>
+                          <a href="/toko-tani">Produk Tani</a>
                         </li>
                         <li className="text-green-primary hover:text-green-primary hover:font-bold">
                           <a href="/toko-tani/produk-penyuluh">Produk Penyuluh</a>

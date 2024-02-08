@@ -115,8 +115,7 @@ const TambahPenyuluhanTani = () => {
               />
               <label
                 htmlFor="NIK"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                e>
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 <strong>NIK Penyuluh</strong> (Contoh: 3514002000000001)
               </label>
             </div>
@@ -309,9 +308,7 @@ const TambahPenyuluhanTani = () => {
             <button
               type="submit"
               className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800"
-              onClick={() => window.history.back()}
-              // on click go back to list penyuluh
-            >
+              onClick={() => window.history.back()}>
               <FontAwesomeIcon icon={faCancel} className="mr-2" />
               Batalkan
             </button>

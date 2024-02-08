@@ -1,22 +1,11 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFilter,
-  faEdit,
-  faTrash,
-  faDownload,
-  faBullseye,
-  faPlus,
-  faCheck,
-  faXmark
-} from '@fortawesome/free-solid-svg-icons';
-import { GetDaftarTani, DeleteDaftarTani, ListUser } from '@/infrastruture';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { ListUser } from '@/infrastruture';
 // import ExcelComponent from "../../../components/exelComponent";
-import ExcelComponent from '../../components/exelComponent';
-import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs, TextInput } from '@mantine/core';
-import { Link } from 'react-router-dom';
+// import ExcelComponent from '../../components/exelComponent';
+import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs } from '@mantine/core';
 import LoadingAnimation from '../../components/loadingSession';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
 import { VerifyingUser, DeleteUser } from '../../infrastucture';
 
 const breadcrumbItems = [
@@ -48,38 +37,38 @@ const VerifikasiUser = () => {
     // refresh page
     window.location.reload();
   };
-  const [filters, setFilters] = useState({
-    kecamatan: '',
-    desa: '',
-    nik: '',
-    nama: '',
-    namaKelompok: '',
-    gapoktan: '',
-    penyuluh: ''
-  });
-  const handleFilterChange = (e, column) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [column]: e.target.value
-    }));
-  };
-  const handleDownlod = () => {
-    const dataExel = filteredData.map((item) => {
-      return {
-        NIK: item.NIK,
-        ['No Wa']: item.NoWa,
-        Alamat: item.alamat,
-        Kecamatan: item.kecamatan,
-        Desa: item.desa,
-        nama: item.nama,
-        password: item.password,
-        namaKelompok: item?.kelompok?.namaKelompok,
-        gapoktan: item?.kelompok?.gapoktan,
-        penyuluh: item?.dataPenyuluh?.nama
-      };
-    });
-    ExcelComponent(dataExel, 'data.xlsx', 'Sheet1');
-  };
+  // const [filters, setFilters] = useState({
+  //   kecamatan: '',
+  //   desa: '',
+  //   nik: '',
+  //   nama: '',
+  //   namaKelompok: '',
+  //   gapoktan: '',
+  //   penyuluh: ''
+  // });
+  // const handleFilterChange = (e, column) => {
+  //   setFilters((prevFilters) => ({
+  //     ...prevFilters,
+  //     [column]: e.target.value
+  //   }));
+  // };
+  // const handleDownlod = () => {
+  //   const dataExel = filteredData.map((item) => {
+  //     return {
+  //       NIK: item.NIK,
+  //       ['No Wa']: item.NoWa,
+  //       Alamat: item.alamat,
+  //       Kecamatan: item.kecamatan,
+  //       Desa: item.desa,
+  //       nama: item.nama,
+  //       password: item.password,
+  //       namaKelompok: item?.kelompok?.namaKelompok,
+  //       gapoktan: item?.kelompok?.gapoktan,
+  //       penyuluh: item?.dataPenyuluh?.nama
+  //     };
+  //   });
+  //   ExcelComponent(dataExel, 'data.xlsx', 'Sheet1');
+  // };
   // const totalData = filteredData.length;
   return (
     <div>

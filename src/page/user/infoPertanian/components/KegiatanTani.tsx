@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { Image } from '@mantine/core';
 import { IoCalendar } from 'react-icons/io5';
 import { FaClock } from 'react-icons/fa6';
@@ -7,9 +7,9 @@ import { motion } from 'framer-motion';
 import MainCard from '../../../../components/MainCard';
 import { GetEventTani } from '../../../../infrastucture';
 const KegiatanTani = () => {
-  const [width, setWidth] = useState(0);
-  const carousel = useRef(null);
-  const [datas, setDatas] = useState([
+  const [width, setWidth] = React.useState(0);
+  const carousel = React.useRef(null);
+  const [datas, setDatas] = React.useState([
     {
       namaKegiatan: 'Kegiatan a',
       fotoKegiatan:
@@ -51,24 +51,25 @@ const KegiatanTani = () => {
       tempat: 'ruang tak terbatas'
     }
   ]);
-  useEffect(() => {
+  React.useEffect(() => {
     GetEventTani().then((data) => {
       setDatas(data.infotani);
     });
   }, []);
-  // useEffect(() => {
+  // React.useEffect(() => {
   //   getEventTani().then((data)=>setDatas(data))
   // }, [])
   // const formatedDate = (date)=>{
   //   const currentDate = new Date(date)
   //   return currentDate.getDate() + " " + currentDate.toLocaleString('id', { month: 'long' }) + " " + currentDate.getFullYear();
   // }
-  useEffect(() => {
+  React.useEffect(() => {
     if (carousel.current)
       setWidth(
         (carousel.current as HTMLDivElement)?.scrollWidth -
           (carousel.current as HTMLDivElement)?.offsetWidth
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carousel.current]);
   return (
     <div>

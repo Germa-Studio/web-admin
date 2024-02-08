@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 function NumberInput({ id, name, label, contoh = '', type = 'number', onChange, value }) {
   return (
@@ -22,5 +22,15 @@ function NumberInput({ id, name, label, contoh = '', type = 'number', onChange, 
     </div>
   );
 }
+
+NumberInput.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  contoh: PropTypes.string,
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string
+};
 
 export default NumberInput;

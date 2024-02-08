@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { GetChatt } from '@/infrastruture';
-function liveChat() {
+// import { GetChatt } from '@/infrastruture';
+function LiveChat() {
   const [filters, setFilters] = useState({
     chatMasuk: '',
     tujuanPenyuluhanMasuk: '',
@@ -169,4 +169,4 @@ function liveChat() {
   );
 }
 
-export default liveChat;
+export default LiveChat;

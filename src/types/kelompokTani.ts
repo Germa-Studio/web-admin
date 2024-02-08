@@ -3,6 +3,7 @@ export type TKelompokTani = {
   gapoktan: string;
   namaKelompok: string;
   desa: string;
+  kecamatan: string;
   penyuluh: string | null;
   createdAt: string | null;
   updatedAt: string | null;

@@ -1,7 +1,10 @@
-import { Anchor, Breadcrumbs } from '@mantine/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
+import { Anchor, Breadcrumbs } from '@mantine/core';
 import Table from '../../components/table/Table';
 import { getLogActivity } from '../../infrastucture/logActivity';
+import { PaginatedRespApiData } from '../../types/paginatedRespApi';
+import { DataPerson } from '../../@types/toko';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }, { title: 'Log Aktivitas' }].map(
   (item, index) => (
@@ -55,8 +58,26 @@ const activityType = [
 ];
 
 const LogActivity = () => {
-  const [dataTable, setDataTable] = useState();
-  const [resp, setResp] = useState();
+  const [dataTable, setDataTable] = useState<
+    | PaginatedRespApiData<{
+        no: number;
+        nama: string;
+        role: string;
+        aktivitas: string;
+        date: string;
+      }>
+    | undefined
+  >();
+  const [resp, setResp] = useState<
+    | PaginatedRespApiData<{
+        user_id: number;
+        activity: string;
+        detail: string;
+        tbl_akun: DataPerson;
+        createdAt: string;
+      }>
+    | undefined
+  >();
 
   const searchParams = new URLSearchParams(location.search);
 
@@ -73,6 +94,7 @@ const LogActivity = () => {
   useEffect(() => {
     if (resp) {
       setDataTable({
+        ...resp,
         data: resp.data.map((item, index) => {
           const msg = activityType.find((type) => type.type === item.activity)?.message;
           const itemDetailArr = item.detail.split(' ');
@@ -86,12 +108,7 @@ const LogActivity = () => {
             aktivitas: msg + msg2,
             date: item.createdAt.split('T')[0]
           };
-        }),
-        meta: {
-          total: resp.total,
-          page: resp.page,
-          limit: resp.limit
-        }
+        })
       });
     }
   }, [resp]);

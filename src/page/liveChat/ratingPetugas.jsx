@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { GetRatting } from '@/infrastruture';
+// import { GetRatting } from '@/infrastruture';
 function RatingPetugas() {
   const [filters, setFilters] = useState({
     status: '',

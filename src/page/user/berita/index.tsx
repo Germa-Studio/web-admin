@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
 import { IoCaretBackCircle } from 'react-icons/io5';
@@ -9,7 +9,7 @@ import UserLayout from '../../../components/UserLayout';
 import { GetInfoTaniById } from '../../../infrastucture';
 
 export default function Berita() {
-  const [datas, setDatas] = useState({
+  const [datas, setDatas] = React.useState({
     judul: '',
     fotoBerita: '',
     createdBy: '',
@@ -25,7 +25,7 @@ export default function Berita() {
         setDatas(data.infotani);
       });
     }
-  }, []);
+  }, [id]);
 
   return (
     <UserLayout>

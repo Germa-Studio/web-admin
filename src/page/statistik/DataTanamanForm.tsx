@@ -6,17 +6,16 @@ import {
   NumberInput,
   Radio,
   Select,
-  Stack,
   Tabs,
   TextInput
 } from '@mantine/core';
 import clsx from 'clsx';
 import React, { useEffect } from 'react';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
-import { FaRegRectangleList, FaUpload } from 'react-icons/fa6';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
+import { FaRegRectangleList } from 'react-icons/fa6';
 import { IoEyeOutline } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../infrastucture/redux/store';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../infrastucture/redux/store';
 import { TDataTanaman, TTableDataTanaman, dataTanamanDefault } from '../../types/dataTanaman';
 import {
   GetStatistikTanamanById,
@@ -27,7 +26,7 @@ import {
 } from '../../infrastucture/statistic';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Table from '../../components/table/Table';
-import { PaginatedRespApi, PaginatedRespApiData } from '../../types/paginatedRespApi';
+import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import { ColumnDef } from '@tanstack/react-table';
 import { ImPencil } from 'react-icons/im';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -191,8 +190,8 @@ export default function DataTanamanForm({
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     if (type === 'add')
-      AddNewDataTanaman({ ...newData, fk_kelompokId: poktan?.id ?? 1 }).then((e) => {
-        navigate(`/statistik/edit/${e.data.id}`);
+      AddNewDataTanaman({ ...newData, fk_kelompokId: poktan?.id ?? 1 }).then(() => {
+        navigate(`/statistik/`);
       });
     else {
       UpdateStatistikTanamanById(id, newData);

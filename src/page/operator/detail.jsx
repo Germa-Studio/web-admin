@@ -1,27 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from 'react';
-import { faPlus, faSearch, faClose, faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from '@/components/inputImage';
 import MainCard from '@/components/MainCard';
 import { GetOperatorDetail, UpdateOperator } from '@/infrastruture';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Loading from '../../components/loading';
-import {
-  Anchor,
-  Breadcrumbs,
-  Button,
-  Image,
-  NumberInput,
-  Radio,
-  Select,
-  Tabs,
-  TextInput,
-  Text,
-  Modal
-} from '@mantine/core';
+import { Button, Select } from '@mantine/core';
 
 const DetailOperator = () => {
-  const [datas, setDatas] = useState([]);
+  // const [datas, setDatas] = useState([]);
   const [nik, setNIK] = useState('');
   const [nkk, setNKK] = useState('');
   const [nama, setNama] = useState('');
@@ -40,7 +26,7 @@ const DetailOperator = () => {
       // console.log(data)
       // console.log(data.data_1)
       if (data.data) {
-        const { nik, nkk, nama, email, password, noTelp, alamat, foto, peran } = data.data;
+        // const { nik, nkk, nama, email, password, noTelp, alamat, foto, peran } = data.data;
         setNIK(data.data[0].nik);
         setNKK(data.data[0].nkk);
         setNama(data.data[0].nama);
@@ -53,7 +39,7 @@ const DetailOperator = () => {
         // setDatas(data.data[0].data);
       }
     });
-  }, []);
+  }, [id]);
 
   // useEffect(() => {
   //   // console.log(datas); // This will reflect the updated value of datas

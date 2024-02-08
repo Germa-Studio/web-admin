@@ -17,7 +17,7 @@ import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
-import SearchInput from '../../../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
 import { FaRegRectangleList } from 'react-icons/fa6';
 import { SearchPetani } from '../../../../infrastucture/searchApi';
 import {

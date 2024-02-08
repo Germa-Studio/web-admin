@@ -1,9 +1,8 @@
-import MainCard from '@/components/MainCard';
+import { useState, useEffect } from 'react';
 import InputImage from '@/components/inputImage';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
 import TimeInput from '@/components/uiComponents/inputComponents/timeInputEdit';
 import { GetEventTaniById, updateEventTani } from '@/infrastruture';
-import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import LoadingAnimation from '../../../components/loading';
 
@@ -28,7 +27,7 @@ function EditEventTani() {
       setFotoKegiatan(data?.fotoKegiatan);
       setisLoading(false);
     });
-  }, []);
+  }, [id]);
   const currentDate = new Date(tanggalAcara.split('T'));
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   const formattedDate = currentDate.toLocaleDateString('id-ID', options);

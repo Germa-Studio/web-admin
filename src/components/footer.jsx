@@ -6,122 +6,122 @@ import { GiRotaryPhone } from 'react-icons/gi';
 import { FaInstagram, FaFacebook, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
-const socialMedia = [
-  {
-    name: 'Tiktok',
-    url: 'https://tiktok.com',
-    icon: '/icons/brand/tiktok.svg'
-  },
-  {
-    name: 'Facebook',
-    url: 'https://facebook.com',
-    icon: '/icons/brand/facebook.svg'
-  },
-  {
-    name: 'Instagram',
-    url: 'https://instagram.com',
-    icon: '/icons/brand/instagram.svg'
-  },
-  {
-    name: 'Twitter',
-    url: 'https://twitter.com',
-    icon: '/icons/brand/x-twitter.svg'
-  },
-  {
-    name: 'Youtube',
-    url: 'https://youtube.com',
-    icon: '/icons/brand/youtube.svg'
-  }
-];
+// const socialMedia = [
+//   {
+//     name: 'Tiktok',
+//     url: 'https://tiktok.com',
+//     icon: '/icons/brand/tiktok.svg'
+//   },
+//   {
+//     name: 'Facebook',
+//     url: 'https://facebook.com',
+//     icon: '/icons/brand/facebook.svg'
+//   },
+//   {
+//     name: 'Instagram',
+//     url: 'https://instagram.com',
+//     icon: '/icons/brand/instagram.svg'
+//   },
+//   {
+//     name: 'Twitter',
+//     url: 'https://twitter.com',
+//     icon: '/icons/brand/x-twitter.svg'
+//   },
+//   {
+//     name: 'Youtube',
+//     url: 'https://youtube.com',
+//     icon: '/icons/brand/youtube.svg'
+//   }
+// ];
 
-const menuPage = [
-  {
-    name: 'FAQ',
-    url: '/faq'
-  },
-  {
-    name: 'Term of use',
-    url: '/term-of-use'
-  },
-  {
-    name: 'Privacy Policy',
-    url: '/privacy-policy'
-  },
-  {
-    name: 'About Us',
-    url: '/about-us'
-  },
-  {
-    name: 'Contact',
-    url: '/contact'
-  }
-];
+// const menuPage = [
+//   {
+//     name: 'FAQ',
+//     url: '/faq'
+//   },
+//   {
+//     name: 'Term of use',
+//     url: '/term-of-use'
+//   },
+//   {
+//     name: 'Privacy Policy',
+//     url: '/privacy-policy'
+//   },
+//   {
+//     name: 'About Us',
+//     url: '/about-us'
+//   },
+//   {
+//     name: 'Contact',
+//     url: '/contact'
+//   }
+// ];
 
-const feature = [
-  {
-    name: 'Statistik Pertanian',
-    url: '/statistik-pertanian'
-  },
-  {
-    name: 'Data Pertanian',
-    url: '/data-pertanian'
-  },
-  {
-    name: 'Info Pertanian',
-    url: '/info-pertanian'
-  },
-  {
-    name: 'Toko Pertanian',
-    url: '/toko-pertanian'
-  },
-  {
-    name: 'Info Penyuluh',
-    url: '/info-penyuluh'
-  },
-  {
-    name: 'Hak Akses User',
-    url: '/hak-akses-user'
-  },
-  {
-    name: 'Riwayat Aktivitas',
-    url: '/riwayat-aktivitas'
-  },
-  {
-    name: 'List Data Operator',
-    url: '/list-data-operator'
-  }
-];
+// const feature = [
+//   {
+//     name: 'Statistik Pertanian',
+//     url: '/statistik-pertanian'
+//   },
+//   {
+//     name: 'Data Pertanian',
+//     url: '/data-pertanian'
+//   },
+//   {
+//     name: 'Info Pertanian',
+//     url: '/info-pertanian'
+//   },
+//   {
+//     name: 'Toko Pertanian',
+//     url: '/toko-pertanian'
+//   },
+//   {
+//     name: 'Info Penyuluh',
+//     url: '/info-penyuluh'
+//   },
+//   {
+//     name: 'Hak Akses User',
+//     url: '/hak-akses-user'
+//   },
+//   {
+//     name: 'Riwayat Aktivitas',
+//     url: '/riwayat-aktivitas'
+//   },
+//   {
+//     name: 'List Data Operator',
+//     url: '/list-data-operator'
+//   }
+// ];
 
-const GetFeatures = () => {
-  // round up the size
-  const size = Math.ceil(feature.length / 2);
-  return (
-    <div className="grid grid-cols-2">
-      <ol className="list-decimal mx-4">
-        {feature.slice(0, size).map((item, index) => {
-          return (
-            <li key={index}>
-              <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
-                {item.name}
-              </a>
-            </li>
-          );
-        })}
-      </ol>
-      <ol className="list-decimal mx-4" start={size + 1}>
-        {feature.slice(size).map((item, index) => {
-          return (
-            <li key={index}>
-              <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
-                {item.name}
-              </a>
-            </li>
-          );
-        })}
-      </ol>
-    </div>
-  );
-};
+// const GetFeatures = () => {
+//   // round up the size
+//   const size = Math.ceil(feature.length / 2);
+//   return (
+//     <div className="grid grid-cols-2">
+//       <ol className="list-decimal mx-4">
+//         {feature.slice(0, size).map((item, index) => {
+//           return (
+//             <li key={index}>
+//               <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
+//                 {item.name}
+//               </a>
+//             </li>
+//           );
+//         })}
+//       </ol>
+//       <ol className="list-decimal mx-4" start={size + 1}>
+//         {feature.slice(size).map((item, index) => {
+//           return (
+//             <li key={index}>
+//               <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
+//                 {item.name}
+//               </a>
+//             </li>
+//           );
+//         })}
+//       </ol>
+//     </div>
+//   );
+// };
 
 const Footer = ({ sidebarOpen, isFull = false }) => {
   return (
@@ -211,5 +211,6 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
 export default Footer;
 
 Footer.propTypes = {
-  sidebarOpen: PropTypes.bool
+  sidebarOpen: PropTypes.bool,
+  isFull: PropTypes.bool
 };

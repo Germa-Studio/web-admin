@@ -15,8 +15,6 @@ import FormJurnalKegiatan from './penyuluhanTani/detailPenyuluh/formJurnalKegiat
 import PresensiKehadiran from './penyuluhanTani/detailPenyuluh/presensiKehadiran';
 import RekapDataPenyuluh from './penyuluhanTani/detailPenyuluh/rekapDataPenyuluh';
 import TambahPenjual from './tokoTani/tambahDataPenjual';
-import ProdukPenyuluh from './tokoTani/produk/penyuluh';
-import ProdukPetani from './tokoTani/produk/petani';
 import Login from './login';
 import Register from './register';
 import Notification from './notification';
@@ -79,8 +77,6 @@ export {
   FormJurnalKegiatan,
   PresensiKehadiran,
   TambahPenjual,
-  ProdukPenyuluh,
-  ProdukPetani,
   Login,
   Register,
   NotFoundPage,

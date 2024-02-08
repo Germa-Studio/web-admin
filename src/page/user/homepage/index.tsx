@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MainCard from '../../../components/MainCard';
 import UserLayout from '../../../components/UserLayout';
 import LineChart from './components/LineChart';
@@ -10,10 +10,10 @@ import { TKomoditasResponse, TSummaryKategoriResponse } from '../../../types/sta
 import { NumberInput, Select } from '@mantine/core';
 
 export default function Homepage() {
-  const [time, setTime] = useState(new Date());
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [respData, setRespData] = useState<
+  const [time, setTime] = React.useState(new Date());
+  const [month, setMonth] = React.useState(new Date().getMonth() + 1);
+  const [year, setYear] = React.useState(new Date().getFullYear());
+  const [respData, setRespData] = React.useState<
     | {
         latest: TTanamanPetani[];
         statistik: TKomoditasResponse[];
@@ -22,7 +22,7 @@ export default function Homepage() {
     | undefined
   >(undefined);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());
     }, 1000);
@@ -30,7 +30,7 @@ export default function Homepage() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     GetStatistikTanamanPetani(month, year).then((res) => {
       setRespData(res?.data);
     });

@@ -1,23 +1,20 @@
-import React, { useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import InputImage from '@/components/inputImage';
 import MainCard from '@/components/MainCard';
 import TimeInput from '@/components/uiComponents/inputComponents/timeInput';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
 import { AddEventTani } from '@/infrastruture';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { Loader } from '@mantine/core';
 import LoadingAnimation from '../../../components/loading';
 
 function TambahEventTani() {
-  const [namaKegiatan, setNamaKegiatan] = useState('');
-  const [tanggalAcara, setTanggalAcara] = useState('');
-  const [waktuAcara, setWaktuAcara] = useState('');
-  const [tempat, setTempat] = useState('');
-  const [peserta, setPeserta] = useState('');
-  const [loading, setLoading] = useState(false);
-  // const [isi, setIsi] = useState("");
-  const [fotoKegiatan, setFotoKegiatan] = useState('');
+  const [namaKegiatan, setNamaKegiatan] = React.useState('');
+  const [tanggalAcara, setTanggalAcara] = React.useState('');
+  const [waktuAcara, setWaktuAcara] = React.useState('');
+  const [tempat, setTempat] = React.useState('');
+  const [peserta, setPeserta] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  // const [isi, setIsi] = React.useState("");
+  const [fotoKegiatan, setFotoKegiatan] = React.useState('');
 
   const handleSubmit = () => {
     setLoading(true);

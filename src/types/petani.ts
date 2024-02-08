@@ -1,12 +1,9 @@
 import { TKelompokTani } from './kelompokTani';
 
-export type TPetani = {
+type TAkun = {
   id: number;
-  accoundID: number;
-  fk_kelompokId: number;
-  fk_penyuluhId: number;
+  accountID: number;
   nik: string;
-  nkk: string;
   nama: string;
   foto: string;
   alamat: string;
@@ -16,6 +13,18 @@ export type TPetani = {
   noTelp: string;
   createdAt: string | null;
   updatedAt: string | null;
+};
+
+export type TPetani = {
+  fk_kelompokId: number;
+  fk_penyuluhId: number;
+  nkk: string;
 
   kelompok?: TKelompokTani;
-};
+} & TAkun;
+
+export type TPenyuluh = {
+  desaBinaan: string;
+  kecamatanBinaan: string;
+  namaProduct: string;
+} & TAkun;

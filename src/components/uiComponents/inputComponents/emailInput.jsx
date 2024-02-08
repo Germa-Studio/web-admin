@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 function EmailInput({ id, name, label, contoh = '', type = 'email', onChange, value }) {
   return (
@@ -22,5 +22,15 @@ function EmailInput({ id, name, label, contoh = '', type = 'email', onChange, va
     </div>
   );
 }
+
+EmailInput.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  contoh: PropTypes.string,
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string
+};
 
 export default EmailInput;

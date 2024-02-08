@@ -1,6 +1,6 @@
-import { Anchor, Breadcrumbs, Button, FileInput, Modal } from '@mantine/core';
+import { Anchor, Breadcrumbs, Button, Modal } from '@mantine/core';
 import React, { useEffect } from 'react';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import { FaPlus, FaUpload } from 'react-icons/fa';
 import {
   DeleteStatistikTanamanById,
@@ -11,7 +11,7 @@ import Table from '../../components/table/Table';
 import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import { TDataTanaman, TTableDataTanaman } from '../../types/dataTanaman';
 import { ColumnDef } from '@tanstack/react-table';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -92,7 +92,7 @@ const loadOptions = (
   }, 1000);
 };
 
-export default function index() {
+export default function Index() {
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TTableDataTanaman> | undefined
   >();
@@ -103,7 +103,6 @@ export default function index() {
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 

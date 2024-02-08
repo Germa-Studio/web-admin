@@ -3,7 +3,7 @@ import EditorText from '@/components/textAreaEditorEdit';
 import { Button } from '@mantine/core';
 import MainCard from '@/components/MainCard';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
-import { IconPlus, IconX, IconDeviceFloppy } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { getByIdLaporanTanam, editLaporanTanam } from '@/infrastruture';
 import InputImage from '@/components/inputImage';
 import { useParams, useNavigate } from 'react-router-dom';

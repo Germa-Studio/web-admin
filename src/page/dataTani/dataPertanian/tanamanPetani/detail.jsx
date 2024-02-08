@@ -16,7 +16,7 @@ import Table from '@/components/table/Table';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 // import React, { useEffect } from "react";
 // import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
-import SearchInput from '../../../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
 import { FaRegRectangleList } from 'react-icons/fa6';
 // import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from 'react-icons/io5';

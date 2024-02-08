@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-
-const LoadingAnimation = ({ session }) => {
+const LoadingAnimation = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-700 bg-opacity-50 fixed inset-0 z-[99]">
       <div className="bg-white p-8 rounded-lg shadow-lg z-50 relative">

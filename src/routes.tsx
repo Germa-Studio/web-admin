@@ -11,14 +11,10 @@ import {
   TambahEventTani,
   LiveChat,
   RatingPetugas,
-  TambahPenyuluhanTani,
   DataRiwayatChat,
   JurnalKegiatan,
   PresensiKehadiran,
-  TambahPenjual,
   FormJurnalKegiatan,
-  ProdukPenyuluh,
-  ProdukPetani,
   Login,
   Register,
   NotFoundPage,
@@ -32,7 +28,7 @@ import {
   EditRekapPetani,
   TambahTanamanPetani,
   EditTanamanPetani,
-  DetailTanamanPetani,
+  // DetailTanamanPetani,
   TambahOperator,
   // DetailDataTanamanPetani,
   EditLaporanTanam,
@@ -71,7 +67,14 @@ import LogActivity from './page/logAktivitas';
 import IndexOperator from './page/operator';
 import EditOperator from './page/operator/edit';
 import DetailOperator from './page/operator/detail';
-import Profil from './page/profil/side';
+import Profil from './page/profil/profil';
+import Pengaturan from './page/pengaturan/pengaturan';
+import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
+import EditFormJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/editJurnal';
+import TokoTani from './page/tokoTani';
+import TambahTokoTani from './page/tokoTani/tambah';
+import DetailTokoTani from './page/tokoTani/detail';
+import EditTokoTani from './page/tokoTani/edit';
 
 const menu = [
   {
@@ -154,12 +157,12 @@ const menu = [
       {
         name: 'Tambah Toko Tani',
         icon: '/icons/tambah.svg',
-        path: '/toko-tani/tambah-penjual'
+        path: '/toko-tani/tambah'
       },
       {
         name: 'Lihat Daftar Toko Tani',
         icon: '/icons/toko.svg',
-        path: '/toko-tani/produk-petani'
+        path: '/toko-tani'
       }
     ]
   },
@@ -174,19 +177,19 @@ const menu = [
         path: '/data-penyuluh/tambah'
       },
       {
-        name: 'Daftar Laporan Harian',
-        icon: '/icons/pensil.svg',
-        path: '/data-penyuluh/jurnal-kegiatan'
-      },
-      {
-        name: 'Daftar Jurnal Petugas',
-        icon: '/icons/papan.svg',
-        path: '/data-penyuluh/jurnal-kegiatan/form'
-      },
-      {
         name: 'Rekap Data Penyuluh',
         icon: '/icons/penyuluh.svg',
         path: '/data-penyuluh/rekap-penyuluh'
+      },
+      {
+        name: 'Tambah Jurnal Petugas',
+        icon: '/icons/tambah.svg',
+        path: '/data-penyuluh/jurnal-kegiatan/form'
+      },
+      {
+        name: 'Lihat Jurnal Petugas',
+        icon: '/icons/pensil.svg',
+        path: '/data-penyuluh/jurnal-kegiatan'
       }
     ]
   },
@@ -271,6 +274,7 @@ const Path = () => {
 
   const user = useSelector((state: RootState) => state.state.user);
   const dispatch = useDispatch();
+  const [role, setRole] = React.useState('' as string);
 
   const token = window.localStorage.getItem('token');
   const isAuthPage =
@@ -287,6 +291,7 @@ const Path = () => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(setUser(res.data.user));
+            setRole(res.data.user.role);
           }
         })
         .catch((err) => {
@@ -297,7 +302,7 @@ const Path = () => {
           }
         });
     }
-  }, [token, isAuthPage]);
+  }, [token, isAuthPage, dispatch, isWebVidePage]);
 
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
 
@@ -471,6 +476,8 @@ const Path = () => {
 };
 
 const RoutesPath = () => {
+  const userRole = useSelector((state: RootState) => state.state.user?.peran);
+
   return (
     <Router>
       <Routes>
@@ -481,7 +488,13 @@ const RoutesPath = () => {
         <Route path="/info-pertanian" element={<InfoPertanian />} />
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/verifikasi" element={<VerifikasiUser />} />
+          {/*if  user is operator, show this route else hide it*/}
+          {userRole === 'operators super admin' || userRole === 'super admin' ? (
+            // <Route path="/live-chat" element={<LiveChat />} />
+            <Route path="/verifikasi" element={<VerifikasiUser />} />
+          ) : (
+            ''
+          )}
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
@@ -520,16 +533,25 @@ const RoutesPath = () => {
           <Route path="/info-tani/detail" element={<DetailInfoTani />} />
           <Route path="/info-tani/edit/:id" element={<EditInfoTani />} />
           {/* Toko Tani */}
-          <Route path="/toko-tani/tambah-penjual" element={<TambahPenjual />} />
-          <Route path="/toko-tani/produk-petani" element={<ProdukPetani />} />
-          <Route path="/toko-tani/produk-penyuluh" element={<ProdukPenyuluh />} />
+          <Route path="/toko-tani" element={<TokoTani />} />
+          <Route path="/toko-tani/tambah" element={<TambahTokoTani />} />
+          <Route path="/toko-tani/:id" element={<DetailTokoTani />} />
+          <Route path="/toko-tani/edit/:id" element={<EditTokoTani />} />
           {/* Data Penyuluh */}
-          <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
-          <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
+          <Route path="/data-penyuluh/tambah" element={<TambahTokoTani />} />
           <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
           <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
           <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />
+          <Route
+            path="/data-penyuluh/jurnal-kegiatan/detail/:id"
+            element={<DetailJurnalKegiatan />}
+          />
+          <Route
+            path="/data-penyuluh/jurnal-kegiatan/edit/:id"
+            element={<EditFormJurnalKegiatan />}
+          />
           <Route path="/data-penyuluh/riwayat-chat" element={<DataRiwayatChat />} />
+          <Route path="/data-penyuluh/:id" element={<EditPenyuluhan />} />
           {/*All about Operator*/}
           <Route path="/list-operator/tambah" element={<TambahOperator />} />
           <Route path="/list-operator" element={<IndexOperator />} />
@@ -544,6 +566,8 @@ const RoutesPath = () => {
           <Route path="/live-chat/rating-petugas" element={<RatingPetugas />} />
           {/* Profil */}
           <Route path="profil" element={<Profil />} />
+          {/* Pengaturan */}
+          <Route path="pengaturan" element={<Pengaturan />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

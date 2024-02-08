@@ -1,8 +1,9 @@
 import { Anchor, Breadcrumbs } from '@mantine/core';
 import React, { useEffect } from 'react';
-import { FaPlus, FaUserCheck, FaUserXmark, FaUsers } from 'react-icons/fa6';
+import { FaPlus, FaUserCheck, FaUserXmark } from 'react-icons/fa6';
+import { RiArticleLine } from 'react-icons/ri';
 import { LuNewspaper } from 'react-icons/lu';
-import SearchInput from '../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../components/uiComponents/inputComponents/SearchInput';
 import { TKelompokTani } from '../types/kelompokTani';
 import { SearchPoktan } from '../infrastucture/searchApi';
 import { PaginatedRespApiData } from '../types/paginatedRespApi';
@@ -11,9 +12,10 @@ import { DeleteStatistikTanamanById, GetStatistikTanamanAll } from '../infrastuc
 import { Link } from 'react-router-dom';
 import { IoEyeOutline } from 'react-icons/io5';
 import { ImPencil } from 'react-icons/im';
-import { MdDeleteOutline } from 'react-icons/md';
+import { MdDeleteOutline, MdOutlineTipsAndUpdates } from 'react-icons/md';
 import { ColumnDef } from '@tanstack/react-table';
 import Table from '../components/table/Table';
+import { GetDashboardInfo } from '../infrastucture/dashboard';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
@@ -90,6 +92,13 @@ export default function Dashboard() {
   >();
   const [resp, setResp] = React.useState<PaginatedRespApiData<TDataTanaman> | undefined>();
   const [poktan, setPoktan] = React.useState<TKelompokTani>();
+  const [dashboardData, setDashboardData] = React.useState({
+    verifiedPetani: 0,
+    unverifiedPetani: 0,
+    berita: 0,
+    artikel: 0,
+    tips: 0
+  });
 
   useEffect(() => {
     GetStatistikTanamanAll(poktan?.id, {
@@ -102,6 +111,12 @@ export default function Dashboard() {
       setResp(res?.data);
     });
   }, [poktan]);
+
+  useEffect(() => {
+    GetDashboardInfo().then((res) => {
+      setDashboardData(res);
+    });
+  }, []);
 
   useEffect(() => {
     if (resp) {
@@ -147,24 +162,33 @@ export default function Dashboard() {
       <div className="grid gap-8 grid-cols-2">
         <div className="rounded-lg bg-[#3B5D38] p-6">
           <h4 className="text-white text-xl font-bold">Statistik</h4>
-          <div className="rounded-lg bg-[#E3EAE2] mt-4 grid grid-cols-2">
+          <div className="rounded-lg bg-[#E3EAE2] mt-4 grid grid-cols-3">
             <Link
-              className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all rounded-l-lg flex cursor-pointer text-[#3B5D38] justify-between items-center"
-              to="#">
+              className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all rounded-l-lg flex flex-col cursor-pointer text-[#3B5D38] justify-between items-center"
+              to="/info-tani?category=berita">
+              <LuNewspaper size={40} />
               <div className="flex items-center flex-col justify-center text-lg">
-                <h5 className="font-bold">User Aktif</h5>
-                <p className="font-semibold">20</p>
+                <h5 className="font-bold text-center">Berita</h5>
+                <p className="font-semibold">{dashboardData.berita}</p>
               </div>
-              <FaUsers size={40} />
             </Link>
             <Link
-              className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all rounded-r-lg flex cursor-pointer text-[#3B5D38] justify-between items-center"
-              to="#">
+              className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all flex flex-col cursor-pointer text-[#3B5D38] justify-between items-center"
+              to="/info-tani?category=artikel">
+              <RiArticleLine size={40} />
               <div className="flex items-center flex-col justify-center text-lg">
-                <h5 className="font-bold">Publish Artikel</h5>
-                <p className="font-semibold">20</p>
+                <h5 className="font-bold text-center">Artikel</h5>
+                <p className="font-semibold">{dashboardData.artikel}</p>
               </div>
-              <LuNewspaper size={40} />
+            </Link>
+            <Link
+              className="w-full h-full py-4 px-8 hover:bg-[#C6D4C4] hover:text-white transition-all rounded-r-lg flex flex-col cursor-pointer text-[#3B5D38] justify-between items-center"
+              to="/info-tani?category=tips">
+              <MdOutlineTipsAndUpdates size={40} />
+              <div className="flex items-center flex-col justify-center text-lg">
+                <h5 className="font-bold text-center">Tips</h5>
+                <p className="font-semibold">{dashboardData.tips}</p>
+              </div>
             </Link>
           </div>
         </div>
@@ -172,21 +196,25 @@ export default function Dashboard() {
           <h4 className="text-[#3B5D38] text-xl font-bold">Notifikasi</h4>
           <div className="rounded-lg bg-[#E3EAE2] mt-4 grid grid-cols-2 gap-6">
             <div className="w-full h-full py-4 px-8 bg-[#3B5D38] hover:bg-[#598C54] transition-all rounded-lg flex cursor-pointer text-white justify-center items-center relative">
-              <div className="flex items-center flex-col justify-center">
+              <Link
+                className="flex items-center flex-col justify-center"
+                to="/data-tani/rekap-petani?verified=true">
                 <FaUserCheck size={40} />
-                <h5 className="font-semibold text-center">User sudah verifikasi</h5>
-              </div>
+                <h5 className="font-semibold text-center">Petani sudah verifikasi</h5>
+              </Link>
               <div className="absolute border-4 border-[#E3EAE2] bg-[#3B5D38] h-10 w-10 -top-4 -right-4 flex items-center justify-center rounded-full">
-                2
+                {dashboardData.verifiedPetani}
               </div>
             </div>
             <div className="w-full h-full py-4 px-8 bg-[#3B5D38] hover:bg-[#598C54] transition-all rounded-lg flex cursor-pointer text-white justify-center items-center relative">
-              <div className="flex items-center flex-col justify-center">
+              <Link
+                className="flex items-center flex-col justify-center"
+                to="/data-tani/rekap-petani?verified=false">
                 <FaUserXmark size={40} />
-                <h5 className="font-semibold text-center">User belum verifikasi</h5>
-              </div>
+                <h5 className="font-semibold text-center">Petani belum verifikasi</h5>
+              </Link>
               <div className="absolute border-4 border-[#E3EAE2] bg-[#3B5D38] h-10 w-10 -top-4 -right-4 flex items-center justify-center rounded-full">
-                2
+                {dashboardData.unverifiedPetani}
               </div>
             </div>
           </div>

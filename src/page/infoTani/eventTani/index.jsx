@@ -3,8 +3,12 @@ import InputCrud from '@/components/page/infoTani/IconCrud';
 import { DeleteEventTani, GetEventTani } from '@/infrastruture';
 import { Button, Card, Modal, Text } from '@mantine/core';
 import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
+import { GetEventTani, DeleteEventTani } from '@/infrastruture';
+import { Text, Button, Modal, Card } from '@mantine/core';
+import LoadingAnimation from '../../../components/loading';
+import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
+import { IoMdListBox } from 'react-icons/io';
 import { FaBuilding } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa6';
 import { IoMdListBox, IoMdPerson } from 'react-icons/io';
@@ -80,7 +84,6 @@ function EventTani() {
                 className="h-min rounded-lg w-52"
                 src={d?.fotoKegiatan}
                 alt="With default placeholder"
-                withPlaceholder
               />
               <MainCard transparent noPadding className="w-[100%]">
                 <h1 className="font-bold text-base md:text-lg text-justify tracking-[1px] text-green-primary capitalize max-w-[95%]">

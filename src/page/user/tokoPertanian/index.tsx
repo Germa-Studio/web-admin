@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import UserLayout from '../../../components/UserLayout';
 import MainCard from '../../../components/MainCard';
-import CarouselPromo from './components/CarouselPromo';
-import CarouselUnggulan from './components/carouselUnggulan';
+// import CarouselPromo from './components/CarouselPromo';
+import CarouselUnggulan from './components/CarouselUnggulan';
 import { getTokoTani } from '../../../infrastucture/toko';
 import Card from './components/Card';
+import { TokoTani } from '../../../@types/toko';
 
-export default function index() {
-  useEffect(() => {
+export default function Index() {
+  React.useEffect(() => {
     getTokoTani().then((res) => {
       const response = res.data.data as TokoTani[];
       setTokoTani(response);
@@ -22,8 +23,8 @@ export default function index() {
     });
   }, []);
 
-  const [tokoTani, setTokoTani] = useState<TokoTani[]>([]);
-  const [groupedToko, setGroupedToko] = useState<TokoTani[][]>([]);
+  const [tokoTani, setTokoTani] = React.useState<TokoTani[]>([]);
+  const [groupedToko, setGroupedToko] = React.useState<TokoTani[][]>([]);
 
   return (
     <UserLayout>
@@ -31,7 +32,7 @@ export default function index() {
         <div className="pb-5 max-w-[90%] mx-auto flex flex-col gap-12 justify-center items-center">
           {/* Header */}
           {/* Dekstop */}
-          <MainCard className="w-[80%] hidden md:block">
+          {/* <MainCard className="w-[80%] hidden md:block">
             <div className="flex justify-between">
               <div className="w-[67%]">
                 <img src="/image/icon-buah-1.png" alt="buah-1" />
@@ -45,18 +46,18 @@ export default function index() {
                 </div>
               </div>
             </div>
-          </MainCard>
+          </MainCard> */}
           {/* Mobile */}
 
           {/* Produk Unggulan Petani */}
           <MainCard className="w-[80%]">
             <div className="py-8">
               <p className="text-lg lg:text-2xl font-bold text-green-primary text-center pb-5">
-                PRODUK UNGGULAN PETANI
+                PRODUK PETANI
               </p>
               <div className="hidden md:block">
                 <div className="grid md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7">
-                  {tokoTani.map((item, index) => (
+                  {tokoTani.map((item) => (
                     <Card key={item.id} item={item} />
                   ))}
                 </div>
@@ -69,8 +70,9 @@ export default function index() {
               <CarouselUnggulan tokoArray={groupedToko} />
             </div>
           </MainCard>
+
           {/* Promo Penjual Ngawi */}
-          <MainCard className="w-[80%]">
+          {/* <MainCard className="w-[80%]">
             <div className="py-8">
               <p className="text-lg lg:text-2xl font-bold text-green-primary text-center pb-5">
                 PROMO PENJUAL NGAWI
@@ -81,7 +83,6 @@ export default function index() {
                     <img src="/image/icon-promo.png" width="60%" height="60%" alt="Icon Promo" />
                   </div>
                 </div>
-                {/* Dekstop */}
                 <div className="w-full hidden md:flex items-center justify-center">
                   <div className="grid grid-cols-3 pt-5 pl-10 md:pl-0 gap-2 md:gap-2">
                     <div>
@@ -140,13 +141,12 @@ export default function index() {
                     </div>
                   </div>
                 </div>
-                {/* Mobile */}
                 <div className="md:hidden">
                   <CarouselPromo />
                 </div>
               </div>
             </div>
-          </MainCard>
+          </MainCard> */}
         </div>
       </section>
     </UserLayout>

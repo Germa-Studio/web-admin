@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from '@/components/inputImage';
-import { updatePenyuluhById, getPenyuluhById, select } from '@/infrastruture';
+import { updatePenyuluhById, getPenyuluhById } from '@/infrastruture';
 import { MultiSelect } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
 import { useParams } from 'react-router-dom';
@@ -110,7 +110,7 @@ const TambahPenyuluhanTani = () => {
       setIdKecamanan(filteredData[0]?.id);
       setKecamatanActive(kecamatanActivate);
     }
-  }, [daftarKecamatan, kecamatan]);
+  }, [daftarKecamatan, kecamatan, kecamatanActive]);
   useEffect(() => {
     fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
   }, [idKecamatan]);
@@ -124,7 +124,7 @@ const TambahPenyuluhanTani = () => {
       setIdKecamananBinaan(filteredData[0]?.id);
       setKecamatanBinaanActive(kecamatanActivate);
     }
-  }, [daftarKecamatan, kecamatanBinaan]);
+  }, [daftarKecamatan, kecamatanBinaan, kecamatanBinaanActive]);
   useEffect(() => {
     if (idKecamatanBinaan) {
       fecthDesa(idKecamatanBinaan).then((data) => {

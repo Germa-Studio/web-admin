@@ -16,10 +16,10 @@ import THead from './THead';
 import clsx from 'clsx';
 import { PaginationControl, PaginationCount } from './Pagination';
 import { IoMdAdd } from 'react-icons/io';
-import { RiTableLine } from 'react-icons/ri';
 import { TiExport } from 'react-icons/ti';
 
 type TableProps<T extends object> = {
+  className?: string;
   data: PaginatedRespApiData<T> | undefined;
   columns: ColumnDef<T>[];
   isLoading?: boolean;
@@ -40,7 +40,7 @@ export default function Table<T extends object>({
   data,
   isLoading,
   omitSort = false,
-  withFilter = false,
+  // withFilter = false,
   withPaginationCount = false,
   withPaginationControl = false,
   withButton = false,
@@ -48,7 +48,7 @@ export default function Table<T extends object>({
   buttonHref = '/',
   exportUrl = '',
 
-  filter = [],
+  // filter = [],
   ...rest
 }: TableProps<T>) {
   const [globalFilter, setGlobalFilter] = React.useState('');
@@ -123,13 +123,13 @@ export default function Table<T extends object>({
         </div>
       </div>
       {withButton && (
-        <div>
-          <a href={buttonHref} className="bg-color-3 rounded-[10px] px-6 py-2.5">
-            <div className="flex items-center justify-center gap-1 text-white">
+        <div className="w-fit mt-2">
+          <Link to={buttonHref}>
+            <div className="flex items-center justify-center gap-1 text-white rounded-[10px] bg-[#F29D0E] px-4 py-2.5">
               <IoMdAdd className="h-6 w-6" />
               <p className="text-sm">{buttonText}</p>
             </div>
-          </a>
+          </Link>
         </div>
       )}
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -138,7 +138,7 @@ export default function Table<T extends object>({
             <table className="min-w-full divide-y divide-gray-300">
               <THead
                 table={table}
-                data={data}
+                // data={data}
                 omitSort={omitSort}
                 className="rounded-xl text-white"
               />

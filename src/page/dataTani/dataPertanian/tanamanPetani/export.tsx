@@ -2,8 +2,6 @@ import { Anchor, Breadcrumbs, Button } from '@mantine/core';
 import React, { useEffect } from 'react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { PaginatedRespApiData } from '../../../../types/paginatedRespApi';
-import { TDataTanaman } from '../../../../types/dataTanaman';
-import { GetStatistikTanamanAll } from '../../../../infrastucture/statistic';
 import { komoditasSemusim, komoditasTahunan } from '../../../../types/const';
 import { GetListTanaman } from '../../../../infrastucture';
 import { TTanamanPetani } from '../../../../types/tanamanPetani';

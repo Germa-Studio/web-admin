@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faSave } from '@fortawesome/free-solid-svg-icons';
 import MainCard from '@/components/MainCard';
@@ -6,19 +6,7 @@ import InputImage from '@/components/inputImage';
 import { AddOperator } from '@/infrastruture';
 import Loading from '../../components/loading';
 import { Link } from 'react-router-dom';
-import {
-  Anchor,
-  Breadcrumbs,
-  Button,
-  Image,
-  NumberInput,
-  Radio,
-  Select,
-  Tabs,
-  TextInput,
-  Text,
-  Modal
-} from '@mantine/core';
+import { Select } from '@mantine/core';
 
 const TambahOperator = () => {
   const [nik, setNIK] = useState('');
@@ -194,7 +182,7 @@ const TambahOperator = () => {
             <p>Peran</p>
             <Select
               className="mt-2"
-              placeholder="Status Tanah"
+              placeholder="Pilih peran"
               value={peran}
               data={['operator poktan', 'operator admin', 'operator super admin']}
               onChange={(value) => setPeran(value)}

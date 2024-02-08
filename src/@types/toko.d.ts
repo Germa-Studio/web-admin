@@ -1,3 +1,5 @@
+import { TPenyuluh, TPetani } from '../types/petani';
+
 export type TokoTani = {
   id: number;
   profesiPenjual: string;
@@ -46,4 +48,7 @@ export type DataPerson = {
   isVerified: boolean;
   createdAt: string;
   updatedAt: string;
+
+  dataPetani: TPetani | null;
+  dataPenyuluh: TPenyuluh | null;
 };

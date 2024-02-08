@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import MainCard from '@/components/MainCard';
 import InputCrud from '@/components/page/infoTani/IconCrud';
 import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
@@ -15,14 +15,14 @@ const InfoTani = () => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
-  const history = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
-    GetInfoTani().then((data) => {
+    GetInfoTani(location.search).then((data) => {
       setDatas(data.infotani);
       setLoading(false);
-      console.log(data);
     });
-  }, []);
+  }, [location]);
 
   const handleDeleteUser = (ids) => {
     DeleteInfoTani(ids);

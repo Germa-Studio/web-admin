@@ -2,12 +2,7 @@ import SweatAlert from '../components/uiComponents/swetAlert';
 import { TDataTanaman, TDataTanamanInput } from '../types/dataTanaman';
 import { PaginatedRespApi, RespApiData } from '../types/paginatedRespApi';
 import { TRequestQuery } from '../types/query';
-import {
-  TKategoriResponse,
-  TKomoditasResponse,
-  TSummaryKategoriResponse,
-  TSummaryKomoditasResponse
-} from '../types/statistik';
+import { TKomoditasResponse, TSummaryKategoriResponse } from '../types/statistik';
 import { TTanamanPetani } from '../types/tanamanPetani';
 import Api from './base';
 

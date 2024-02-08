@@ -1,27 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import MainCard from '@/components/MainCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFilter,
-  faEdit,
-  faTrash,
-  faBullseye,
-  faPlus,
-  faArrowRight,
-  faArrowLeft,
-  faUpload
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
-import { Image, Modal, Text, Button, Tooltip, Breadcrumbs, Anchor } from '@mantine/core';
-import {
-  GetListTanaman,
-  GetTanmanPetani,
-  DeleteTanamanPetani,
-  UploadTanamanPetani
-} from '@/infrastruture';
-import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import LoadingAnimation from '../../../../components/loading';
-import SearchInput from '../../../../components/uiComponents/inputComponents/searchInput';
+import { Modal, Text, Button, Breadcrumbs, Anchor } from '@mantine/core';
+import { GetListTanaman, DeleteTanamanPetani, UploadTanamanPetani } from '@/infrastruture';
+import { Link, useLocation } from 'react-router-dom';
+import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -87,26 +71,26 @@ const columns = [
 ];
 
 export default function DetailRekapPetani() {
-  const [datas, setDatas] = useState([]);
+  // const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
   const [petani, setPetani] = useState([]);
-  const [selectedPetani, setSelectedPetani] = useState(null);
-  const [filters, setFilters] = useState({
-    janisPanen: '',
-    jenis: '',
-    kategori: '',
-    komoditas: '',
-    luasLahan: '',
-    musimTanam: '',
-    perkiraanHasilPanen: '',
-    perkiraanPanen: '',
-    realisasiHasilPanen: '',
-    statusLahan: '',
-    tanggalTanam: ''
-  });
+  // const [selectedPetani, setSelectedPetani] = useState(null);
+  // const [filters, setFilters] = useState({
+  //   janisPanen: '',
+  //   jenis: '',
+  //   kategori: '',
+  //   komoditas: '',
+  //   luasLahan: '',
+  //   musimTanam: '',
+  //   perkiraanHasilPanen: '',
+  //   perkiraanPanen: '',
+  //   realisasiHasilPanen: '',
+  //   statusLahan: '',
+  //   tanggalTanam: ''
+  // });
   const fileInputRef = useRef();
   // const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(10);
@@ -119,9 +103,9 @@ export default function DetailRekapPetani() {
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
 
-  const searchQuery = searchParams.get('search_query') ?? '';
-  const sortKey = searchParams.get('sort_key') ?? '';
-  const sortType = searchParams.get('sort_type') ?? '';
+  // const searchQuery = searchParams.get('search_query') ?? '';
+  // const sortKey = searchParams.get('sort_key') ?? '';
+  // const sortType = searchParams.get('sort_type') ?? '';
 
   // Do something with the extracted parameters if needed
 
@@ -135,27 +119,25 @@ export default function DetailRekapPetani() {
       // sortKey,
       // sortType
     ).then((data) => {
-      setDatas(data.data);
       setResp(data);
-      setLoading(false);
-      console.log(data);
+      // setLoading(false);
     });
   }, [page, limit, petani]);
 
-  const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+  // const handleNextPage = () => {
+  //   setPage((prevPage) => prevPage + 1);
+  // };
 
-  const handlePrevPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
+  // const handlePrevPage = () => {
+  //   setPage((prevPage) => Math.max(prevPage - 1, 1));
+  // };
 
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
     // delay 6 seconds
     setTimeout(() => {
       window.location.reload();
-    }, 4000);
+    });
     // window.location.reload();
   };
 
@@ -194,12 +176,12 @@ export default function DetailRekapPetani() {
     }
   }, [resp]);
 
-  const handleFilterChange = (e, column) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [column]: e.target.value
-    }));
-  };
+  // const handleFilterChange = (e, column) => {
+  //   setFilters((prevFilters) => ({
+  //     ...prevFilters,
+  //     [column]: e.target.value
+  //   }));
+  // };
 
   function handleFileChange(event) {
     if (!event.target.files) return;

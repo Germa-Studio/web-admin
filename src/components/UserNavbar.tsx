@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export default function UserNavbar() {
-  const [navbar, setNavbar] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [navbar, setNavbar] = React.useState(false);
+  // const [activeDropdown, setActiveDropdown] = React.useState(null);
 
   // eslint-disable-next-line no-unused-vars
-  const toggleDropdown = (dropdown) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-  };
-  const [isScrolled, setIsScrolled] = useState(false);
+  // const toggleDropdown = (dropdown) => {
+  //   setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  // };
+  const [isScrolled, setIsScrolled] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
         setIsScrolled(true);

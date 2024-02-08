@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import EditorText from '@/components/textAreaEditor';
 import { Button } from '@mantine/core';
 import MainCard from '@/components/MainCard';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
-import { IconPlus, IconX, IconDeviceFloppy } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { AddJurnalKegiatan } from '@/infrastruture';
 import InputImage from '@/components/inputImage';
 import LoadingAnimation from '../../../components/loading';
 const FormJurnalKegiatan = () => {
-  const [NIP, setNIP] = useState('');
+  const [NIK, setNIK] = useState('');
   const [judul, setJudul] = useState('');
   const [statusJurnal, setStatusJurnal] = useState('');
   const [isi, setIsi] = useState('');
@@ -29,7 +29,7 @@ const FormJurnalKegiatan = () => {
     setLoading(true);
     e.preventDefault();
     const data = {
-      NIP,
+      NIK,
       judul,
       uraian: isi,
       gambar,
@@ -51,11 +51,11 @@ const FormJurnalKegiatan = () => {
         <MainCard transparent gap="10%" row>
           <MainCard transparent noPadding width="40%">
             <TextInput
-              id="NIP"
-              name="NIP"
+              id="NIK"
+              name="NIK"
               label="NIP"
-              value={NIP}
-              onChange={(e) => setNIP(e.target.value)}
+              value={NIK}
+              onChange={(e) => setNIK(e.target.value)}
             />
             <TextInput
               id="judul"
@@ -67,20 +67,13 @@ const FormJurnalKegiatan = () => {
             <TextInput
               id="createdBy"
               name="createdBy"
-              label="Di Buat Oleh"
+              label="Dibuat Oleh"
               value={createdBy}
               onChange={(e) => setCreatedBy(e.target.value)}
             />
-            {/* <TextInput
-              id="statusJurnal"
-              name="statusJurnal"
-              label="Status Jurnal"
-              value={statusJurnal}
-              onChange={(e) => setStatusJurnal(e.target.value)}
-            /> */}
             <div className="relative z-0 w-full mb-6 group">
               <label htmlFor="underline_select" className="text-sm dark:text-gray-400 pt-5 md:pt-0">
-                <strong>Satuan</strong>
+                <strong>Status</strong>
               </label>
               <select
                 id="statusJurnal"
@@ -101,21 +94,17 @@ const FormJurnalKegiatan = () => {
           </MainCard>
         </MainCard>
         <EditorText setValue={setIsi} />
-        <MainCard
-          transparent
-          id="isi"
-          name="isi"
-          value={isi}
-          onChange={(e) => setIsi(e.target.value)}
-          row
-          style={{ justifyContent: 'end' }}>
+        <MainCard transparent id="isi" name="isi" row style={{ justifyContent: 'end' }}>
           <Button
             leftIcon={<IconDeviceFloppy size="1rem" />}
             variant="outline"
             onClick={(e) => handleSubmit(e)}>
             Simpan
           </Button>
-          <Button leftIcon={<IconX size="1rem" />} variant="outline">
+          <Button 
+            leftIcon={<IconX size="1rem" />} 
+            variant="outline"
+            onClick={() => (window.location = '/data-penyuluh/jurnal-kegiatan')}>
             Batalkan
           </Button>
         </MainCard>

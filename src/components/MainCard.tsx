@@ -24,7 +24,7 @@ export default function MainCard({
   gap?: number | string;
   fullWidth?: boolean;
   width?: number | string;
-  style?: any;
+  style?: React.CSSProperties;
   thinShadow?: boolean;
   forceRow?: boolean;
   className?: string;

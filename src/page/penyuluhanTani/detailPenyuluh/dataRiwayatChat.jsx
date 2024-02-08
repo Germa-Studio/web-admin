@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { GetRiwayatChat } from '@/infrastruture';
+// import { GetRiwayatChat } from '@/infrastruture';
 function DataRiwayatChat() {
-  const [datas, setDatas] = useState([]);
-  useEffect(() => {}, []);
+  // const [datas, setDatas] = useState([]);
   const [filters, setFilters] = useState({
     kecamatan: '',
     nipPenyuluh: '',

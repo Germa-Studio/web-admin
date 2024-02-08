@@ -1,11 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-import {
-  GroupBase,
-  Props,
-  StylesConfig,
-  ActionMeta,
-  components as ReactSelectComponents
-} from 'react-select';
+import { GroupBase, StylesConfig } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import type { AsyncProps } from 'react-select/async';
 
@@ -47,7 +42,7 @@ const customStyle: StylesConfig = {
   },
   input: (styles) => ({ ...styles, ...dot() }),
   placeholder: (styles) => ({ ...styles, ...dot('#ccc') }),
-  singleValue: (styles, { data }) => ({ ...styles, ...dot('#ccc') })
+  singleValue: (styles) => ({ ...styles, ...dot('#ccc') })
 };
 
 export interface AsyncSelectProps<
@@ -56,6 +51,6 @@ export interface AsyncSelectProps<
   Group extends GroupBase<Option> = GroupBase<Option>
 > extends AsyncProps<Option, IsMulti, Group> {}
 
-export default function SearchInput(props: AsyncSelectProps<any>) {
+export default function SearchInput(props: AsyncSelectProps<unknown>) {
   return <AsyncSelect styles={customStyle} className="mt-4" {...props} />;
 }

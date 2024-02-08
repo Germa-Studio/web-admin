@@ -1,26 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFilter,
-  faEdit,
-  faTrash,
-  faDownload,
-  faBullseye,
-  faPlus,
-  faUpload
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
-import {
-  GetDaftarOperator,
-  DeleteOperator,
-  GetOperatorDetail,
-  UploadDataOperator
-} from '@/infrastruture';
-import ExcelComponent from '../../components/exelComponent';
-import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs, TextInput } from '@mantine/core';
-import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import LoadingAnimation from '../../components/loadingSession';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
+import { GetDaftarOperator, DeleteOperator, UploadDataPetani } from '@/infrastruture';
+// import ExcelComponent from '../../components/exelComponent';
+import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
+import { Link, useLocation } from 'react-router-dom';
+// import LoadingAnimation from '../../components/loadingSession';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -69,13 +56,13 @@ const columns = [
 ];
 
 const IndexOperator = () => {
-  const [datas, setDatas] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [datas, setDatas] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
   const fileInputRef = useRef();
-  const [filters, setFilters] = useState({});
+  // const [filters, setFilters] = useState({});
   // const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(10);
   const location = useLocation();
@@ -87,30 +74,29 @@ const IndexOperator = () => {
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
 
-  const searchQuery = searchParams.get('search_query') ?? '';
-  const sortKey = searchParams.get('sort_key') ?? '';
-  const sortType = searchParams.get('sort_type') ?? '';
+  // const searchQuery = searchParams.get('search_query') ?? '';
+  // const sortKey = searchParams.get('sort_key') ?? '';
+  // const sortType = searchParams.get('sort_type') ?? '';
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     GetDaftarOperator(page, limit)
       .then((res) => {
-        //   console.log(res.data)
         setResp(res);
-        setDatas(res.data);
-        setLoading(false);
+        // setDatas(res.data);
+        // setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         //   console.log(err);
-        setLoading(false);
+        // setLoading(false);
       });
-  }, []);
-  const handleFilterChange = (e, column) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [column]: e.target.value
-    }));
-  };
+  }, [limit, page]);
+  // const handleFilterChange = (e, column) => {
+  //   setFilters((prevFilters) => ({
+  //     ...prevFilters,
+  //     [column]: e.target.value
+  //   }));
+  // };
   const handleDeleteOperator = (ids) => {
     DeleteOperator(ids);
   };

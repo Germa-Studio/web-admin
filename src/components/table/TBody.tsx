@@ -3,6 +3,7 @@ import { RowData, Table, flexRender } from '@tanstack/react-table';
 import React from 'react';
 
 type TBodyProps<T extends RowData> = {
+  className?: string;
   table: Table<T>;
   isLoading?: boolean;
 } & React.ComponentPropsWithoutRef<'div'>;

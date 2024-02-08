@@ -1,5 +1,5 @@
 import { RichTextEditor, Link } from '@mantine/tiptap';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
@@ -7,10 +7,9 @@ import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
+import PropTypes from 'prop-types';
 
 const EditorText = ({ setValue, isi }) => {
-  const [content, setContent] = useState('');
-
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -29,7 +28,7 @@ const EditorText = ({ setValue, isi }) => {
   };
   useEffect(() => {
     editor?.commands?.setContent(isi);
-  }, [isi]);
+  }, [editor, isi]);
 
   return (
     <>
@@ -77,6 +76,11 @@ const EditorText = ({ setValue, isi }) => {
       </RichTextEditor>
     </>
   );
+};
+
+EditorText.propTypes = {
+  setValue: PropTypes.func,
+  isi: PropTypes.string
 };
 
 export default EditorText;
