@@ -9,6 +9,9 @@ import { TableTokoTani, TokoTani } from '../../@types/toko';
 import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import { deleteTokoTani, getTokoTani } from '../../infrastucture/toko';
 import Table from '../../components/table/Table';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../infrastucture/redux/state/stateSlice';
+import { RootState } from '../../infrastucture/redux/store';
 
 const columns: ColumnDef<TableTokoTani>[] = [
   {
@@ -69,6 +72,8 @@ function TokoPetani() {
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TableTokoTani> | undefined
   >();
+  const user = useSelector((state: RootState) => state.state.user);
+  // console.log(user?.peran)
   const [resp, setResp] = React.useState<PaginatedRespApiData<TokoTani> | undefined>();
 
   // const [loading, setLoading] = useState(true);
@@ -98,7 +103,7 @@ function TokoPetani() {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
+              {user?.peran !== 'penyuluh' && (<button
                 onClick={() => {
                   setModalDeleteData(true);
                   setSelectedId(item.id);
@@ -106,7 +111,7 @@ function TokoPetani() {
                 <div className="flex h-7 w-7 items-center justify-center bg-red-500">
                   <MdDeleteOutline className="h-6 w-6 text-white" />
                 </div>
-              </button>
+              </button>)}
             </div>
           )
         }))

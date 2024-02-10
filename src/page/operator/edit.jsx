@@ -24,7 +24,7 @@ const EditOperator = () => {
 
   useEffect(() => {
     GetOperatorDetail(id).then((data) => {
-      // console.log(data)
+      console.log(data.data)
       // console.log(data.data_1)
       if (data.data) {
         // const { nik, nkk, nama, email, password, noTelp, alamat, foto, peran } = data.data;
@@ -60,7 +60,7 @@ const EditOperator = () => {
       peran,
       foto
     };
-    // console.log(data)
+    console.log(data)
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);

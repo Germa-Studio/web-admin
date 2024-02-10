@@ -11,6 +11,10 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 // import { TPetani } from "../../../../types/petani";
 import { SearchPetani } from '../../../../infrastucture/searchApi';
+// import { postLogActivity } from '../../../../infrastucture/logActivity';
+import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -77,60 +81,20 @@ export default function DetailRekapPetani() {
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
   const [petani, setPetani] = useState([]);
-  // const [selectedPetani, setSelectedPetani] = useState(null);
-  // const [filters, setFilters] = useState({
-  //   janisPanen: '',
-  //   jenis: '',
-  //   kategori: '',
-  //   komoditas: '',
-  //   luasLahan: '',
-  //   musimTanam: '',
-  //   perkiraanHasilPanen: '',
-  //   perkiraanPanen: '',
-  //   realisasiHasilPanen: '',
-  //   statusLahan: '',
-  //   tanggalTanam: ''
-  // });
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const fileInputRef = useRef();
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
   const location = useLocation();
-  // const history = useHistory();
-
-  // useEffect(() => {
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
-
-  // const searchQuery = searchParams.get('search_query') ?? '';
-  // const sortKey = searchParams.get('sort_key') ?? '';
-  // const sortType = searchParams.get('sort_type') ?? '';
-
-  // Do something with the extracted parameters if needed
-
-  // }, [location.search]);
   useEffect(() => {
-    GetListTanaman(
-      page,
-      limit,
-      petani?.id
-      // search,
-      // sortKey,
-      // sortType
-    ).then((data) => {
+    GetListTanaman(page, limit, petani?.id).then((data) => {
       setResp(data);
       // setLoading(false);
     });
   }, [page, limit, petani]);
-
-  // const handleNextPage = () => {
-  //   setPage((prevPage) => prevPage + 1);
-  // };
-
-  // const handlePrevPage = () => {
-  //   setPage((prevPage) => Math.max(prevPage - 1, 1));
-  // };
 
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
@@ -161,14 +125,16 @@ export default function DetailRekapPetani() {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+              {user?.peran === 'operator super admin' && (
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))

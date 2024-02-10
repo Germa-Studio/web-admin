@@ -37,6 +37,10 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
+// import { postLogActivity } from '../../../../infrastucture/logActivity';
+import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -107,7 +111,8 @@ export default function EditTanamanPetani() {
   const [prakiraanLuasPanen, setPrakiraanLuasPanen] = useState();
   const [prakiraanProduksiPanen, setPrakiraanProduksiPanen] = useState(0);
   const [prakiraanBulanPanen, setPrakiraanBulanPanen] = useState('');
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [loading, setLoading] = useState(true);
   const [dataTable, setDataTable] = useState();
@@ -185,14 +190,16 @@ export default function EditTanamanPetani() {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+              {user?.peran === 'operator super admin' && (
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))

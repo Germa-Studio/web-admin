@@ -18,6 +18,9 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { TKelompokTani } from '../../types/kelompokTani';
 import { SearchPoktan } from '../../infrastucture/searchApi';
 import { FaCheckDouble } from 'react-icons/fa6';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../infrastucture/redux/state/stateSlice';
+import { RootState } from '../../infrastucture/redux/store';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -113,6 +116,8 @@ export default function Index() {
   const sortKey = searchParams.get('sort_key') ?? '';
   const sortType = searchParams.get('sort_type') ?? '';
 
+  const user = useSelector((state: RootState) => state.state.user);
+  // console.log(user?.peran)
   useEffect(() => {
     GetStatistikTanamanAll(poktan?.id, {
       page: Number(page),
@@ -139,25 +144,31 @@ export default function Index() {
                   <IoEyeOutline className="h-6 w-6 text-white" />
                 </div>
               </Link>
-              <Link to={`/statistik/edit/${item.id}`}>
-                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
-                  <ImPencil className="h-[18px] w-[18px] text-white" />
-                </div>
-              </Link>
-              <Link to={`/statistik/${item.id}/realisasi`}>
-                <div className="flex h-7 w-7 items-center justify-center bg-gray-500">
-                  <FaCheckDouble className="h-[18px] w-[18px] text-white" />
-                </div>
-              </Link>
-              <button
-                onClick={() => {
-                  setShowModalDelete(true);
-                  setSelectedData(item);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+              {user?.peran !== 'operator poktan' && (
+                <Link to={`/statistik/edit/${item.id}`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
+                    <ImPencil className="h-[18px] w-[18px] text-white" />
+                  </div>
+                </Link>
+              )}
+              {user?.peran !== 'penyuluh' && (
+                <Link to={`/statistik/${item.id}/realisasi`}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-gray-500">
+                    <FaCheckDouble className="h-[18px] w-[18px] text-white" />
+                  </div>
+                </Link>
+              )}
+              {user?.peran === 'operator super admin' && (
+                <button
+                  onClick={() => {
+                    setShowModalDelete(true);
+                    setSelectedData(item);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))

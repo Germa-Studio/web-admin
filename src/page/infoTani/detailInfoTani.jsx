@@ -4,7 +4,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { GetInfoTaniById, DeleteInfoTani } from '@/infrastruture';
 import MainCard from '@/components/MainCard';
 import LoadingAnimation from '../../components/loading';
+import { setUser } from '../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 function DetailInfoTani() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const [data, setData] = useState(null);
   const location = useLocation();
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -85,11 +90,13 @@ function DetailInfoTani() {
               onClick={() => navigateToEdit(data?.id)}>
               Edit
             </button>
-            <button
-              className="bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white"
-              onClick={() => setModalDeleteData(data?.id)}>
-              Delete
-            </button>
+            {user?.peran === 'operator super admin' && (
+              <button
+                className="bg-white h-fit px-4 py-2 border border-green-primary text-green-primary rounded-md hover:bg-green-primary hover:text-white"
+                onClick={() => setModalDeleteData(data?.id)}>
+                Delete
+              </button>
+            )}
           </Group>
         </Card>
       </MainCard>

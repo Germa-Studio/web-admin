@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ListUser } from '@/infrastruture';
-// import ExcelComponent from "../../../components/exelComponent";
-// import ExcelComponent from '../../components/exelComponent';
 import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs } from '@mantine/core';
 import LoadingAnimation from '../../components/loadingSession';
 import { VerifyingUser, DeleteUser } from '../../infrastucture';
+import { setUser } from '../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -17,7 +18,10 @@ const breadcrumbItems = [
     {item.title}
   </Anchor>
 ));
+
 const VerifikasiUser = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -28,6 +32,7 @@ const VerifikasiUser = () => {
       setLoading(false);
     });
   }, []);
+  console.log(user)
 
   const handleDeleteUser = (ids) => {
     DeleteUser(ids);
@@ -37,39 +42,6 @@ const VerifikasiUser = () => {
     // refresh page
     window.location.reload();
   };
-  // const [filters, setFilters] = useState({
-  //   kecamatan: '',
-  //   desa: '',
-  //   nik: '',
-  //   nama: '',
-  //   namaKelompok: '',
-  //   gapoktan: '',
-  //   penyuluh: ''
-  // });
-  // const handleFilterChange = (e, column) => {
-  //   setFilters((prevFilters) => ({
-  //     ...prevFilters,
-  //     [column]: e.target.value
-  //   }));
-  // };
-  // const handleDownlod = () => {
-  //   const dataExel = filteredData.map((item) => {
-  //     return {
-  //       NIK: item.NIK,
-  //       ['No Wa']: item.NoWa,
-  //       Alamat: item.alamat,
-  //       Kecamatan: item.kecamatan,
-  //       Desa: item.desa,
-  //       nama: item.nama,
-  //       password: item.password,
-  //       namaKelompok: item?.kelompok?.namaKelompok,
-  //       gapoktan: item?.kelompok?.gapoktan,
-  //       penyuluh: item?.dataPenyuluh?.nama
-  //     };
-  //   });
-  //   ExcelComponent(dataExel, 'data.xlsx', 'Sheet1');
-  // };
-  // const totalData = filteredData.length;
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
@@ -156,7 +128,9 @@ const VerifikasiUser = () => {
                     {/* <th className="sticky top-0 px-4 py-2 truncate ">
                       PEMBINA
                     </th> */}
-                    <th className="sticky top-0 px-4 py-2 truncate">Action</th>
+                    {user?.peran !== 'operator poktan' && (
+                      <th className="sticky top-0 px-4 py-2 truncate">Action</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -174,32 +148,34 @@ const VerifikasiUser = () => {
                         {item?.isVerified == true ? 'Verified' : 'Not Verified'}
                       </td>
                       {/* <td className="px-4 py-2 text-center ">{item?.penyuluh}</td> */}
-                      <td className="px-2 py-2 text-center">
-                        {item?.isVerified ? (
-                          <Tooltip label="Sudah Terverifikasi">
-                            <button className="disabled cursor-pointer text-green-800">
-                              Sudah Terverifikasi
-                            </button>
-                          </Tooltip>
-                        ) : (
-                          <>
-                            <Tooltip label="Terima">
-                              <FontAwesomeIcon
-                                onClick={() => setVerifikasiUser(item?.id)}
-                                icon={faCheck}
-                                className="cursor-pointer text-green-500 hover:text-green-600 mr-2"
-                              />
+                      {user?.peran !== 'operator poktan'  && (  
+                        <td className="px-2 py-2 text-center">
+                          {item?.isVerified ? (
+                            <Tooltip label="Sudah Terverifikasi">
+                              <button className="disabled cursor-pointer text-green-800">
+                                Sudah Terverifikasi
+                              </button>
                             </Tooltip>
-                            <Tooltip label="Tolak">
-                              <FontAwesomeIcon
-                                onClick={() => setModalDeleteData(item?.id)}
-                                icon={faXmark}
-                                className="cursor-pointer text-red-500 hover:text-red-600"
-                              />
-                            </Tooltip>
-                          </>
-                        )}
-                      </td>
+                          ) : (
+                            <>
+                              <Tooltip label="Terima">
+                                <FontAwesomeIcon
+                                  onClick={() => setVerifikasiUser(item?.id)}
+                                  icon={faCheck}
+                                  className="cursor-pointer text-green-500 hover:text-green-600 mr-2"
+                                />
+                              </Tooltip>
+                              <Tooltip label="Tolak">
+                                <FontAwesomeIcon
+                                  onClick={() => setModalDeleteData(item?.id)}
+                                  icon={faXmark}
+                                  className="cursor-pointer text-red-500 hover:text-red-600"
+                                />
+                              </Tooltip>
+                            </>
+                          )}
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

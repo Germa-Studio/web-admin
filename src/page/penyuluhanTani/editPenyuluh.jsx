@@ -73,9 +73,11 @@ const TambahPenyuluhanTani = () => {
         setKecamatan(data?.kecamatan);
         setKecamatanBinaan(data?.kecamatanBinaan);
         // setDesa(data?.desa)
+        setFoto(data?.foto)
         setAlamat(data?.alamat);
         setNamaProduct(data?.namaProduct);
         setDesaBinaan(data?.desaBinaan?.split(', '));
+        console.log(data)
       });
     }
   }, [id]);
@@ -147,7 +149,7 @@ const TambahPenyuluhanTani = () => {
             <InputImage
               id="foto"
               name="foto"
-              value={foto}
+              imageActive={foto} 
               onChange={(e) => setFoto(e.target.value)}
               title="Foto Profil"
             />

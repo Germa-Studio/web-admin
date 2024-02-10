@@ -53,6 +53,7 @@ const KegiatanTani = () => {
   ]);
   React.useEffect(() => {
     GetEventTani().then((data) => {
+      // console.log('data', data);
       setDatas(data.infotani);
     });
   }, []);

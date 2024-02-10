@@ -11,6 +11,9 @@ import SearchInput from '../../components/uiComponents/inputComponents/SearchInp
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
+import { setUser } from '../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -56,6 +59,8 @@ const columns = [
 ];
 
 const IndexOperator = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
   // const [datas, setDatas] = useState([]);
   // const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -128,14 +133,17 @@ const IndexOperator = () => {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+              
+              {user?.peran === 'operator super admin' &&(
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))

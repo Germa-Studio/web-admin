@@ -299,7 +299,7 @@ export const AddInfoTani = async (data) => {
 };
 export const GetInfoTani = async (search) => {
   try {
-    const response = await Api.get(`/info-tani${search}`);
+    const response = await Api.get(`/info-tani?${search}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');

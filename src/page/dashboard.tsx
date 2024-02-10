@@ -78,11 +78,6 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
     accessorKey: 'prakiraanBulanPanen',
     header: 'Prakiraan Bulan Panen',
     cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'actions',
-    header: 'Aksi',
-    cell: (props) => props.row.original.actions
   }
 ];
 

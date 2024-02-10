@@ -32,6 +32,10 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
+// import { postLogActivity } from '../../../../infrastucture/logActivity';
+import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
+// import { RootState } from './infrastucture/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -107,6 +111,8 @@ export default function TambahTanamanPetani() {
   const [loading, setLoading] = useState(true);
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.state.user);
 
   // const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(10);
@@ -149,14 +155,16 @@ export default function TambahTanamanPetani() {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+              {user?.peran === 'operator super admin' && (
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))
@@ -469,12 +477,12 @@ export default function TambahTanamanPetani() {
         </div>
       )}
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
-        <h3 className="text-white text-2xl font-bold mx-auto">TABEL DATA TANAMAN PERTANIAN</h3>
+        {/* <h3 className="text-white text-2xl font-bold mx-auto">TABEL DATA TANAMAN PERTANIAN</h3> */}
         <button className="absolute right-4 text-[#0FA958] text-xl">
           <FaRegRectangleList />
         </button>
       </div>
-      <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
+      {/* <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl /> */}
     </div>
   );
 }
