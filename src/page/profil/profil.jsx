@@ -1,10 +1,11 @@
 import { clsx } from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DataInduk from './ubahDataInduk';
 import DataProfil from './ubahDataProfil';
 import DataKontak from './ubahDataKontak';
 import DataPassword from './ubahDataPassword';
 import DataBinaan from './ubahDataBinaan';
+import {GetDetailProfile} from '../../infrastucture';
 
 export default function Profil() {
   const menu =
@@ -15,6 +16,14 @@ export default function Profil() {
   const handleClick = (e) => {
     setFilter(e.target.value);
   };
+  const [datas, setData] = useState([]);
+
+  useEffect(()=> {
+    GetDetailProfile().then((data) => {
+      setData(data.data)
+    });
+  }, [])
+  // console.log(data.data.tbl_akun.peran);
   return (
     <div>
       <div className="font-bold text-white mb-7">
@@ -54,21 +63,23 @@ export default function Profil() {
               Ubah Data Password
             </button>
           </li>
-          <li>
-            <button
-              className={clsx(filter === 'binaan' ? active : menu)}
-              onClick={handleClick}
-              value={'binaan'}>
-              Ubah Data Binaan
-            </button>
-          </li>
+          {datas.data?.tbl_akun.peran === 'penyuluh' &&(
+            <li>
+              <button
+                className={clsx(filter === 'binaan' ? active : menu)}
+                onClick={handleClick}
+                value={'binaan'}>
+                Ubah Data Binaan
+              </button>
+            </li>
+          )}
         </ul>
         <div className="w-[68%] p-7 h-fit bg-white rounded-lg">
-          {filter === 'induk' && <DataInduk />}
-          {filter === 'profil' && <DataProfil />}
-          {filter === 'kontak' && <DataKontak />}
-          {filter === 'password' && <DataPassword />}
-          {filter === 'binaan' && <DataBinaan />}
+          {filter === 'induk' && <DataInduk data = {datas}/>}
+          {filter === 'profil' && <DataProfil data = {datas}/>}
+          {filter === 'kontak' && <DataKontak data = {datas}/>}
+          {filter === 'password' && <DataPassword data = {datas}/>}
+          {filter === 'binaan' && <DataBinaan data = {datas}/>}
         </div>
       </div>
     </div>
