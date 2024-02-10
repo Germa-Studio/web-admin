@@ -14,7 +14,7 @@ export default function DataInduk({data}) {
   useEffect(()=>{
     if (data){
       setIndukData(data.data);
-      setNokk(data.data?.nokk);
+      setNokk(data.data?.nkk);
       setNik(data.data?.nik);
     }
     // console.log(data.data)
@@ -36,15 +36,15 @@ export default function DataInduk({data}) {
 
   return (
     <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      {/* <form onSubmit={(e) => handleSubmit(e)}> */}
       {loading && <LoadingAnimation />}
-      {indukData?.nokk &&(
+      {indukData?.nkk &&(
         <div className="flex space-x-2">
           <RiContactsBook2Line size="30px" />
           <NumberInput
-            id="nip"
-            name="nip"
-            label="NIP"
+            id="nokk"
+            name="NoKK"
+            label="No.KK"
             value={nokk}
             onChange={(e) => setNokk(e.target.value)}
           />
@@ -65,12 +65,11 @@ export default function DataInduk({data}) {
         </div>
       )}
       <button
-        type="submit"
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         className="w-[30%] float-end text-white bg-[#307B28] hover:bg-white hover:text-[#307B28] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
         Update Data Induk
       </button>
-      </form>
+      {/* </form> */}
     </div>
   );
 }

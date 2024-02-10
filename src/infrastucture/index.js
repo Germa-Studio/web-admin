@@ -78,6 +78,17 @@ export const Logout = () => {
   window.location = '/login';
 };
 
+{/* @description Routes for Hak Akses */}
+
+export const GetPeran = async (page, limit) => {
+  try {
+    const response = await Api.get(`/peran?page=${page}&limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
 // cekNik
 export const CekNik = async (data) => {
   try {

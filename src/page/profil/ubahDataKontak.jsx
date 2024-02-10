@@ -4,6 +4,7 @@ import EmailInput from '../../components/uiComponents/inputComponents/emailInput
 import LoadingAnimation from '../../components/loading';
 import { FaWhatsapp } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
+import { UpdateProfile } from '../../infrastucture';
 
 export default function DataKontak({data}) {
   const [whatsapp, setWhatsapp] = useState('');
@@ -27,6 +28,7 @@ export default function DataKontak({data}) {
     for (const key in data) {
       formData.append(key, data[key]);
     }
+    UpdateProfile(formData).then(()=>setLoading(false))
     // AddEventTani(formData).then(()=>setLoading(false))
   };
 

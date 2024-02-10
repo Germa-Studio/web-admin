@@ -21,9 +21,10 @@ export default function Profil() {
   useEffect(()=> {
     GetDetailProfile().then((data) => {
       setData(data.data)
+      console.log(data)
     });
   }, [])
-  // console.log(data.data.tbl_akun.peran);
+  console.log(datas);
   return (
     <div>
       <div className="font-bold text-white mb-7">

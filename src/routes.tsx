@@ -75,6 +75,9 @@ import TokoTani from './page/tokoTani';
 import TambahTokoTani from './page/tokoTani/tambah';
 import DetailTokoTani from './page/tokoTani/detail';
 import EditTokoTani from './page/tokoTani/edit';
+import TableAkses from './page/kelolaUser/component/tableAkses';
+import HakAkses from './page/kelolaUser/component/hakAkses';
+import UbahAkses from './page/kelolaUser/ubahAkses';
 
 const menu = [
   {
@@ -527,6 +530,7 @@ const RoutesPath = () => {
           
             {/* // <Route path="/live-chat" element={<LiveChat />} /> */}
           <Route path="/verifikasi" element={<VerifikasiUser />} />
+          <Route path="/hak-akses/ubah" element={<UbahAkses />}/>
           {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
