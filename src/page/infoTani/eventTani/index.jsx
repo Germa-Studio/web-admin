@@ -1,5 +1,6 @@
 import MainCard from '@/components/MainCard';
 import InputCrud from '@/components/page/infoTani/IconCrud';
+import { useNavigate } from 'react-router-dom';
 import { DeleteEventTani, GetEventTani } from '@/infrastruture';
 import { Button, Card, Modal, Text } from '@mantine/core';
 import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
@@ -7,11 +8,12 @@ import LoadingAnimation from '../../../components/loading';
 import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
 import { FaBuilding } from 'react-icons/fa';
-import { IoMdPerson } from 'react-icons/io';
+import { IoMdListBox, IoMdPerson } from 'react-icons/io';
 // import { postLogActivity } from '../../../infrastucture/logActivity';
 import { setUser } from '../../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 function EventTani() {
   const dispatch = useDispatch();
@@ -133,7 +135,7 @@ function EventTani() {
                     Edit
                   </InputCrud>
                   {user?.peran === 'operator super admin' && (
-                    <InputCrud onClick={() => setModalDeleteData(item.id)} icon={<IconTrash />}>
+                    <InputCrud onClick={() => setModalDeleteData(d.id)} icon={<IconTrash />}>
                       Hapus
                     </InputCrud>
                   )}

@@ -87,7 +87,7 @@ const LogActivity = () => {
   useEffect(() => {
     getLogActivity(page, limit).then((data) => {
       setResp(data);
-      // console.log(data);
+      console.log('data', data);
     });
   }, [page, limit]);
 

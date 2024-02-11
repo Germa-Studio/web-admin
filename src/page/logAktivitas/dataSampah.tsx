@@ -87,7 +87,7 @@ const DataSampah = () => {
   useEffect(() => {
     getTrashActivity(page, limit).then((data) => {
       setResp(data);
-      console.log(data);
+      console.log('hehe', data);
     });
   }, [page, limit]);
 
