@@ -10,7 +10,7 @@ import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
 import { IoMdListBox } from 'react-icons/io';
 import { BiCategoryAlt } from 'react-icons/bi';
-import { postLogActivity } from '../../infrastucture/logActivity';
+// import { postLogActivity } from '../../infrastucture/logActivity';
 import { setUser } from '../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,12 +32,6 @@ const InfoTani = () => {
 
   const handleDeleteUser = (ids) => {
     DeleteInfoTani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'INFO',
-      detail_id: ids
-    });
   };
   const navigateToEdit = (itemId) => {
     history(`/info-tani/edit/${itemId}`, { state: { id: itemId } });

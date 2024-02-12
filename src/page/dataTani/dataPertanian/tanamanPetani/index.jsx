@@ -11,11 +11,9 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 // import { TPetani } from "../../../../types/petani";
 import { SearchPetani } from '../../../../infrastucture/searchApi';
-import { postLogActivity } from '../../../../infrastucture/logActivity';
-import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
+// import { postLogActivity } from '../../../../infrastucture/logActivity';
 // import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -82,7 +80,7 @@ export default function DetailRekapPetani() {
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
   const [petani, setPetani] = useState([]);
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.state.user);
   const fileInputRef = useRef();
   const location = useLocation();
@@ -91,11 +89,7 @@ export default function DetailRekapPetani() {
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
   useEffect(() => {
-    GetListTanaman(
-      page,
-      limit,
-      petani?.id
-    ).then((data) => {
+    GetListTanaman(page, limit, petani?.id).then((data) => {
       setResp(data);
       // setLoading(false);
     });
@@ -103,12 +97,6 @@ export default function DetailRekapPetani() {
 
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'TANAMAN',
-      detail_id: ids
-    });
     // delay 6 seconds
     setTimeout(() => {
       window.location.reload();
@@ -137,21 +125,21 @@ export default function DetailRekapPetani() {
                 </div>
               </Link>
               {user?.peran === 'operator super admin' && (
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
+                <button
+                  onClick={() => {
+                    setModalDeleteData(item?.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
               )}
             </div>
           )
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
 
   // const handleFilterChange = (e, column) => {
   //   setFilters((prevFilters) => ({
@@ -247,7 +235,13 @@ export default function DetailRekapPetani() {
             </Button>
           </div>
         </div>
-        <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
+        <Table
+          data={dataTable}
+          columns={columns}
+          withPaginationCount
+          withPaginationControl
+          exportUrl="/tanaman-petani/export"
+        />
       </div>
     </div>
   );

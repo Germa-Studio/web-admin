@@ -5,7 +5,7 @@ import TimeInput from '@/components/uiComponents/inputComponents/timeInput';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
 import { AddEventTani } from '@/infrastruture';
 import LoadingAnimation from '../../../components/loading';
-import { postLogActivity } from '../../../infrastucture/logActivity';
+
 function TambahEventTani() {
   const [namaKegiatan, setNamaKegiatan] = React.useState('');
   const [tanggalAcara, setTanggalAcara] = React.useState('');
@@ -32,12 +32,6 @@ function TambahEventTani() {
     }
     AddEventTani(formData).then(() => {
       setLoading(false);
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'CREATE',
-        type: 'EVENT',
-        detail_id: null
-      });
     });
   };
   return (

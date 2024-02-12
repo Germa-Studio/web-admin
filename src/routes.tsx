@@ -36,7 +36,8 @@ import {
   TambahLaporanAhir,
   EditPenyuluhan,
   VerifikasiUser,
-  DataSampah
+  DataSampah,
+  TambahPenyuluhanTani
 } from './page';
 import { clsx } from 'clsx';
 
@@ -309,7 +310,6 @@ const Path = () => {
   const user = useSelector((state: RootState) => state.state.user);
   const perans = user?.peran;
   const dispatch = useDispatch();
-  const [users, setUsers] = React.useState([]);
 
   const token = window.localStorage.getItem('token');
   const isAuthPage =
@@ -326,7 +326,6 @@ const Path = () => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(setUser(res.data.user));
-            setUsers(res.data.user);
           }
         })
         .catch((err) => {
@@ -336,6 +335,7 @@ const Path = () => {
             window.location.href = '/login';
           }
         });
+      // console.log('menu', menu, perans);
     }
   }, [token, isAuthPage, dispatch, isWebVidePage]);
   if (isAuthPage || isWebVidePage) return <RoutesPath />;
@@ -359,57 +359,65 @@ const Path = () => {
           </div>
           <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
-              {menu.map((item, index) => (
-                (item.list_roles.includes(perans ?? '')) && (
-                  <li key={index} className="divide-y divide-gray-500">
-                    {item.path ? (
-                      <a
-                        href={item.path}
-                        className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}>
-                        <Image src={item.icon} alt={item.name} w={24} />
-                        <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
-                          {item.name}
-                        </span>
-                      </a>
-                    ) : (
-                      <button
-                        className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}
-                        onClick={() => {
-                          if (activeMenu === item.id) setActiveMenu('');
-                          else setActiveMenu(item.id);
-                        }}>
-                        <Image src={item.icon} alt={item.name} w={24} />
-                        <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
-                          {item.name}
-                        </span>
-                      </button>
-                    )}
-          
-                    {activeMenu === item.id && (
-                      <ul className="divide-y divide-gray-500">
-                        {item.sub?.map((sub, index) => (
-                        (sub.list_sub_roles?.includes(perans ?? '')) && (
-                          <li key={index}>
-                            <a
-                              href={sub.path}
-                              className={clsx(
-                                subMenuClasses,
-                                activePage === 'bpup' && activeClasses
-                              )}>
-                              <Image src={sub.icon} alt={sub.name} width={24} />
-                              <span
-                                className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
-                                {sub.name}
-                              </span>
-                            </a>
-                          </li>
-                      )
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                )
-              ))}
+              {menu.map(
+                (item, index) =>
+                  item.list_roles.includes(perans ?? '') && (
+                    <li key={index} className="divide-y divide-gray-500">
+                      {item.path ? (
+                        <a
+                          href={item.path}
+                          className={clsx(
+                            mainMenuClasses,
+                            activePage === item.id && activeClasses
+                          )}>
+                          <Image src={item.icon} alt={item.name} w={24} />
+                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                            {item.name}
+                          </span>
+                        </a>
+                      ) : (
+                        <button
+                          className={clsx(mainMenuClasses, activePage === item.id && activeClasses)}
+                          onClick={() => {
+                            if (activeMenu === item.id) setActiveMenu('');
+                            else setActiveMenu(item.id);
+                          }}>
+                          <Image src={item.icon} alt={item.name} w={24} />
+                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                            {item.name}
+                          </span>
+                        </button>
+                      )}
+
+                      {activeMenu === item.id && (
+                        <ul className="divide-y divide-gray-500">
+                          {item.sub?.map(
+                            (sub, index) =>
+                              sub.list_sub_roles?.includes(perans ?? '') && (
+                                <li key={index}>
+                                  <a
+                                    href={sub.path}
+                                    className={clsx(
+                                      subMenuClasses,
+                                      activePage === 'bpup' && activeClasses
+                                    )}>
+                                    <Image src={sub.icon} alt={sub.name} width={24} />
+                                    <span
+                                      className={clsx(
+                                        textMenuClasses,
+                                        sidebarOpen ? 'block' : 'hidden'
+                                      )}>
+                                      {sub.name}
+                                    </span>
+                                  </a>
+                                </li>
+                              )
+                          )}
+                        </ul>
+                      )}
+                    </li>
+                  )
+              )}
             </ul>
           </div>
         </aside>
@@ -514,8 +522,6 @@ const Path = () => {
 };
 
 const RoutesPath = () => {
-  const userRole = useSelector((state: RootState) => state.state.user?.peran);
-
   return (
     <Router>
       <Routes>
@@ -527,8 +533,8 @@ const RoutesPath = () => {
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
           {/*if  user is operator, show this route else hide it*/}
-          
-            {/* // <Route path="/live-chat" element={<LiveChat />} /> */}
+
+          {/* // <Route path="/live-chat" element={<LiveChat />} /> */}
           <Route path="/verifikasi" element={<VerifikasiUser />} />
           <Route path="/hak-akses/ubah" element={<UbahAkses />}/>
           {/* <Route index element={<Dashboard />}></Route> */}
@@ -574,7 +580,7 @@ const RoutesPath = () => {
           <Route path="/toko-tani/:id" element={<DetailTokoTani />} />
           <Route path="/toko-tani/edit/:id" element={<EditTokoTani />} />
           {/* Data Penyuluh */}
-          <Route path="/data-penyuluh/tambah" element={<TambahTokoTani />} />
+          <Route path="/data-penyuluh/tambah" element={<TambahPenyuluhanTani />} />
           <Route path="/data-penyuluh/presensi-kehadiran" element={<PresensiKehadiran />} />
           <Route path="/data-penyuluh/jurnal-kegiatan" element={<JurnalKegiatan />} />
           <Route path="/data-penyuluh/jurnal-kegiatan/form" element={<FormJurnalKegiatan />} />

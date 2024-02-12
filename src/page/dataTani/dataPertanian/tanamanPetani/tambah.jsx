@@ -32,7 +32,7 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
-import { postLogActivity } from '../../../../infrastucture/logActivity';
+// import { postLogActivity } from '../../../../infrastucture/logActivity';
 import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -200,12 +200,6 @@ export default function TambahTanamanPetani() {
     // add window.history.push('/tanaman-petani')
     // AddTanamanPetani(formData).then(()=>{window.history.push('/tanaman-petani'), setLoading(false)});
     AddTanamanPetani(data).then(() => {
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'CREATE',
-        type: 'TANAMAN',
-        detail_id: null
-      });
       setLoading(false);
     });
   };

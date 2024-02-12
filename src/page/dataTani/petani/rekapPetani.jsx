@@ -11,7 +11,6 @@ import SearchInput from '../../../components/uiComponents/inputComponents/Search
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
-import { postLogActivity } from '../../../infrastucture/logActivity';
 
 import { setUser } from '../../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
@@ -109,12 +108,6 @@ const RekapPetani = () => {
   // };
   const handleDeleteUser = (ids) => {
     DeleteDaftarTani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'PETANI',
-      detail_id: ids
-    });
   };
   // const filteredData = datas.filter((item) => {
   //   return Object.keys(filters).every((key) => {

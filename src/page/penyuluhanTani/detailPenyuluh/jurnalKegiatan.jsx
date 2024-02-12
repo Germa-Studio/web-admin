@@ -25,15 +25,7 @@ function JurnalKegiatan() {
   const [id, setId] = useState();
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
-  // const history = useNavigate();
-  const handleCheckd = (e) => {
-    if (e == true) {
-      setChecekd(true);
-    } else {
-      setChecekd(false);
-    }
-    setId();
-  };
+
   const handleCheckdOne = (ids) => {
     if (id) {
       if (id != ids) {

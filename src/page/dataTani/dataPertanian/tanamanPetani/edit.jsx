@@ -24,8 +24,7 @@ import { SearchPetani } from '../../../../infrastucture/searchApi';
 import {
   GetListTanaman,
   GetTanamanPetaniById,
-  UpdateTanamanPetani,
-  DeleteTanamanPetani
+  UpdateTanamanPetani
 } from '../../../../infrastucture/index';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
@@ -38,7 +37,7 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
-import { postLogActivity } from '../../../../infrastucture/logActivity';
+// import { postLogActivity } from '../../../../infrastucture/logActivity';
 import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -207,14 +206,7 @@ export default function EditTanamanPetani() {
       });
     }
   }, [resp]);
-  const handleDeleteTanaman = (ids) => {
-    DeleteTanamanPetani(ids);
-    postLogActivity({
-      user_id: localStorage.getItem('user_id'),
-      activity: 'DELETE',
-      type: 'TANAMAN',
-      detail_id: ids
-    });
+  const handleDeleteTanaman = () => {
     // delay 6 seconds
     setTimeout(() => {
       window.location.reload();
@@ -245,12 +237,6 @@ export default function EditTanamanPetani() {
     // console.log(data);
     UpdateTanamanPetani(id, data).then(() => {
       setLoading(false);
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'EDIT',
-        type: 'TANAMAN',
-        detail_id: id
-      });
     });
     // window.reload()
     // add window reload

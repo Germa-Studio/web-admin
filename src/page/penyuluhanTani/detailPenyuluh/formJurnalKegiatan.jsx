@@ -101,8 +101,8 @@ const FormJurnalKegiatan = () => {
             onClick={(e) => handleSubmit(e)}>
             Simpan
           </Button>
-          <Button 
-            leftIcon={<IconX size="1rem" />} 
+          <Button
+            leftIcon={<IconX size="1rem" />}
             variant="outline"
             onClick={() => (window.location = '/data-penyuluh/jurnal-kegiatan')}>
             Batalkan

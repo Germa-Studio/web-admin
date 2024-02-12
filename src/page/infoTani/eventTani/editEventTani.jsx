@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import InputImage from '@/components/inputImage';
-import MainCard from '@/components/MainCard';
-import TimeInput from '@/components/uiComponents/inputComponents/timeInputEdit';
+import MainCard from '@/components/inputImage';
 import TextInput from '@/components/uiComponents/inputComponents/textInput';
+import TimeInput from '@/components/uiComponents/inputComponents/timeInputEdit';
 import { GetEventTaniById, updateEventTani } from '@/infrastruture';
 import { useParams } from 'react-router-dom';
 import LoadingAnimation from '../../../components/loading';
-import { postLogActivity } from '../../../infrastucture/logActivity';
+
 function EditEventTani() {
   const [namaKegiatan, setNamaKegiatan] = useState('');
   const [tanggalAcara, setTanggalAcara] = useState('');
@@ -50,12 +50,6 @@ function EditEventTani() {
     }
     updateEventTani(id, formData).then(() => {
       setisLoading(false);
-      postLogActivity({
-        user_id: localStorage.getItem('user_id'),
-        activity: 'EDIT',
-        type: 'EVENT',
-        detail_id: id
-      });
     });
   };
   return (

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import InputImage from '@/components/inputImage';
 import { GetInfoTaniById, updateInfoTani } from '@/infrastruture';
 import LoadingAnimation from '../../components/loading';
-import { postLogActivity } from '../../infrastucture/logActivity';
+
 const TambahInfoTani = () => {
   const [judul, setJudul] = useState('');
   const [kategori, setKategori] = useState('');
@@ -52,12 +52,6 @@ const TambahInfoTani = () => {
       }
       updateInfoTani(id, formData).then(() => {
         setLoading(false);
-        postLogActivity({
-          user_id: localStorage.getItem('user_id'),
-          activity: 'EDIT',
-          type: 'INFO',
-          detail_id: id
-        });
       });
     } else {
       window.location = '/info-tani';
