@@ -307,7 +307,6 @@ const Path = () => {
   const user = useSelector((state: RootState) => state.state.user);
   const perans = user?.peran;
   const dispatch = useDispatch();
-  const [users, setUsers] = React.useState([]);
 
   const token = window.localStorage.getItem('token');
   const isAuthPage =
@@ -324,7 +323,6 @@ const Path = () => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(setUser(res.data.user));
-            setUsers(res.data.user);
           }
         })
         .catch((err) => {
@@ -521,8 +519,6 @@ const Path = () => {
 };
 
 const RoutesPath = () => {
-  const userRole = useSelector((state: RootState) => state.state.user?.peran);
-
   return (
     <Router>
       <Routes>

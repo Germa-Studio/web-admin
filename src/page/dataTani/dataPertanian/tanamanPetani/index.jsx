@@ -12,9 +12,8 @@ import { MdDeleteOutline } from 'react-icons/md';
 // import { TPetani } from "../../../../types/petani";
 import { SearchPetani } from '../../../../infrastucture/searchApi';
 // import { postLogActivity } from '../../../../infrastucture/logActivity';
-import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -81,7 +80,7 @@ export default function DetailRekapPetani() {
   const [dataTable, setDataTable] = useState();
   const [resp, setResp] = useState();
   const [petani, setPetani] = useState([]);
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.state.user);
   const fileInputRef = useRef();
   const location = useLocation();
@@ -140,7 +139,7 @@ export default function DetailRekapPetani() {
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
 
   // const handleFilterChange = (e, column) => {
   //   setFilters((prevFilters) => ({
@@ -236,7 +235,13 @@ export default function DetailRekapPetani() {
             </Button>
           </div>
         </div>
-        <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
+        <Table
+          data={dataTable}
+          columns={columns}
+          withPaginationCount
+          withPaginationControl
+          exportUrl="/tanaman-petani/export"
+        />
       </div>
     </div>
   );
