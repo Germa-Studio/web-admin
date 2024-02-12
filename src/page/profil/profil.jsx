@@ -1,10 +1,11 @@
 import { clsx } from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DataInduk from './ubahDataInduk';
 import DataProfil from './ubahDataProfil';
 import DataKontak from './ubahDataKontak';
 import DataPassword from './ubahDataPassword';
 import DataBinaan from './ubahDataBinaan';
+import { GetDetailProfile } from '../../infrastucture';
 
 export default function Profil() {
   const menu =
@@ -15,6 +16,16 @@ export default function Profil() {
   const handleClick = (e) => {
     setFilter(e.target.value);
   };
+
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    GetDetailProfile().then((data) => {
+      setData(data);
+    });
+    console.log(data)
+  }, []);
+
   return (
     <div>
       <div className="font-bold text-white mb-7">

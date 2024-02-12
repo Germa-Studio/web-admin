@@ -62,7 +62,7 @@ export const GetProfile = async () => {
 };
 export const GetDetailProfile = async () => {
   const response = await Api.get('/auth/detailprofile');
-  return response;
+  return response.data;
 };
 export const UpdateProfile = async (data) => {
   try {

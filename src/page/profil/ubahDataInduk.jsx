@@ -1,13 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NumberInput from '../../components/uiComponents/inputComponents/numberInput';
 import LoadingAnimation from '../../components/loading';
 import { RiContactsBook2Line } from 'react-icons/ri';
 import { GoNumber } from 'react-icons/go';
+import { GetDetailProfile } from '../../infrastucture';
 
 export default function DataInduk() {
   const [nip, setNip] = useState('');
   const [nik, setNik] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const [data, setData] = useState()
+
+  // useEffect(() => {
+  //   GetDetailProfile().then((data) => {
+  //     setData(data);
+  //   });
+  //   console.log(data.data)
+  // }, []);
 
   const handleSubmit = () => {
     setLoading(true);
