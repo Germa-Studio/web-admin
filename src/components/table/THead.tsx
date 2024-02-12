@@ -41,22 +41,9 @@ export default function THead<T extends RowData>({
               {header.isPlaceholder ? null : (
                 <div
                   className={clsx(
-                    'relative flex items-center gap-2 py-1',
-                    !omitSort && header.column.getCanSort() ? 'cursor-pointer select-none' : ''
+                    'relative flex items-center gap-2 py-1'
                   )}
-                  onClick={() => {
-                    if (omitSort) return;
-                    if (['no', 'actions'].includes(header.column.id)) return;
-                    navigate(
-                      `${
-                        location.pathname
-                      }?page=${1}&limit=${perPage}&search=${searchQuery}&sortBy=${
-                        header.column.id
-                      }&sortType=${
-                        sortKey === header.column.id ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc'
-                      }`
-                    );
-                  }}>
+                  >
                   <p className="text-sm" color="white">
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </p>

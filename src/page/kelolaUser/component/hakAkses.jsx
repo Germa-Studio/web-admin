@@ -1,6 +1,5 @@
-
 import { useState } from "react"
-import SearchInput from "../../../components/uiComponents/inputComponents/SearchInput"
+import SearchInput from "../../../components/uiComponents/inputComponents/searchInput"
 import TableAkses from "./tableAkses"
 
 export default function HakAkses(){
@@ -605,4 +604,3 @@ export default function HakAkses(){
         
     )
 }
-

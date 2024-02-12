@@ -4,6 +4,7 @@ import LoadingAnimation from '../../components/loading';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { CgPassword } from 'react-icons/cg';
+import { UpdateProfile } from '../../infrastucture';
 
 export default function DataPassword() {
   const [lama, setLama] = useState('');
@@ -14,7 +15,7 @@ export default function DataPassword() {
 
   const handleChange = (e) => {
     setConfirm(e.target.value);
-    if (lama != baru) setSalah(true);
+    if (baru != confirm) setSalah(false);
   };
   const handleSubmit = () => {
     setLoading(true);
@@ -26,6 +27,7 @@ export default function DataPassword() {
     for (const key in data) {
       formData.append(key, data[key]);
     }
+    UpdateProfile(formData).then(()=>setLoading(false))
     // AddEventTani(formData).then(()=>setLoading(false))
   };
 

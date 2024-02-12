@@ -67,7 +67,7 @@ export const GetDetailProfile = async () => {
 export const UpdateProfile = async (data) => {
   try {
     const response = await Api.put('/auth/updateprofile', data, headers);
-    SweatAlert(String(response.data.message), 'success');
+    SweatAlert(String(response.data.message), 'success', 'reload');
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }
@@ -76,6 +76,17 @@ export const UpdateProfile = async (data) => {
 export const Logout = () => {
   localStorage.clear();
   window.location = '/login';
+};
+
+{/* @description Routes for Hak Akses */}
+
+export const GetPeran = async (page, limit) => {
+  try {
+    const response = await Api.get(`/peran?page=${page}&limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
 };
 
 // cekNik
@@ -237,7 +248,6 @@ export const GetOpsiPenyuluh = async () => {
 };
 
 export const GetDaftarTani = async (page, limit, verified) => {
-  console.log(verified);
   try {
     const response = await Api.get(`/daftar-tani?page=${page}&limit=${limit}&verified=${verified}`);
     return response.data;

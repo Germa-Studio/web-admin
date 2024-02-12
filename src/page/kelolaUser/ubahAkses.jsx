@@ -6,7 +6,7 @@ import Table from '@/components/table/Table';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 // import LoadingAnimation from '../../../components/loadingSession';
 import { Link, useLocation } from 'react-router-dom';
-import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
+import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
 import TextInput from '../../components/uiComponents/inputComponents/textInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
@@ -52,18 +52,18 @@ const columns = [
 ];
 
 export default function UbahAkses(){
-    const [modalDeleteData, setModalDeleteData] = useState(false);
-    const [modalKelolaData, setModalKelolaData] = useState(false);
+  const [modalDeleteData, setModalDeleteData] = useState(false);
+  const [modalKelolaData, setModalKelolaData] = useState(false);
   const fileInputRef = useRef();
   const [filter, setFilter] = useState('role')
   const location = useLocation();
   const chooseBase = 'rounded-ss-xl rounded-se-xl w-[50%] text-center h-fit py-2 w-[100%] min-w-8 font-bold text-white transition-all bg-orange-primary hover:bg-green-sidebar-hover duration-200 ease-in-out'
-const chooseActive = 'rounded-ss-xl rounded-se-xl w-[50%] text-center h-12 w-[100%] min-w-8 font-bold text-white transition-all bg-[#307B28] hover:bg-green-sidebar-hover duration-200 ease-in-out'
+  const chooseActive = 'rounded-ss-xl rounded-se-xl w-[50%] text-center h-12 w-[100%] min-w-8 font-bold text-white transition-all bg-[#307B28] hover:bg-green-sidebar-hover duration-200 ease-in-out'
 
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
-  const limit = searchParams.get('limit') ?? 10;
+  const limit = searchParams.get('limit') ?? 10
 
   const data = {data: [
     {
@@ -238,18 +238,13 @@ useEffect(() => {
                         value={data.data.nama}
                         disabled
                     />
-                    <select
+                    <TextInput
                         id="akses"
                         name="akses"
                         label="Akses"
                         value={data.data.akses}
-                        onChange={setAkses}>
-                        <option value="publish">Petani</option>
-                        <option value="draft">Penyuluh</option>
-                        <option value="publish">Operator Poktan</option>
-                        <option value="draft">Operator Admin</option>
-                        <option value="draft">Operator Super Admin</option>
-                    </select>
+                        onChange={setAkses}
+                    />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
                     <Button

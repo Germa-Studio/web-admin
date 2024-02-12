@@ -1,6 +1,3 @@
-
-
-
 export default function TableAkses(props){
     const {datas,user} = props
     return(

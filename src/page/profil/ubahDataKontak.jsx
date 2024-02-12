@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NumberInput from '../../components/uiComponents/inputComponents/numberInput';
 import EmailInput from '../../components/uiComponents/inputComponents/emailInput';
 import LoadingAnimation from '../../components/loading';
 import { FaWhatsapp } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
+import { UpdateProfile } from '../../infrastucture';
 
-export default function DataKontak() {
+export default function DataKontak({data}) {
   const [whatsapp, setWhatsapp] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if(data){
+      setEmail(data.data.email);
+      setWhatsapp(data.data.noTelp);
+    }
+  },[data]);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -20,6 +28,7 @@ export default function DataKontak() {
     for (const key in data) {
       formData.append(key, data[key]);
     }
+    UpdateProfile(formData).then(()=>setLoading(false))
     // AddEventTani(formData).then(()=>setLoading(false))
   };
 

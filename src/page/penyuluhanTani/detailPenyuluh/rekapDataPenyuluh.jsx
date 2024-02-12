@@ -127,7 +127,7 @@ const RekapDataPenyuluh = () => {
           no: resp.from + index,
           actions: (
             <div className="flex gap-4">
-              <Link to={`/data-penyuluh/${item.id}`}>
+              <Link to={`/data-penyuluh/detail/${item.id}`}>
                 <div className="flex h-7 w-7 items-center justify-center bg-green-500">
                   <IoEyeOutline className="h-6 w-6 text-white" />
                 </div>
@@ -186,7 +186,7 @@ const RekapDataPenyuluh = () => {
     if (!event.target.files) return;
 
     const file = event.target.files[0];
-    console.log(file);
+    // console.log(file);
     UploadDataPenyuluh(file).then(() => {
       window.location.reload();
     });
