@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import {
+    Button,
+  } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -6,9 +9,10 @@ import InputImage from '@/components/inputImage';
 import { updatePenyuluhById, getPenyuluhById } from '@/infrastruture';
 import { MultiSelect } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import LoadingAnimation from '../../components/loading';
-const EditPenyuluhanTani = () => {
+const DetailPenyuluh = () => {
+  const navigate = useNavigate();
   const [NIP, setNIP] = useState('');
   const [NoWa, setNoWa] = useState('');
   const [nama, setNama] = useState('');
@@ -30,31 +34,30 @@ const EditPenyuluhanTani = () => {
   const [idKecamatanBinaan, setIdKecamananBinaan] = useState('');
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  console.log(foto)
-  const handleSubmit = (e) => {
-    setLoading(true);
-    e.preventDefault();
-    const data = {
-      NIP,
-      NoWa,
-      email,
-      nama,
-      password,
-      kecamatan,
-      desa,
-      foto,
-      namaProduct,
-      desaBinaan: desaBinaan.join(', '),
-      alamat,
-      kecamatanBinaan
-    };
-    const formData = new FormData();
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-    // console.log(formData)
-    updatePenyuluhById(formData, id).then(() => setLoading(false));
-  };
+//   const handleSubmit = (e) => {
+//     setLoading(true);
+//     e.preventDefault();
+//     const data = {
+//       NIP,
+//       NoWa,
+//       email,
+//       nama,
+//       password,
+//       kecamatan,
+//       desa,
+//       foto,
+//       namaProduct,
+//       desaBinaan: desaBinaan.join(', '),
+//       alamat,
+//       kecamatanBinaan
+//     };
+//     const formData = new FormData();
+//     for (const key in data) {
+//       formData.append(key, data[key]);
+//     }
+//     // console.log(formData)
+//     updatePenyuluhById(formData, id).then(() => setLoading(false));
+//   };
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
@@ -78,7 +81,6 @@ const EditPenyuluhanTani = () => {
         setAlamat(data?.alamat);
         setNamaProduct(data?.namaProduct);
         setDesaBinaan(data?.desaBinaan?.split(', '));
-        console.log(data)
       });
     }
   }, [id]);
@@ -153,6 +155,7 @@ const EditPenyuluhanTani = () => {
               imageActive={foto} 
               onChange={(e) => setFoto(e)}
               title="Foto Profil"
+              isDisabled
             />
           </div>
           <div className="grid md:grid-cols-2 md:gap-6 mt-3">
@@ -166,6 +169,7 @@ const EditPenyuluhanTani = () => {
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
+                disabled
               />
               <label
                 htmlFor="NIP"
@@ -183,6 +187,7 @@ const EditPenyuluhanTani = () => {
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
+                disabled
               />
               <label
                 htmlFor="NoWa"
@@ -202,6 +207,7 @@ const EditPenyuluhanTani = () => {
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
+                disabled
               />
               <label
                 htmlFor="namaPenyuluh"
@@ -210,7 +216,7 @@ const EditPenyuluhanTani = () => {
                 <strong>Nama</strong> (Contoh: Subagyo Joyo Kumuso)
               </label>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
+            {/* <div className="relative z-0 w-full mb-6 group">
               <input
                 type="passwordPenyuluh"
                 name="passwordPenyuluh"
@@ -225,7 +231,7 @@ const EditPenyuluhanTani = () => {
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 <strong>Password</strong>
               </label>
-            </div>
+            </div> */}
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
@@ -233,7 +239,8 @@ const EditPenyuluhanTani = () => {
                 id="kecamatan"
                 value={kecamatanActive}
                 onChange={(e) => handleSelectKecamatan(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown">
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
+                disabled>
                 {daftarKecamatan?.map((item, i) => (
                   <option value={`${item.nama}-${item.id}`} key={i}>
                     {item.nama}
@@ -251,7 +258,8 @@ const EditPenyuluhanTani = () => {
                 id="desa"
                 value={desa}
                 onChange={(e) => setDesa(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown">
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown" 
+                disabled>
                 {dafatarDesa?.map((item, i) => (
                   <option value={item.nama} key={i}>
                     {item.nama}
@@ -274,6 +282,7 @@ const EditPenyuluhanTani = () => {
               onChange={(e) => setAlamat(e.target.value)}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              disabled
             />
             <label
               htmlFor="alamat"
@@ -291,6 +300,7 @@ const EditPenyuluhanTani = () => {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              disabled
             />
             <label
               htmlFor="email"
@@ -310,7 +320,8 @@ const EditPenyuluhanTani = () => {
                 name="kecamatan"
                 value={kecamatanBinaanActive}
                 onChange={(e) => handleSelectKecamatanBinaan(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown">
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown" 
+                disabled>
                 {/* <option value="">--Silahkan Pilih Kecamatan--</option> */}
                 {daftarKecamatan?.map((item, i) => (
                   <option value={`${item.nama}-${item.id}`} key={i}>
@@ -330,6 +341,7 @@ const EditPenyuluhanTani = () => {
                 placeholder="Pilih desa binaan"
                 value={desaBinaan}
                 onChange={setDesaBinaan}
+                disabled
               />
             </div>
           </div>
@@ -342,6 +354,7 @@ const EditPenyuluhanTani = () => {
               onChange={(e) => setNamaProduct(e.target.value)}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              disabled
             />
             <label
               htmlFor="namaProduct"
@@ -350,18 +363,20 @@ const EditPenyuluhanTani = () => {
             </label>
           </div>
           <div className="flex space-x-4 justify-end">
-            <button
+            {/* <button
               type="submit"
               className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-orange-800">
               <FontAwesomeIcon icon={faSave} className="mr-2" />
               Simpan
-            </button>
-            <button
-              onClick={handleClick}
-              className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-orange-800">
-              <FontAwesomeIcon icon={faCancel} className="mr-2" />
-              Batalkan
-            </button>
+            </button> */}
+            <Button
+              type="button"
+              className="bg-blue-500"
+              onClick={() => {
+                navigate('/data-penyuluh/rekap-penyuluh');
+              }}>
+              Kembali
+            </Button>
           </div>
         </form>
       </div>
@@ -369,4 +384,4 @@ const EditPenyuluhanTani = () => {
   );
 };
 
-export default EditPenyuluhanTani;
+export default DetailPenyuluh;

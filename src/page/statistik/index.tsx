@@ -151,7 +151,7 @@ export default function Index() {
                   </div>
                 </Link>
               )}
-              {user?.peran !== 'penyuluh' && (
+              {user?.peran !== 'petani' && (
                 <Link to={`/statistik/${item.id}/realisasi`}>
                   <div className="flex h-7 w-7 items-center justify-center bg-gray-500">
                     <FaCheckDouble className="h-[18px] w-[18px] text-white" />
