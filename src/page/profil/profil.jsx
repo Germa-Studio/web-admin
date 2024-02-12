@@ -1,5 +1,6 @@
 import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DataInduk from './ubahDataInduk';
 import DataProfil from './ubahDataProfil';
 import DataKontak from './ubahDataKontak';
