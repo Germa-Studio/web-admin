@@ -9,7 +9,7 @@ import {
   getTrashActivity,
   restoreTrashActivity
 } from '../../infrastucture/logActivity';
-import { MdDeleteOutline, MdRestoreFromTrash } from 'react-icons/md';
+import { MdDeleteOutline, MdOutlineRestore } from 'react-icons/md';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }, { title: 'Data Sampah' }].map(
   (item, index) => (
@@ -47,7 +47,7 @@ const columns = [
   },
   {
     accessorKey: 'actions',
-    header: 'Date',
+    header: 'Action',
     cell: (props) => props.row.original.actions
   }
 ];
@@ -114,20 +114,20 @@ const DataSampah = () => {
               <div className="flex gap-4">
                 <button
                   onClick={() => {
+                    setModalRestoreData(true);
+                    setSelectedId(item.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-blue-500">
+                    <MdOutlineRestore className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
                     setModalDeleteData(true);
                     setSelectedId(item.id);
                   }}>
                   <div className="flex h-7 w-7 items-center justify-center bg-red-500">
                     <MdDeleteOutline className="h-6 w-6 text-white" />
-                  </div>
-                </button>
-                <button
-                  onClick={() => {
-                    setModalRestoreData(true);
-                    setSelectedId(item.id);
-                  }}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-blue-500">
-                    <MdRestoreFromTrash className="h-6 w-6 text-white" />
                   </div>
                 </button>
               </div>
