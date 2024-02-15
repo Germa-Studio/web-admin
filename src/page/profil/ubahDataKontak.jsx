@@ -13,8 +13,8 @@ export default function DataKontak({data}) {
 
   useEffect(() => {
     if(data){
-      setEmail(data.data.email);
-      setWhatsapp(data.data.noTelp);
+      setEmail(data?.email);
+      setWhatsapp(data?.noTelp);
     }
   },[data]);
 
