@@ -54,6 +54,10 @@ const activityType = [
   {
     type: 'DELETE',
     message: 'Menghapus data '
+  },
+  {
+    type: 'DELETE PERMANENT',
+    message: 'Menghapus permanen data '
   }
 ];
 
@@ -102,12 +106,17 @@ const LogActivity = () => {
           const msg2 = itemDetailArr[1]
             ? itemDetailFirst + ' dengan id: ' + itemDetailArr[itemDetailArr.length - 1]
             : itemDetailFirst + '';
+
+          const dateArr = item.createdAt.split('T');
+          const date = dateArr[0];
+          const time = dateArr[1].split('.')[0];
+
           return {
             no: index + 1,
             nama: item.tbl_akun.nama,
             role: item.tbl_akun.peran,
             aktivitas: msg + msg2,
-            date: item.createdAt.split('T')[0]
+            date: `${date} ${time}`
           };
         })
       });
