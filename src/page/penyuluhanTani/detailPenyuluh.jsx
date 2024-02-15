@@ -33,6 +33,7 @@ const DetailPenyuluh = () => {
   const [idKecamatan, setIdKecamanan] = useState('');
   const [idKecamatanBinaan, setIdKecamananBinaan] = useState('');
   const [loading, setLoading] = useState(true);
+  const [kelompokData, setKelompokData] = useState([]);
   const { id } = useParams();
 //   const handleSubmit = (e) => {
 //     setLoading(true);
@@ -67,6 +68,7 @@ const DetailPenyuluh = () => {
     if (id) {
       getPenyuluhById(id).then((item) => {
         const data = item?.dataDaftarPenyuluh;
+        console.log(data);
         setLoading(false);
         setNIP(data?.nik);
         setNoWa(data?.noTelp);
@@ -81,9 +83,12 @@ const DetailPenyuluh = () => {
         setAlamat(data?.alamat);
         setNamaProduct(data?.namaProduct);
         setDesaBinaan(data?.desaBinaan?.split(', '));
+        setKelompokData(data?.kelompoks);
+        // console.log(item);
       });
     }
   }, [id]);
+  console.log(kelompokData);
   const handleSelectKecamatan = (e) => {
     const id = e?.split('-')[1];
     const nama = e?.split('-')[0];
@@ -361,6 +366,21 @@ const DetailPenyuluh = () => {
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               <strong>Nama Produk</strong> (Contoh: SiKetan Hijau)
             </label>
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <label
+              htmlFor="underline_select"
+              className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
+              <strong>Kelompok: </strong>
+            </label>
+            <div >
+              {kelompokData.map((kelompok, index) => (
+                <span key={kelompok.id}>
+                  {kelompok.namaKelompok} - {kelompok.gapoktan} - {kelompok.desa} - {kelompok.kecamatan}
+                  {index !== kelompokData.length - 1 && ' ; '}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="flex space-x-4 justify-end">
             {/* <button
