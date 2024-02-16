@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCancel, faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from '@/components/inputImage';
-import { AddPenyuluh } from '@/infrastruture';
+import { AddPenyuluh, GetKelompok } from '@/infrastruture';
 import { MultiSelect } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
 import Loading from '../../components/loading';
@@ -26,6 +26,9 @@ const TambahPenyuluhanTani = () => {
   const [kecamatanActive, setKecamatanActive] = useState('');
   const [kecamatanBinaanActive, setKecamatanBinaanActive] = useState('');
   const [loading, setLoading] = useState(false);
+  const [kelompok, setKelompok] = useState([]);
+  const [selectedKelompok, setSelectedKelompok] = useState([]); // State to hold selected kelompok
+  const [selectedKelompokIds, setSelectedKelompokIds] = useState([]);
 
   const handleSubmit = (e) => {
     setLoading(true);
@@ -41,6 +44,7 @@ const TambahPenyuluhanTani = () => {
       foto,
       namaProduct,
       desaBinaan: desaBinaan.join(', '),
+      selectedKelompokIds: selectedKelompokIds.join(', '),
       alamat,
       kecamatanBinaan
     };
@@ -54,6 +58,7 @@ const TambahPenyuluhanTani = () => {
   // create function to gobackParent
   // const goBackParent = () => window.history.back();
 
+  
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
@@ -82,6 +87,25 @@ const TambahPenyuluhanTani = () => {
       setDafatarDesaBinaan(dataaa);
     });
   };
+  
+  useEffect(() => {
+    GetKelompok().then((data) => {
+      if (data && typeof data.dataKelompok === 'object') {
+        // Get kelompok options from data
+        const kelompokOptions = Object.values(data.dataKelompok).map((item) => ({
+          value: item.id.toString(), // Convert id to string
+          label: `${item.namaKelompok} - ${item.desa}, ${item.kecamatan}`, // Combine label
+          kecamatan: item.kecamatan.toString(), // Convert kecamatan to string
+        }));
+  
+        // Filter kelompok options based on kecamatanBinaan
+        const filteredKelompokOptions = kelompokOptions.filter(option => option.kecamatan === kecamatanBinaan.toString());
+  
+        // Set filtered kelompok options as state
+        setKelompok(filteredKelompokOptions);
+      }
+    });
+  }, [kecamatanBinaan]);
 
   return (
     <div className="px-10 md:px-40 py-10">
@@ -296,6 +320,17 @@ const TambahPenyuluhanTani = () => {
                 {' '}
                 <strong>Nama Produk</strong> (Contoh: Beras Merah)
               </label>
+            </div>
+            <div className="relative z-0 w-full mb-6 group">
+              <label htmlFor="kelompok" className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
+                <strong>Select Kelompok:</strong>
+              </label>
+              <MultiSelect
+                data={kelompok}
+                placeholder="Select kelompok"
+                value={selectedKelompokIds} // Pass selectedKelompokIds as value
+                onChange={setSelectedKelompokIds} // Update selectedKelompokIds on change
+              />
             </div>
           </div>
           <div className="flex space-x-4 justify-end">

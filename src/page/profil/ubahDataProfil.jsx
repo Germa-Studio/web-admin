@@ -20,12 +20,12 @@ export default function DataProfil({data}) {
 
   useEffect(()=>{
     if(data){
-      setProfileData(data.data);
-      setNama(data.data?.nama);
-      setKecamatan(data?.data.kecamatan);
-      setDesa(data.data?.desa);
-      setAlamat(data.data?.alamat);
-      setFotoProfil(data.data?.foto)
+      setProfileData(data);
+      setNama(data?.nama);
+      setKecamatan(data?.kecamatan);
+      setDesa(data?.desa);
+      setAlamat(data?.alamat);
+      setFotoProfil(data?.foto)
     }
   }, [data])
   const handleSubmit = (e) => {

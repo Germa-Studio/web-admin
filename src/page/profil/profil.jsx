@@ -21,10 +21,11 @@ export default function Profil() {
   useEffect(()=> {
     GetDetailProfile().then((data) => {
       setData(data.data)
-      console.log(data)
+      // console.log(data)
     });
   }, [])
-  console.log(datas);
+  // console.log(datas);
+  // console.log(datas);
   return (
     <div>
       <div className="font-bold text-white mb-7">

@@ -13,13 +13,13 @@ export default function DataInduk({data}) {
 
   useEffect(()=>{
     if (data){
-      setIndukData(data.data);
-      setNokk(data.data?.nkk);
-      setNik(data.data?.nik);
+      setIndukData(data);
+      setNokk(data?.nkk);
+      setNik(data?.nik);
     }
     // console.log(data.data)
   }, [data])
-  // console.log(indukData)
+  console.log(indukData)
   const handleSubmit = () => {
     setLoading(true);
     const data = {

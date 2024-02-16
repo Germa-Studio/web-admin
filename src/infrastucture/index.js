@@ -107,6 +107,17 @@ export const CekNiP = async (data) => {
   }
 };
 
+{/* @description All about Kelompok*/}
+export const GetKelompok = async () =>{
+  try {
+    const response = await Api.get('/kelompok');
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+}
+
+
 // data tani
 export const DaftarTaniAdd = async (data) => {
   try {
@@ -645,8 +656,15 @@ export const getPenyuluhById = async (id) => {
     const response = await Api.get(`/daftar-penyuluh/${id}`);
     return response.data;
   } catch (error) {
-    SweatAlert(String(error.response.data.message), 'error');
-    throw new Error('error');
+    if (error.response && error.response.data && error.response.data.message) {
+      // Display error message using SweatAlert or any other method
+      SweatAlert(String(error.response.data.message), 'error');
+    } else {
+      // Handle generic error
+      console.error('An error occurred while fetching penyuluh by ID:', error);
+      SweatAlert('An error occurred while fetching penyuluh.', 'error');
+    }
+    throw error; // Rethrow the error to propagate it further if needed
   }
 };
 export const updatePenyuluhById = async (payload, id) => {
