@@ -8,6 +8,7 @@ import { MultiSelect } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
 import { useParams } from 'react-router-dom';
 import LoadingAnimation from '../../components/loading';
+import { GetKelompok } from '../../infrastucture';
 const EditPenyuluhanTani = () => {
   const [NIP, setNIP] = useState('');
   const [NoWa, setNoWa] = useState('');
@@ -29,8 +30,11 @@ const EditPenyuluhanTani = () => {
   const [idKecamatan, setIdKecamanan] = useState('');
   const [idKecamatanBinaan, setIdKecamananBinaan] = useState('');
   const [loading, setLoading] = useState(true);
+  const [kelompok, setKelompok] = useState([]);
+  const [selectedKelompokIds, setSelectedKelompokIds] = useState([]);
+
   const { id } = useParams();
-  console.log(foto)
+
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -60,10 +64,12 @@ const EditPenyuluhanTani = () => {
       setDaftarKecamatan(data.kecamatan);
     });
   }, []);
+
   useEffect(() => {
     if (id) {
       getPenyuluhById(id).then((item) => {
         const data = item?.dataDaftarPenyuluh;
+        console.log({ data });
         setLoading(false);
         setNIP(data?.nik);
         setNoWa(data?.noTelp);
@@ -74,14 +80,16 @@ const EditPenyuluhanTani = () => {
         setKecamatan(data?.kecamatan);
         setKecamatanBinaan(data?.kecamatanBinaan);
         // setDesa(data?.desa)
-        setFoto(data?.foto)
+        setFoto(data?.foto);
         setAlamat(data?.alamat);
         setNamaProduct(data?.namaProduct);
         setDesaBinaan(data?.desaBinaan?.split(', '));
-        console.log(data)
+
+        setSelectedKelompokIds(data?.kelompoks.map((kelompok) => kelompok.id.toString()));
       });
     }
   }, [id]);
+
   const handleSelectKecamatan = (e) => {
     const id = e?.split('-')[1];
     const nama = e?.split('-')[0];
@@ -91,6 +99,7 @@ const EditPenyuluhanTani = () => {
       setDafatarDesa(data.kelurahan);
     });
   };
+
   const handleSelectKecamatanBinaan = (e) => {
     const id = e?.split('-')[1];
     const nama = e?.split('-')[0];
@@ -103,6 +112,7 @@ const EditPenyuluhanTani = () => {
       setDafatarDesaBinaan(dataaa);
     });
   };
+
   useEffect(() => {
     if (daftarKecamatan && kecamatan && !kecamatanActive) {
       const filteredData = daftarKecamatan?.filter((item) => {
@@ -114,9 +124,11 @@ const EditPenyuluhanTani = () => {
       setKecamatanActive(kecamatanActivate);
     }
   }, [daftarKecamatan, kecamatan, kecamatanActive]);
+
   useEffect(() => {
     fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
   }, [idKecamatan]);
+
   useEffect(() => {
     if (daftarKecamatan && kecamatanBinaan && !kecamatanBinaanActive) {
       const filteredData = daftarKecamatan?.filter((item) => {
@@ -128,6 +140,7 @@ const EditPenyuluhanTani = () => {
       setKecamatanBinaanActive(kecamatanActivate);
     }
   }, [daftarKecamatan, kecamatanBinaan, kecamatanBinaanActive]);
+
   useEffect(() => {
     if (idKecamatanBinaan) {
       fecthDesa(idKecamatanBinaan).then((data) => {
@@ -138,6 +151,28 @@ const EditPenyuluhanTani = () => {
       });
     }
   }, [idKecamatanBinaan]);
+
+  useEffect(() => {
+    GetKelompok().then((data) => {
+      if (data && typeof data.dataKelompok === 'object') {
+        // Get kelompok options from data
+        const kelompokOptions = Object.values(data.dataKelompok).map((item) => ({
+          value: item.id.toString(), // Convert id to string
+          label: `${item.namaKelompok} - ${item.desa}, ${item.kecamatan}`, // Combine label
+          kecamatan: item.kecamatan.toString() // Convert kecamatan to string
+        }));
+
+        // Filter kelompok options based on kecamatanBinaan
+        const filteredKelompokOptions = kelompokOptions.filter(
+          (option) => option.kecamatan === kecamatanBinaan.toString()
+        );
+
+        // Set filtered kelompok options as state
+        setKelompok(filteredKelompokOptions);
+      }
+    });
+  }, [kecamatanBinaan]);
+
   const handleClick = () => {
     window.location.href = '/data-penyuluh/rekap-penyuluh';
   };
@@ -150,7 +185,7 @@ const EditPenyuluhanTani = () => {
             <InputImage
               id="foto"
               name="foto"
-              imageActive={foto} 
+              imageActive={foto}
               onChange={(e) => setFoto(e)}
               title="Foto Profil"
             />
@@ -226,8 +261,6 @@ const EditPenyuluhanTani = () => {
                 <strong>Password</strong>
               </label>
             </div>
-          </div>
-          <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <select
                 id="kecamatan"
@@ -332,22 +365,35 @@ const EditPenyuluhanTani = () => {
                 onChange={setDesaBinaan}
               />
             </div>
-          </div>
-          <div className="relative z-0 w-[49%] mb-6 group">
-            <input
-              type="text"
-              name="namaProduct"
-              id="namaProduct"
-              value={namaProduct}
-              onChange={(e) => setNamaProduct(e.target.value)}
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-            />
-            <label
-              htmlFor="namaProduct"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              <strong>Nama Produk</strong> (Contoh: SiKetan Hijau)
-            </label>
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                name="namaProduct"
+                id="namaProduct"
+                value={namaProduct}
+                onChange={(e) => setNamaProduct(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+              />
+              <label
+                htmlFor="namaProduct"
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                <strong>Nama Produk</strong> (Contoh: SiKetan Hijau)
+              </label>
+            </div>
+            <div className="relative z-0 w-full mb-6 group">
+              <label
+                htmlFor="kelompok"
+                className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
+                <strong>Select Kelompok:</strong>
+              </label>
+              <MultiSelect
+                data={kelompok}
+                placeholder="Select kelompok"
+                value={selectedKelompokIds}
+                onChange={setSelectedKelompokIds}
+              />
+            </div>
           </div>
           <div className="flex space-x-4 justify-end">
             <button

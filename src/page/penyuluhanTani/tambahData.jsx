@@ -27,7 +27,6 @@ const TambahPenyuluhanTani = () => {
   const [kecamatanBinaanActive, setKecamatanBinaanActive] = useState('');
   const [loading, setLoading] = useState(false);
   const [kelompok, setKelompok] = useState([]);
-  const [selectedKelompok, setSelectedKelompok] = useState([]); // State to hold selected kelompok
   const [selectedKelompokIds, setSelectedKelompokIds] = useState([]);
 
   const handleSubmit = (e) => {
@@ -57,8 +56,6 @@ const TambahPenyuluhanTani = () => {
 
   // create function to gobackParent
   // const goBackParent = () => window.history.back();
-
-  
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
@@ -87,7 +84,7 @@ const TambahPenyuluhanTani = () => {
       setDafatarDesaBinaan(dataaa);
     });
   };
-  
+
   useEffect(() => {
     GetKelompok().then((data) => {
       if (data && typeof data.dataKelompok === 'object') {
@@ -95,12 +92,14 @@ const TambahPenyuluhanTani = () => {
         const kelompokOptions = Object.values(data.dataKelompok).map((item) => ({
           value: item.id.toString(), // Convert id to string
           label: `${item.namaKelompok} - ${item.desa}, ${item.kecamatan}`, // Combine label
-          kecamatan: item.kecamatan.toString(), // Convert kecamatan to string
+          kecamatan: item.kecamatan.toString() // Convert kecamatan to string
         }));
-  
+
         // Filter kelompok options based on kecamatanBinaan
-        const filteredKelompokOptions = kelompokOptions.filter(option => option.kecamatan === kecamatanBinaan.toString());
-  
+        const filteredKelompokOptions = kelompokOptions.filter(
+          (option) => option.kecamatan === kecamatanBinaan.toString()
+        );
+
         // Set filtered kelompok options as state
         setKelompok(filteredKelompokOptions);
       }
@@ -322,7 +321,9 @@ const TambahPenyuluhanTani = () => {
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
-              <label htmlFor="kelompok" className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
+              <label
+                htmlFor="kelompok"
+                className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
                 <strong>Select Kelompok:</strong>
               </label>
               <MultiSelect
