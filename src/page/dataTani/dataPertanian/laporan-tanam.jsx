@@ -34,7 +34,7 @@ function LaporanTanam() {
       setDaftarKomoditas(tanamanPangan);
     } else if (kategori == 'Tanaman Perkebunan') {
       setDaftarKomoditas(tanamanPerkebunan);
-    } else if (kategori == 'Tanaman Holtikultura') {
+    } else if (kategori == 'Tanaman Hortikultura') {
       setDaftarKomoditas(komoditasTahunan);
     } else if (kategori == 'lainnya') {
       setDaftarKomoditas(komoditasSemusim);
@@ -179,17 +179,17 @@ function LaporanTanam() {
               </div>
               <div className="flex items-center">
                 <input
-                  id="tanaman-holtikultura"
-                  value="Tanaman Holtikultura"
+                  id="tanaman-hortikultura"
+                  value="Tanaman Hortikultura"
                   onChange={(e) => setKategori(e.target.value)}
                   type="radio"
                   name="kategori"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-900 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
-                  htmlFor="tanaman-holtikultura"
+                  htmlFor="tanaman-hortikultura"
                   className="ml-2 text-sm font-medium text-gray-900">
-                  Tanaman Holtikultura
+                  Tanaman Hortikultura
                 </label>
               </div>
               <div className="flex items-center py-2">
@@ -207,7 +207,7 @@ function LaporanTanam() {
               </div>
             </div>
 
-            {kategori == 'Tanaman Holtikultura' && (
+            {kategori == 'Tanaman Hortikultura' && (
               <div className="relative z-0 w-full mb-6 group">
                 <label htmlFor="underline_select" className="text-sm text-gray-500 ">
                   <strong>Pilih Jenis Tanaman</strong>

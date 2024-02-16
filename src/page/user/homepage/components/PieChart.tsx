@@ -6,7 +6,7 @@ import { TSummaryKategoriResponse } from '../../../../types/statistik';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const dummyData = {
-  labels: ['HOLTIKULTURA', 'TANAMAN PANGAN', 'TANAMAN PERKEBUNAN'],
+  labels: ['HORTIKULTURA', 'TANAMAN PANGAN', 'TANAMAN PERKEBUNAN'],
   datasets: [
     {
       label: 'Jumlah Komoditas',

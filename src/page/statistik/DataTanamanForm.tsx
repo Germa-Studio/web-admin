@@ -111,7 +111,7 @@ export default function DataTanamanForm({
   const params = useParams();
   const id = Number(params.id);
   const [newData, setNewData] = React.useState(dataTanamanDefault);
-  const [isHoltikultura, setIsHoltikultura] = React.useState(false);
+  const [isHortikultura, setIsHortikultura] = React.useState(false);
   const [poktan, setPoktan] = React.useState<TKelompokTani>();
 
   const [dataTable, setDataTable] = React.useState<
@@ -180,7 +180,7 @@ export default function DataTanamanForm({
         });
         if (e) setNewData(dataResult);
         if (dataResult.kategori === 'buah' || dataResult.kategori === 'sayur')
-          setIsHoltikultura(true);
+          setIsHortikultura(true);
       });
     }
   }, [type, id]);
@@ -254,7 +254,7 @@ export default function DataTanamanForm({
                       value="pangan"
                       disabled={type === 'realisasi' || type === 'detail'}
                       onClick={(event) => {
-                        setIsHoltikultura(false);
+                        setIsHortikultura(false);
                         setNewData({
                           ...newData,
                           kategori: event.currentTarget.value
@@ -266,7 +266,7 @@ export default function DataTanamanForm({
                       value="perkebunan"
                       disabled={type === 'realisasi' || type === 'detail'}
                       onClick={(event) => {
-                        setIsHoltikultura(false);
+                        setIsHortikultura(false);
                         setNewData({
                           ...newData,
                           kategori: event.currentTarget.value
@@ -274,40 +274,40 @@ export default function DataTanamanForm({
                       }}
                     />
                     <Radio
-                      label="Tanaman Holtikultura"
-                      value="holtikultura"
+                      label="Tanaman Hortikultura"
+                      value="hortikultura"
                       onClick={() => {
-                        setIsHoltikultura(true);
+                        setIsHortikultura(true);
                       }}
-                      checked={isHoltikultura}
+                      checked={isHortikultura}
                       disabled={type === 'realisasi' || type === 'detail'}
                     />
                     <Radio.Group className="ml-8 [&>*]:mt-1" value={newData.kategori}>
                       <Radio
                         label="Jenis Buah"
                         value="buah"
-                        disabled={!isHoltikultura || type === 'realisasi' || type === 'detail'}
+                        disabled={!isHortikultura || type === 'realisasi' || type === 'detail'}
                         onClick={(event) => {
-                          if (isHoltikultura)
+                          if (isHortikultura)
                             setNewData({
                               ...newData,
                               kategori: event.currentTarget.value
                             });
                         }}
-                        checked={newData.kategori === 'buah' && isHoltikultura}
+                        checked={newData.kategori === 'buah' && isHortikultura}
                       />
                       <Radio
                         label="Jenis Sayur"
                         value="sayur"
-                        disabled={!isHoltikultura || type === 'realisasi' || type === 'detail'}
+                        disabled={!isHortikultura || type === 'realisasi' || type === 'detail'}
                         onClick={(event) => {
-                          if (isHoltikultura)
+                          if (isHortikultura)
                             setNewData({
                               ...newData,
                               kategori: event.currentTarget.value
                             });
                         }}
-                        checked={newData.kategori === 'sayur' && isHoltikultura}
+                        checked={newData.kategori === 'sayur' && isHortikultura}
                       />
                     </Radio.Group>
                   </Radio.Group>
@@ -329,7 +329,7 @@ export default function DataTanamanForm({
                   <Tabs.Panel value="semusim">
                     <Select
                       className="mt-2"
-                      placeholder="-Tanaman Holtikultura Buah-"
+                      placeholder="-Tanaman Hortikultura Buah-"
                       value={newData.komoditas}
                       onChange={(e) =>
                         setNewData((prev) => ({
@@ -344,7 +344,7 @@ export default function DataTanamanForm({
                   <Tabs.Panel value="tahunan">
                     <Select
                       className="mt-2"
-                      placeholder="-Tanaman Holtikultura Sayur-"
+                      placeholder="-Tanaman Hortikultura Sayur-"
                       value={newData.komoditas}
                       onChange={(e) =>
                         setNewData((prev) => ({

@@ -327,8 +327,8 @@ export default function TambahTanamanPetani() {
                     onChange={(value) => setKategori(value)}>
                     <Radio label="Tanaman Pangan" value="TANAMAN PANGAN" />
                     <Radio label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
-                    <Radio label="Tanaman Holtikultura" value="TANAMAN HOLTIKULTURA" />
-                    {kategori && kategori.toLowerCase() === 'tanaman holtikultura' && (
+                    <Radio label="Tanaman Hortikultura" value="TANAMAN HORTIKULTURA" />
+                    {kategori && kategori.toLowerCase() === 'tanaman hortikultura' && (
                       <Radio.Group
                         className="ml-8 [&>*]:mt-1"
                         value={jenis}

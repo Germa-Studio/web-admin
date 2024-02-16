@@ -54,6 +54,19 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
     accessorKey: 'statusKepemilikanLahan',
     header: 'Status Kepemilikan Lahan',
     cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'Ditambahkan pada',
+    cell: (props) => (
+      <span>{`${new Date((props.getValue() as string) ?? '').toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      })}`}</span>
+    )
   }
 ];
 

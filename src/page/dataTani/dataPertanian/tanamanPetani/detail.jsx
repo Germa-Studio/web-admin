@@ -365,8 +365,8 @@ export default function DetailDataTanaman() {
                     onChange={(value) => setKategori(value)}>
                     <Radio disabled label="Tanaman Pangan" value="TANAMAN PANGAN" />
                     <Radio disabled label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
-                    <Radio disabled label="Tanaman Holtikultura" value="TANAMAN HOLTIKULTURA" />
-                    {kategori && kategori.toLowerCase() === 'tanaman holtikultura' && (
+                    <Radio disabled label="Tanaman Hortikultura" value="TANAMAN HORTIKULTURA" />
+                    {kategori && kategori.toLowerCase() === 'tanaman hortikultura' && (
                       <Radio.Group
                         className="ml-8 [&>*]:mt-1"
                         value={jenis}

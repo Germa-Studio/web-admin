@@ -208,7 +208,7 @@ export default function ExportTableDataPertanian() {
                   <BlankCell numberOfCol={6} />
                 )}
                 {/* Tanaman Hortikurtira Semusim */}
-                {item.kategori.includes('holtikultura'.toUpperCase()) &&
+                {item.kategori.includes('hortikultura'.toUpperCase()) &&
                 komoditasSemusim.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
@@ -225,7 +225,7 @@ export default function ExportTableDataPertanian() {
                   <BlankCell numberOfCol={9} />
                 )}
                 {/* Tanaman Hortikurtira Tahunan */}
-                {item.kategori.includes('holtikultura'.toUpperCase()) &&
+                {item.kategori.includes('hortikultura'.toUpperCase()) &&
                 komoditasTahunan.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
