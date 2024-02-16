@@ -82,12 +82,21 @@ export const Logout = () => {
 
 export const GetPeran = async (page, limit) => {
   try {
-    const response = await Api.get(`/peran?page=${page}&limit=${limit}`);
+    const response = await Api.get(`/auth/peran?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }
 };
+
+export const UbahPeran = async (id, data) => {
+  try {
+    const response = await Api.put(`/auth/peran/${id}`, data, headers);
+    SweatAlert(String(response.data.message), 'success', '/hak-akses/ubah');
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+}
 
 // cekNik
 export const CekNik = async (data) => {

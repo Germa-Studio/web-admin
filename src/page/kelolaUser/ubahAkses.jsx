@@ -6,13 +6,14 @@ import Table from '@/components/table/Table';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 // import LoadingAnimation from '../../../components/loadingSession';
 import { Link, useLocation } from 'react-router-dom';
-import SearchInput from '../../components/uiComponents/inputComponents/searchInput';
+import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import TextInput from '../../components/uiComponents/inputComponents/textInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 import HakAkses from './component/hakAkses';
-
+import { GetPeran, UbahPeran } from '../../infrastucture';
+import { Select } from '@mantine/core';
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
   { title: 'Data Penyuluh' },
@@ -30,17 +31,17 @@ const columns = [
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'nik',
-    header: 'NIK User',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
     accessorKey: 'nama',
     header: 'Nama User',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'akses',
+    accessorKey: 'email',
+    header: 'Email',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'peran',
     header: 'Akses User',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
@@ -54,53 +55,54 @@ const columns = [
 export default function UbahAkses(){
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [modalKelolaData, setModalKelolaData] = useState(false);
+  const [userData, setUserData] = useState({ id: null, nama: '', peran: '' }); // State for user data
   const fileInputRef = useRef();
+  // const dispatch = useDispatch();
+  // const user = useSelector((state) => state.state.user);
   const [filter, setFilter] = useState('role')
   const location = useLocation();
   const chooseBase = 'rounded-ss-xl rounded-se-xl w-[50%] text-center h-fit py-2 w-[100%] min-w-8 font-bold text-white transition-all bg-orange-primary hover:bg-green-sidebar-hover duration-200 ease-in-out'
   const chooseActive = 'rounded-ss-xl rounded-se-xl w-[50%] text-center h-12 w-[100%] min-w-8 font-bold text-white transition-all bg-[#307B28] hover:bg-green-sidebar-hover duration-200 ease-in-out'
-
+  // const [resp, setResp] = useState();
+  // const [dataTable, setDataTable] = useState();
   const searchParams = new URLSearchParams(location.search);
-
-  const page = searchParams.get('page') ?? 1;
-  const limit = searchParams.get('limit') ?? 10
-
-  const data = {data: [
-    {
-        no: 1,
-        nik: 381234567897,
-        nama: "zo",
-        akses: "admin"
-    },
-    {
-        no: 2,
-        nik: 381234567897,
-        nama: "zo",
-        akses: "admin"
-    },
-    {
-        no: 3,
-        nik: 381234567897,
-        nama: "zo",
-        akses: "admin"
-    },
-    {
-        no: 4,
-        nik: 381234567897,
-        nama: "zo",
-        akses: "admin"
-    },
-  ]}
-
   const [dataTable, setDataTable] = useState();
-  const [resp, setResp] = useState(data);
-//   berguna
-
+  const [resp, setResp] = useState();
+  const page = searchParams.get('page') ?? 1;
+  const limit = searchParams.get('limit') ?? 10;
   useEffect(() => {
-    // getDaftarPenyuluh(page, limit).then((data) => {
+    GetPeran(page, limit).then((data) => {
       setResp(data);
-    // });
+      // console.log(data);
+    })
   }, [limit, page]);
+
+  const handleEditUser = (id) => {
+    // Find the item in resp.data that matches the provided id
+    const selectedItem = resp.data.find((item) => item.id === id);
+    if (selectedItem) {
+      // Set the user data based on the selected item
+      setUserData({ id: id, nama: selectedItem.nama, peran: selectedItem.peran, email: selectedItem.email }); // Change userID to id
+      setModalKelolaData(true);
+    } else {
+      console.error('User data not found');
+    }
+  };  
+
+  const handleSaveUser = async () => {
+    try {
+      console.log('user id: ', userData.id);
+      if (userData.id) {
+        await UbahPeran(userData.id, { roles: userData.peran, id: userData.id });
+        setModalKelolaData(false);
+      } else {
+        console.error('User ID is undefined');
+      }
+    } catch (error) {
+      console.error('Error updating user role:', error);
+    }
+  };
+  
 
 useEffect(() => {
     if (resp) {
@@ -113,26 +115,12 @@ useEffect(() => {
             <div className="flex gap-4">
               <button
                 onClick={() => {
-                  setModalKelolaData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                  <IoEyeOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>
-              <button
-                onClick={() => {
-                  setModalKelolaData(item?.id);
+                  // setModalKelolaData(item?.id);
+                  handleEditUser(item?.id);
+                  console.log(item?.id);
                 }}>
                 <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
                   <ImPencil className="h-[18px] w-[18px] text-white" />
-                </div>
-              </button>
-              <button
-                onClick={() => {
-                  setModalDeleteData(item?.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
                 </div>
               </button>
             </div>
@@ -142,7 +130,7 @@ useEffect(() => {
     }
   }, [resp]);
 
-    const handleDeleteUser = (ids) => {
+  const handleDeleteUser = (ids) => {
     // DeleteDaftarPenyuluh(ids);
   };
 
@@ -196,78 +184,56 @@ useEffect(() => {
                 </div>
             </div>
             <Modal
-                opened={modalDeleteData}
-                onClose={() => setModalDeleteData(false)}
-                withCloseButton={false}
-                centered>
-                <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
-                    <Button
-                    color="cyan"
-                    style={{
-                        color: 'white',
-                        backgroundColor: '#303A47',
-                        marginRight: 8
-                    }}
-                    onClick={() => setModalDeleteData(false)}>
-                    Cancel
-                    </Button>
-                    <Button
-                    color="cyan"
-                    style={{ color: 'white', backgroundColor: 'red' }}
-                    type="submit"
-                    onClick={() => {
-                        handleDeleteUser(modalDeleteData);
-                        setModalDeleteData(false);
-                    }}>
-                    Delete
-                    </Button>
-                </div>
-            </Modal>
-            <Modal
-                opened={modalKelolaData}
-                onClose={() => setModalKelolaData(false)}
-                withCloseButton={false}
-                centered>
-                <Text>Akses User</Text>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
-                    <TextInput
-                        id="nama"
-                        name="nama"
-                        label="Nama"
-                        value={data.data.nama}
-                        disabled
-                    />
-                    <TextInput
-                        id="akses"
-                        name="akses"
-                        label="Akses"
-                        value={data.data.akses}
-                        onChange={setAkses}
-                    />
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
-                    <Button
-                    color="cyan"
-                    style={{
-                        color: 'white',
-                        backgroundColor: '#303A47',
-                        marginRight: 8
-                    }}
-                    onClick={() => setModalKelolaData(false)}>
-                    Cancel
-                    </Button>
-                    <Button
-                    color="cyan"
-                    style={{ color: 'white', backgroundColor: 'green' }}
-                    type="submit"
-                    onClick={() => {
-                        handleKelolaUser(modalKelolaData);
-                        setModalKelolaData(false);
-                    }}>
-                    Simpan
-                    </Button>
-                </div>
+              opened={modalKelolaData}
+              onClose={() => setModalKelolaData(false)}
+              withCloseButton={false}
+              centered
+            >
+              <Text>Akses User</Text>
+              <div className='mt-2' style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                {/* Non-editable fields */}
+                {/* <TextInput
+                  id="nama"
+                  name="nama"
+                  label="Nama"
+                  value={userData.nama}
+                  readOnly
+                />
+                <TextInput
+                  id="email"
+                  name="email"
+                  label="Email"
+                  value={userData.email}
+                  isDisabled
+                  readOnly
+                /> */}
+                <Text>{userData.nama}</Text>
+                <Text>{userData.email}</Text>
+                {/* Editable field with dropdown for Peran */}
+                <Select
+                  data={['petani', 'penyuluh', 'operator poktan', 'operator admin', 'operator super admin']}
+                  value={userData.peran}
+                  onChange={(value) => setUserData({ ...userData, peran: value })}
+                  placeholder="Pilih Peran"
+                />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+                <Button
+                  color="cyan"
+                  style={{ color: 'white', backgroundColor: '#303A47', marginRight: 8 }}
+                  onClick={() => setModalKelolaData(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  color="cyan"
+                  style={{ color: 'white', backgroundColor: 'green' }}
+                  type="submit"
+                  onClick={handleSaveUser}
+                >
+                  Simpan
+                </Button>
+              </div>
             </Modal>
         </div>
     )
