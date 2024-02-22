@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
-import { GetDaftarOperator, DeleteOperator, UploadDataPetani } from '@/infrastruture';
+import { GetDaftarOperator, DeleteOperator, UploadDataOperator } from '@/infrastruture';
 // import ExcelComponent from '../../components/exelComponent';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
@@ -109,7 +109,7 @@ const IndexOperator = () => {
     if (!event.target.files) return;
 
     const file = event.target.files[0];
-    UploadDataPetani(file).then(() => {
+    UploadDataOperator(file).then(() => {
       window.location.reload();
     });
   }
@@ -150,6 +150,7 @@ const IndexOperator = () => {
       });
     }
   }, [resp]);
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
