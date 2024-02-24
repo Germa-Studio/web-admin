@@ -1,59 +1,28 @@
 import React from 'react';
-import { Image } from '@mantine/core';
+import { Button, Image, Modal } from '@mantine/core';
 import { IoCalendar } from 'react-icons/io5';
 import { FaClock } from 'react-icons/fa6';
 import { FaBuilding } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 import MainCard from '../../../../components/MainCard';
 import { GetEventTani } from '../../../../infrastucture';
+import { useDisclosure } from '@mantine/hooks';
+import ShareModal from '../../../../components/ShareModal';
+import { FaShareAlt } from 'react-icons/fa';
+import { TEventTani } from '../../../../types/eventtani';
+
 const KegiatanTani = () => {
   const [width, setWidth] = React.useState(0);
+  const [shareUrl, setShareUrl] = React.useState('');
+  const [title, setTitle] = React.useState('');
+
+  const [opened, { open, close }] = useDisclosure(false);
+
   const carousel = React.useRef(null);
-  const [datas, setDatas] = React.useState([
-    {
-      namaKegiatan: 'Kegiatan a',
-      fotoKegiatan:
-        'https://cdn.idntimes.com/content-images/community/2021/08/photo-1521841313031-a1485f842d34-08019ae11deb84b03f6baff2c7b6601c-9715d48c6ead6920e0b69419f17bd601.jpg',
-      tanggalAcara: '10 Desember 2023',
-      waktuAcara: '09:00-14:00',
-      tempat: 'ruang tak terbatas'
-    },
-    {
-      namaKegiatan: 'Kegiatan b',
-      fotoKegiatan:
-        'https://cdn.idntimes.com/content-images/community/2021/08/photo-1521841313031-a1485f842d34-08019ae11deb84b03f6baff2c7b6601c-9715d48c6ead6920e0b69419f17bd601.jpg',
-      tanggalAcara: '10 Desember 2023',
-      waktuAcara: '09:00-14:00',
-      tempat: 'ruang tak terbatas'
-    },
-    {
-      namaKegiatan: 'Kegiatan c',
-      fotoKegiatan:
-        'https://cdn.idntimes.com/content-images/community/2021/08/photo-1521841313031-a1485f842d34-08019ae11deb84b03f6baff2c7b6601c-9715d48c6ead6920e0b69419f17bd601.jpg',
-      tanggalAcara: '10 Desember 2023',
-      waktuAcara: '09:00-14:00',
-      tempat: 'ruang tak terbatas'
-    },
-    {
-      namaKegiatan: 'Kegiatan d',
-      fotoKegiatan:
-        'https://cdn.idntimes.com/content-images/community/2021/08/photo-1521841313031-a1485f842d34-08019ae11deb84b03f6baff2c7b6601c-9715d48c6ead6920e0b69419f17bd601.jpg',
-      tanggalAcara: '10 Desember 2023',
-      waktuAcara: '09:00-14:00',
-      tempat: 'ruang tak terbatas'
-    },
-    {
-      namaKegiatan: 'Kegiatan e',
-      fotoKegiatan:
-        'https://cdn.idntimes.com/content-images/community/2021/08/photo-1521841313031-a1485f842d34-08019ae11deb84b03f6baff2c7b6601c-9715d48c6ead6920e0b69419f17bd601.jpg',
-      tanggalAcara: '10 Desember 2023',
-      waktuAcara: '09:00-14:00',
-      tempat: 'ruang tak terbatas'
-    }
-  ]);
+  const [datas, setDatas] = React.useState<TEventTani[] | null>(null);
   React.useEffect(() => {
     GetEventTani().then((data) => {
-      // console.log('data', data);
+      console.log('data', { data });
       setDatas(data.infotani);
     });
   }, []);
@@ -74,6 +43,9 @@ const KegiatanTani = () => {
   }, [carousel.current]);
   return (
     <div>
+      <Modal opened={opened} onClose={close} title="Bagikan Info Pertanian" centered>
+        <ShareModal url={shareUrl} title={title} />
+      </Modal>
       <MainCard row transparent noPadding center className="flex-row">
         <motion.div className="carousel overflow-hidden cursor-grab" ref={carousel}>
           <motion.div
@@ -103,6 +75,26 @@ const KegiatanTani = () => {
                     <div className="flex flex-row space-x-2">
                       <FaBuilding size={18} className="fill-green-secondary" />
                       <p className="text-sm">{data.tempat}</p>
+                    </div>
+                    <div className="border w-fit rounded-lg border-blue-300">
+                      <Button
+                        variant="light"
+                        onClick={() => {
+                          open();
+                          setTitle(
+                            `Nama\t: ${data.namaKegiatan}\nWaktu\t: ${new Date(
+                              data.tanggalAcara
+                            ).toLocaleDateString('id-ID', {
+                              weekday: 'long',
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}\nTempat\t: ${data.tempat}`
+                          );
+                          setShareUrl(window.location.origin + '/info-pertanian');
+                        }}>
+                        <FaShareAlt />
+                      </Button>
                     </div>
                   </div>
                 </div>
