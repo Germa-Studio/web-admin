@@ -5,12 +5,24 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import MainCard from '../../../../components/MainCard';
 import { GetInfoTani } from '../../../../infrastucture';
+
+import { Button } from '@mantine/core';
+import { FaShareAlt } from 'react-icons/fa';
+import ShareModal from '../../../../components/ShareModal';
+
+import { useDisclosure } from '@mantine/hooks';
+import { Modal } from '@mantine/core';
+
 const BeritaTani = () => {
   const [datas, setDatas] = React.useState([]);
+  const [shareUrl, setShareUrl] = React.useState('');
+  const [title, setTitle] = React.useState('');
+
+  const [opened, { open, close }] = useDisclosure(false);
+
   React.useEffect(() => {
     GetInfoTani().then((data) => {
       setDatas(data.infotani);
-      console.log(data);
     });
   }, []);
   return (
@@ -53,11 +65,25 @@ const BeritaTani = () => {
                   className="text-sm md:text-base hover:text-green-600">
                   Read More &gt;{' '}
                 </Link>
+                <div className="border w-fit rounded-lg border-blue-300">
+                  <Button
+                    variant="light"
+                    onClick={() => {
+                      open();
+                      setTitle(item.judul);
+                      setShareUrl(window.location.origin + '/info-pertanian/' + item.id);
+                    }}>
+                    <FaShareAlt />
+                  </Button>
+                </div>
               </MainCard>
             </MainCard>
           </MainCard>
         </MainCard>
       ))}
+      <Modal opened={opened} onClose={close} title="Bagikan Info Pertanian" centered>
+        <ShareModal url={shareUrl} title={title} />
+      </Modal>
     </>
   );
 };

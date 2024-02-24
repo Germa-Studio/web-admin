@@ -39,7 +39,7 @@ const Notification = () => {
                 handleClick(modalDeleteData.id);
                 setModalDeleteData('');
               }}>
-              Verivikasi
+              Verifikasi
             </Button>
           </div>
         </Modal>
