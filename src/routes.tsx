@@ -48,6 +48,7 @@ import { Image, Menu, Group, Avatar, Text, UnstyledButton } from '@mantine/core'
 import { IconMenu2 } from '@tabler/icons-react';
 import { IoMailUnreadOutline, IoCaretDownOutline } from 'react-icons/io5';
 import { FaRegBell } from 'react-icons/fa';
+import { FaX } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './infrastucture/redux/state/stateSlice';
 import { RootState } from './infrastucture/redux/store';
@@ -96,13 +97,13 @@ const menu = [
     icon: '/icons/statistik.svg',
     sub: [
       {
-        name: 'Tambah Data Statistik',
+        name: 'Tambah Data',
         icon: '/icons/tambah.svg',
         path: '/statistik/tambah',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Lihat Tabel Statistik',
+        name: 'Lihat Tabel',
         icon: '/icons/users.svg',
         path: '/statistik',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
@@ -116,19 +117,19 @@ const menu = [
     icon: '/icons/data-tani.svg',
     sub: [
       {
-        name: 'Tambah Data Tanam',
-        icon: '/icons/users.svg',
+        name: 'Tambah Data',
+        icon: '/icons/tambah.svg',
         path: '/tanaman-petani/add',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Lihat Tabel Tanam',
+        name: 'Lihat Tabel',
         icon: '/icons/users.svg',
         path: '/tanaman-petani',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Daftar User Petani',
+        name: 'Daftar Petani',
         icon: '/icons/users.svg',
         path: '/data-tani/rekap-petani',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
@@ -142,25 +143,25 @@ const menu = [
     icon: '/icons/info-tani.svg',
     sub: [
       {
-        name: 'Tambah Berita Tani',
-        icon: '/icons/users.svg',
+        name: 'Tambah Berita',
+        icon: '/icons/tambah.svg',
         path: '/info-tani/tambah',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Lihat Berita Tani',
+        name: 'Lihat Berita',
         icon: '/icons/berita.svg',
         path: '/info-tani',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Tambah Acara Tani',
-        icon: '/icons/users.svg',
+        name: 'Tambah Acara',
+        icon: '/icons/tambah.svg',
         path: '/event-tani/tambah',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Lihat Acara Tani',
+        name: 'Lihat Acara',
         icon: '/icons/kalender.svg',
         path: '/info-tani/event-tani',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
@@ -174,13 +175,13 @@ const menu = [
     icon: '/icons/toko-tani.svg',
     sub: [
       {
-        name: 'Tambah Toko Tani',
+        name: 'Tambah Toko',
         icon: '/icons/tambah.svg',
         path: '/toko-tani/tambah',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
       },
       {
-        name: 'Lihat Daftar Toko Tani',
+        name: 'Lihat Daftar Toko',
         icon: '/icons/toko.svg',
         path: '/toko-tani',
         list_sub_roles: ['operator super admin', 'operator admin', 'operator poktan', 'penyuluh']
@@ -348,16 +349,21 @@ const Path = () => {
         <aside
           ref={sidebar}
           className={clsx(
-            'fixed left-0 top-0 z-20 flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white',
-            sidebarOpen ? 'w-80' : 'w-[6%]'
+            'fixed left-0 top-0 z-[20] flex h-screen flex-col justify-between bg-green-primary pb-8 shadow-lg duration-300 lg:translate-x-0 text-white',
+            sidebarOpen ? 'w-[40vw] md:w-60 xl:w-72' : 'hidden lg:block xl:w-20'
           )}>
-          <div className={clsx('bg-green-secondary bg-opacity-50', !sidebarOpen && 'p-4')}>
+          <div className={clsx('bg-green-primary bg-opacity-50', !sidebarOpen && 'h-16 lg:h-20')}>
             <Image
               src="/image/logo-navbar.png"
-              height={80}
               alt="Logo Siketan"
-              className={sidebarOpen ? 'block' : 'hidden'}
+              className={sidebarOpen ? 'hidden lg:block w-52 lg:w-60' : 'hidden'}
             />
+            <button className='lg:hidden h-16 block'
+              onClick={() => {
+                setSidebarOpen(!sidebarOpen);
+              }}>
+              <FaX className={sidebarOpen ? 'w-6 h-6 ml-5 mt-5' : 'hidden' }/>
+            </button>
           </div>
           <div className="h-full px-6 py-2 overflow-y-auto">
             <ul className="space-y-1.5 font-medium">
@@ -372,8 +378,8 @@ const Path = () => {
                             mainMenuClasses,
                             activePage === item.id && activeClasses
                           )}>
-                          <Image src={item.icon} alt={item.name} w={24} />
-                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                          <Image src={item.icon} alt={item.name} className='w-3 lg:w-4 xl:w-6' />
+                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block overflow-scroll' : 'hidden')}>
                             {item.name}
                           </span>
                         </a>
@@ -384,8 +390,8 @@ const Path = () => {
                             if (activeMenu === item.id) setActiveMenu('');
                             else setActiveMenu(item.id);
                           }}>
-                          <Image src={item.icon} alt={item.name} w={24} />
-                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
+                          <Image src={item.icon} alt={item.name} className='w-3 lg:w-4 xl:w-6' />
+                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block overflow-auto' : 'hidden')}>
                             {item.name}
                           </span>
                         </button>
@@ -403,11 +409,11 @@ const Path = () => {
                                       subMenuClasses,
                                       activePage === 'bpup' && activeClasses
                                     )}>
-                                    <Image src={sub.icon} alt={sub.name} width={24} />
+                                    <Image src={sub.icon} alt={sub.name} className='w-3 lg:w-4 xl:w-6'/>
                                     <span
                                       className={clsx(
                                         textMenuClasses,
-                                        sidebarOpen ? 'block' : 'hidden'
+                                        sidebarOpen ? 'block overflow-auto' : 'hidden'
                                       )}>
                                       {sub.name}
                                     </span>
@@ -426,9 +432,9 @@ const Path = () => {
         <div
           className={clsx(
             'box-border h-full min-h-screen w-full transition-all duration-300 ease-in-out relative overflow-hidden',
-            sidebarOpen ? 'lg:ml-80' : 'lg:ml-20'
+            sidebarOpen ? 'lg:ml-60 xl:ml-72' : 'lg:ml-20'
           )}>
-          <nav className="p-5 flex justify-between text-white bg-green-primary">
+          <nav className="p-5 flex justify-between text-white bg-green-primary !h-16 lg:!h-20 z-[40]">
             <div className="flex gap-4 items-center text-xl">
               <button
                 onClick={() => {

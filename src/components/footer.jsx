@@ -125,17 +125,17 @@ import { FaXTwitter } from 'react-icons/fa6';
 
 const Footer = ({ sidebarOpen, isFull = false }) => {
   return (
-    <footer className="relative left-0 right-0 z-[999999999] w-full flex justify-end">
+    <footer className="relative left-0 right-0 z-[0] w-full flex justify-end">
       <div
         className={clsx(
           !isFull
             ? sidebarOpen
-              ? 'w-[calc(100%_-_320px)]'
-              : 'w-[calc(100%_-_96.36px)]'
+              ? 'lg:w-[calc(100%_-_240px)] xl:w-[calc(100%_-_288px)]'
+              : 'lg:w-[calc(100%_-_80px)]'
             : 'w-full',
           'bg-green-primary px-2 py-8'
         )}>
-        <div className="flex flex-row justify-between text-white">
+        <div className="flex flex-row justify-around text-white">
           <div className="flex flex-col w-[30%] justify-between mr-15">
             <Image src="/image/logo-navbar.png" alt="Logo Siketan" width={250} />
             <p className="text-[10px] text-justify">
@@ -145,7 +145,7 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
               terjangkau.
             </p>
           </div>
-          <div className="flex flex-col w-[10%] space-y-3">
+          <div className="flex flex-col w-fit space-y-3">
             <div className="text-sm font-bold">Bantuan</div>
             <ul className="text-xs">
               <li>FAQ</li>
@@ -154,36 +154,36 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
               <li>About Us</li>
             </ul>
           </div>
-          <div className="flex flex-col w-[32%] space-y-3">
+          <div className="flex flex-col w-fit space-y-3">
             <div className="text-sm font-bold">Hubungan Kami</div>
-            <div className="grid grid-rows-2 grid-flow-col gap-5">
-              <div className="flex flex-row gap-3 items-center">
+            <div className="grid grid-rows-2 grid-flow-col gap-3 xl:gap-5 w-fit">
+              <div className="flex flex-row gap-3 items-center w-fit">
                 <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center">
                   <MdWhatsapp size={25} className="fill-green-primary" />
                 </div>
-                <div className="text-white text-xs">081252232644</div>
+                <div className="text-white text-xs hidden xl:block">081252232644</div>
               </div>
-              <div className="flex flex-row gap-3 items-center">
+              <div className="flex flex-row gap-3 items-center w-fit">
                 <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center">
                   <GiRotaryPhone size={25} className="fill-green-primary" />
                 </div>
-                <div className="text-white text-xs">(0351) 749026</div>
+                <div className="text-white text-xs hidden xl:block">(0351) 749026</div>
               </div>
-              <div className="flex flex-row gap-3 items-center">
+              <div className="flex flex-row gap-3 items-center w-fit">
                 <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center">
                   <MdAttachEmail size={25} className="fill-green-primary" />
                 </div>
-                <div className="text-white text-xs">Pertanian@ngawikab.go.id</div>
+                <div className="text-white text-xs hidden xl:block">Pertanian@ngawikab.go.id</div>
               </div>
-              <div className="flex flex-row gap-3 items-center">
+              <div className="flex flex-row gap-3 items-center w-fit">
                 <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center">
                   <MdOutlineFax size={25} className="fill-green-primary" />
                 </div>
-                <div className="text-white text-xs">(0351) 749026</div>
+                <div className="text-white text-xs hidden xl:block">(0351) 749026</div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-[15%] space-y-3">
+          <div className="flex flex-col w-fit space-y-3">
             <div className="text-sm">Kunjungi Kami</div>
             <div className="grid grid-rows-2 grid-flow-col w-fit gap-3">
               <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center">
