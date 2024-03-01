@@ -76,9 +76,9 @@ export default function Table<T extends object>({
   }, [searchParams, table]);
 
   return (
-    <div className={clsx('flex flex-col mt-6', className)} {...rest}>
+    <div className={clsx('flex flex-col', className)} {...rest}>
       <div className="flex flex-col items-end gap-y-3 sm:flex-row sm:justify-between">
-        <span className="text-cwhite flex items-center gap-1 whitespace-nowrap text-white">
+        <span className="flex items-center gap-1 whitespace-nowrap text-white">
           <div>Showing</div>
           <strong>
             {data?.data.length} of {data?.total}

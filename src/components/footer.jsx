@@ -135,9 +135,9 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
             : 'w-full',
           'bg-green-primary px-2 py-8'
         )}>
-        <div className="flex flex-row justify-around text-white">
-          <div className="flex flex-col w-[30%] justify-between mr-15">
-            <Image src="/image/logo-navbar.png" alt="Logo Siketan" width={250} />
+        <div className="mx-[5%] flex flex-row justify-between text-white flex-wrap gap-6 md:gap-0">
+          <div className="flex flex-col w-[100%] md:w-[30%] justify-between mr-15">
+            <Image src="/image/logo-navbar.png" alt="Logo Siketan" className='w-[70%]' />
             <p className="text-[10px] text-justify">
               Sebuah inovasi website penyuluhan pertanian. Berbagi wawasan terbaru, praktik terbaik,
               dan solusi agraris. Antarmuka intuitif untuk akses mudah dan pembaruan informasi yang

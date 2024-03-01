@@ -37,11 +37,11 @@ export default function Homepage() {
   }, [month, year]);
   return (
     <UserLayout>
-      <section className="pb-5 max-w-[90%] mx-auto">
-        <div className="container mb-8 px-20">
-          <h1 className="text-xl text-center font-bold">Statistik Pertanian</h1>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
+      <section className="pb-5 max-w-[80%] mx-auto">
+        <div className="container mb-8">
+          <div className="text-lg md:text-xl text-center font-bold mb-[5%]">Statistik Pertanian</div>
+          <div className="flex flex-col md:flex-row gap-2 md:!justify-between text-sm md:text-base">
+            <div className="flex flex-col gap-2">
               <Select
                 data={[
                   { label: 'Januari', value: '1' },
@@ -71,7 +71,7 @@ export default function Homepage() {
                 max={new Date().getFullYear()}
               />
             </div>
-            <h5>
+            <div>
               {time.toLocaleString('id-ID', {
                 weekday: 'long',
                 day: 'numeric',
@@ -81,20 +81,20 @@ export default function Homepage() {
                 minute: 'numeric',
                 second: 'numeric'
               })}
-            </h5>
+            </div>
           </div>
         </div>
         <MainCard transparent noPadding>
-          <MainCard transparent noPadding row center>
-            <MainCard transparent width="30%">
-              <h2 className="text-center">Musim Tanam Seluruh Komoditas</h2>
+          <div className='lg:flex justify-between'>
+            <MainCard transparent className='w-100 lg:w-[30%]'>
+              <div className="text-center text-base md:text-lg font-semibold !capitalize">Musim Tanam Seluruh Komoditas</div>
               <PieChart apiData={respData?.summary ?? []} />
             </MainCard>
-            <MainCard transparent width="60%">
-              <h2 className="text-center">STATISTIK PERTUMBUHAN PERTANIAN</h2>
+            <MainCard transparent className='w-100 lg:w-[60%]'>
+              <div className="text-center text-base md:text-lg font-semibold !capitalize">statistik pertumbuhan pertanian</div>
               <LineChart apiData={respData?.statistik ?? []} month={month} year={year} />
             </MainCard>
-          </MainCard>
+          </div>
           <MainCard transparent noPadding row center>
             <Tabel apiData={respData?.latest ?? []} />
           </MainCard>

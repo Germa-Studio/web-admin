@@ -98,9 +98,9 @@ export default function Tabel({ apiData }: { apiData: TTanamanPetani[] }) {
     <div className="flex justify-center pt-12 w-full">
       <div className="container rounded-lg">
         <div className="pt-10">
-          <h2 className="text-center mb-4 font-bold">
+          <div className="text-center text-lg font-semibold !capitalize">
             5 data terbaru statistik pertumbuhan pertanian
-          </h2>
+          </div>
           <Table data={dataTable} columns={columns} />
         </div>
       </div>

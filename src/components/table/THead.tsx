@@ -35,7 +35,7 @@ export default function THead<T extends RowData>({
               key={header.id}
               scope="col"
               className={clsx(
-                'group py-3 pr-3 text-left text-sm font-semibold sm:text-base',
+                'group py-3 pr-3 text-left text-sm md:font-semibold sm:text-base',
                 !omitSort && header.column.getCanSort() ? 'pl-4' : 'pl-[30px]'
               )}>
               {header.isPlaceholder ? null : (

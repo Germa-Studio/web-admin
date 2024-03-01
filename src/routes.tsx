@@ -379,7 +379,7 @@ const Path = () => {
                             activePage === item.id && activeClasses
                           )}>
                           <Image src={item.icon} alt={item.name} className='w-3 lg:w-4 xl:w-6' />
-                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block overflow-scroll' : 'hidden')}>
+                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                             {item.name}
                           </span>
                         </a>
@@ -391,7 +391,7 @@ const Path = () => {
                             else setActiveMenu(item.id);
                           }}>
                           <Image src={item.icon} alt={item.name} className='w-3 lg:w-4 xl:w-6' />
-                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block overflow-auto' : 'hidden')}>
+                          <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                             {item.name}
                           </span>
                         </button>
