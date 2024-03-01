@@ -3,14 +3,8 @@ import React from 'react';
 import { ActionIcon, TextInput } from '@mantine/core';
 
 import {
-  EmailIcon,
-  EmailShareButton,
   FacebookIcon,
   FacebookShareButton,
-  LineIcon,
-  LineShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
   TelegramIcon,
   TelegramShareButton,
   TwitterShareButton,
@@ -50,26 +44,17 @@ export default function ShareModal({ url = '', title }: { url?: string; title?: 
       )}
       <div className="flex gap-2">
         <FacebookShareButton url={url} title={title}>
-          <FacebookIcon size={32} round />
+          <FacebookIcon size={48} round />
         </FacebookShareButton>
         <TwitterShareButton url={url} title={title}>
-          <XIcon size={32} round />
+          <XIcon size={48} round />
         </TwitterShareButton>
         <WhatsappShareButton url={url} title={title}>
-          <WhatsappIcon size={32} round />
+          <WhatsappIcon size={48} round />
         </WhatsappShareButton>
         <TelegramShareButton url={url} title={title}>
-          <TelegramIcon size={32} round />
+          <TelegramIcon size={48} round />
         </TelegramShareButton>
-        <LineShareButton url={url} title={title}>
-          <LineIcon size={32} round />
-        </LineShareButton>
-        <LinkedinShareButton url={url} title={title}>
-          <LinkedinIcon size={32} round />
-        </LinkedinShareButton>
-        <EmailShareButton url={url} title={title}>
-          <EmailIcon size={32} round />
-        </EmailShareButton>
       </div>
     </div>
   );
