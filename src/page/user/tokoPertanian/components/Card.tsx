@@ -68,8 +68,8 @@ export default function Card({ item }: { item: TokoTani }) {
             <p className="text-xs">Status: {item.status}</p>
             <p className="text-xs">Stok: {item.stok}</p>
             <p className="text-xs">Satuan: {item.satuan}</p>
-            <p className="text-sm text-justify">{item.deskripsi}</p>
           </div>
+          <p className="text-sm text-justify">{item.deskripsi}</p>
           <Button variant="light" onClick={open}>
             <FaShareAlt />
           </Button>
