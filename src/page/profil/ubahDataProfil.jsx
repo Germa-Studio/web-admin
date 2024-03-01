@@ -60,13 +60,20 @@ export default function DataProfil({data}) {
       <form onSubmit={(e) => handleSubmit(e)}>
       {loading && <LoadingAnimation />}
       <div className="flex justify-between">
-        {profileData.foto &&(
+        {profileData.foto ?(
           <InputImage
             id="foto"
             name="foto"
             imageActive={foto}
             title="Foto Profil"
             onChange={(e) => setFotoProfil(e)}
+          />
+        ): (
+          <input
+            type="file"
+            id="foto"
+            name="foto"
+            onChange={(e) => setFotoProfil(e.target.files[0])}
           />
         )}
         <div className="w-[45%]">

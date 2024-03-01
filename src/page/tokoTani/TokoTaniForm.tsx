@@ -310,7 +310,7 @@ const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
-                type="text"
+                type="number"
                 disabled={disable || type === 'detail'}
                 name="harga"
                 id="harga"

@@ -10,6 +10,7 @@ import { TokoTani } from '../../../@types/toko';
 export default function Index() {
   React.useEffect(() => {
     getTokoTani().then((res) => {
+      console.log({ res });
       const response = res.data.data as TokoTani[];
       setTokoTani(response);
       const groupedToko = response.reduce<TokoTani[][]>((acc, curr, index) => {
