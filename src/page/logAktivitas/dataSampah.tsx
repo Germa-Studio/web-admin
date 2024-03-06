@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { Anchor, Breadcrumbs, Button, Modal, Text } from '@mantine/core';
-import Table from '../../components/table/Table';
+import Table from './table/Table';
 import { DataPerson } from '../../@types/toko';
 import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import {
@@ -87,7 +87,7 @@ const DataSampah = () => {
   useEffect(() => {
     getTrashActivity(page, limit).then((data) => {
       setResp(data);
-      console.log('hehe', data);
+      // console.log('hehe', data);
     });
   }, [page, limit]);
 

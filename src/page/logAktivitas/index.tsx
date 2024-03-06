@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { Anchor, Breadcrumbs } from '@mantine/core';
-import Table from '../../components/table/Table';
+import Table from './table/Table';
 import { getLogActivity } from '../../infrastucture/logActivity';
 import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import { DataPerson } from '../../@types/toko';
@@ -58,6 +58,10 @@ const activityType = [
   {
     type: 'DELETE PERMANENT',
     message: 'Menghapus permanen data '
+  },
+  {
+    type: 'REGISTER',
+    message: 'Mendaftar sebagai '
   }
 ];
 
@@ -74,6 +78,7 @@ const LogActivity = () => {
   >();
   const [resp, setResp] = useState<
     | PaginatedRespApiData<{
+        id: number;
         user_id: number;
         activity: string;
         detail: string;
@@ -91,7 +96,6 @@ const LogActivity = () => {
   useEffect(() => {
     getLogActivity(page, limit).then((data) => {
       setResp(data);
-      console.log('data', data);
     });
   }, [page, limit]);
 

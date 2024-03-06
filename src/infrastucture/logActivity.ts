@@ -28,7 +28,9 @@ export const deleteTrashActivity = async (id) => {
     SweatAlert(String(response.data.message), 'success', 'reload');
     // return response.data;
   } catch (error) {
-    SweatAlert(String(error.response.data.message), 'error');
+    const errorType = error.response.data.type ? String(error.response.data.type) : 'error';
+    const errorMessage = error.response.data.text ? String(error.response.data.text) : null;
+    SweatAlert(String(error.response.data.message), errorType, null, errorMessage);
   }
 };
 
@@ -40,6 +42,8 @@ export const restoreTrashActivity = async (id) => {
     // return response.data;
   } catch (error) {
     console.log(error);
-    SweatAlert(String(error.response.data.message), 'error');
+    const errorType = error.response.data.type ? String(error.response.data.type) : 'error';
+    const errorMessage = error.response.data.text ? String(error.response.data.text) : null;
+    SweatAlert(String(error.response.data.message), errorType, null, errorMessage);
   }
 };
