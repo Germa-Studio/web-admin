@@ -1,6 +1,7 @@
 import { RowData } from '@tanstack/react-table';
 import React from 'react';
-import { PaginatedRespApiData } from '../../types/paginatedRespApi';
+// import { PaginatedRespApiData } from '../../types/paginatedRespApi';
+import { PaginatedRespApiData } from '../../../types/paginatedRespApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import clsx from 'clsx';
