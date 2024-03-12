@@ -1,13 +1,3 @@
-<<<<<<< Updated upstream
-const Footer = () => {
-  return (
-    <footer className="bg-green-primary text-white pb-2 fixed bottom-0 left-0 right-0 z-[999999999]">
-      <div className="container mx-auto flex items-center justify-center px-4 pt-5">
-        <img src="/image/logo-footer.png" width={40} alt="Logo" />
-        <div className="text-white text-sm font-bold text-center pl-3">
-          {/* <span className="pr-3">Logo</span> */}
-          <span>&copy;2023 Dinas Pertanian Kabupaten Ngawi</span>
-=======
 import { Image } from '@mantine/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -17,123 +7,6 @@ import { FaInstagram, FaFacebook, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { GetFooterDetail } from '../infrastucture/footer';
-
-// const socialMedia = [
-//   {
-//     name: 'Tiktok',
-//     url: 'https://tiktok.com',
-//     icon: '/icons/brand/tiktok.svg'
-//   },
-//   {
-//     name: 'Facebook',
-//     url: 'https://facebook.com',
-//     icon: '/icons/brand/facebook.svg'
-//   },
-//   {
-//     name: 'Instagram',
-//     url: 'https://instagram.com',
-//     icon: '/icons/brand/instagram.svg'
-//   },
-//   {
-//     name: 'Twitter',
-//     url: 'https://twitter.com',
-//     icon: '/icons/brand/x-twitter.svg'
-//   },
-//   {
-//     name: 'Youtube',
-//     url: 'https://youtube.com',
-//     icon: '/icons/brand/youtube.svg'
-//   }
-// ];
-
-// const menuPage = [
-//   {
-//     name: 'FAQ',
-//     url: '/faq'
-//   },
-//   {
-//     name: 'Term of use',
-//     url: '/term-of-use'
-//   },
-//   {
-//     name: 'Privacy Policy',
-//     url: '/privacy-policy'
-//   },
-//   {
-//     name: 'About Us',
-//     url: '/about-us'
-//   },
-//   {
-//     name: 'Contact',
-//     url: '/contact'
-//   }
-// ];
-
-// const feature = [
-//   {
-//     name: 'Statistik Pertanian',
-//     url: '/statistik-pertanian'
-//   },
-//   {
-//     name: 'Data Pertanian',
-//     url: '/data-pertanian'
-//   },
-//   {
-//     name: 'Info Pertanian',
-//     url: '/info-pertanian'
-//   },
-//   {
-//     name: 'Toko Pertanian',
-//     url: '/toko-pertanian'
-//   },
-//   {
-//     name: 'Info Penyuluh',
-//     url: '/info-penyuluh'
-//   },
-//   {
-//     name: 'Hak Akses User',
-//     url: '/hak-akses-user'
-//   },
-//   {
-//     name: 'Riwayat Aktivitas',
-//     url: '/riwayat-aktivitas'
-//   },
-//   {
-//     name: 'List Data Operator',
-//     url: '/list-data-operator'
-//   }
-// ];
-
-// const GetFeatures = () => {
-//   // round up the size
-//   const size = Math.ceil(feature.length / 2);
-//   return (
-//     <div className="grid grid-cols-2">
-//       <ol className="list-decimal mx-4">
-//         {feature.slice(0, size).map((item, index) => {
-//           return (
-//             <li key={index}>
-//               <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
-//                 {item.name}
-//               </a>
-//             </li>
-//           );
-//         })}
-//       </ol>
-//       <ol className="list-decimal mx-4" start={size + 1}>
-//         {feature.slice(size).map((item, index) => {
-//           return (
-//             <li key={index}>
-//               <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
-//                 {item.name}
-//               </a>
-//             </li>
-//           );
-//         })}
-//       </ol>
-//     </div>
-//   );
-// };
 
 const Footer = ({ sidebarOpen, isFull = false }) => {
   const [file,setFile] = useState('')
@@ -225,7 +98,6 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
               </div>
             </div>
           </div>
->>>>>>> Stashed changes
         </div>
       </div>
     </footer>
