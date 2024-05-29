@@ -39,7 +39,7 @@ export default function Homepage() {
     <UserLayout>
       <section className="pb-5 max-w-[80%] mx-auto">
         <div className="container mb-8">
-          <div className="text-lg md:text-xl text-center font-bold mb-[5%]">Statistik Pertanian</div>
+          <div className="text-lg md:text-xl lg:text-2xl text-center font-bold mb-[5%]">Statistik Pertanian</div>
           <div className="flex flex-col md:flex-row gap-2 md:!justify-between text-sm md:text-base">
             <div className="flex flex-col gap-2">
               <Select
@@ -87,11 +87,11 @@ export default function Homepage() {
         <MainCard transparent noPadding>
           <div className='lg:flex justify-between'>
             <MainCard transparent className='w-100 lg:w-[30%]'>
-              <div className="text-center text-base md:text-lg font-semibold !capitalize">Musim Tanam Seluruh Komoditas</div>
+              <div className="text-center text-base md:text-lg lg:text-xl font-semibold !capitalize">Musim Tanam Seluruh Komoditas</div>
               <PieChart apiData={respData?.summary ?? []} />
             </MainCard>
             <MainCard transparent className='w-100 lg:w-[60%]'>
-              <div className="text-center text-base md:text-lg font-semibold !capitalize">statistik pertumbuhan pertanian</div>
+              <div className="text-center text-base md:text-lg lg:text-xl font-semibold !capitalize">statistik pertumbuhan pertanian</div>
               <LineChart apiData={respData?.statistik ?? []} month={month} year={year} />
             </MainCard>
           </div>

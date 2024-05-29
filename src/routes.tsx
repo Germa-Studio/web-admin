@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   TambahDataTani,
@@ -82,6 +82,7 @@ import EditTokoTani from './page/tokoTani/edit';
 // import HakAkses from './page/kelolaUser/component/hakAkses';
 import UbahAkses from './page/kelolaUser/ubahAkses';
 import DetailPenyuluh from './page/penyuluhanTani/detailPenyuluh';
+import { GetFooterDetail } from './infrastucture/footer';
 
 const menu = [
   {
@@ -309,6 +310,7 @@ const Path = () => {
     'ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize';
   const stackedMenuClasses = clsx('w-full transition duration-75 group', mainMenuClasses);
   const subMenuClasses = stackedMenuClasses;
+  const [file,setFile] = useState('')
 
   const user = useSelector((state: RootState) => state.state.user);
   const perans = user?.peran;
@@ -322,6 +324,14 @@ const Path = () => {
     window.location.pathname === '/' ||
     window.location.pathname.includes('info-pertanian') ||
     window.location.pathname === '/toko-pertanian';
+
+  useEffect(() => {
+    GetFooterDetail("logo").then((data) => {
+      if(data){
+        setFile(data.footer.value)
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -354,7 +364,7 @@ const Path = () => {
           )}>
           <div className={clsx('bg-green-primary bg-opacity-50', !sidebarOpen && 'h-16 lg:h-20')}>
             <Image
-              src="/image/logo-navbar.png"
+              src={file}
               alt="Logo Siketan"
               className={sidebarOpen ? 'hidden lg:block w-52 lg:w-60' : 'hidden'}
             />

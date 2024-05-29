@@ -20,21 +20,21 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
     header: 'Komoditas',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
-  {
-    accessorKey: 'luasLahan',
-    header: 'Luas Lahan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
+  // {
+  //   accessorKey: 'luasLahan',
+  //   header: 'Luas Lahan',
+  //   cell: (props) => <span>{`${props.getValue()}`}</span>
+  // },
   {
     accessorKey: 'periodeBulanTanam',
     header: 'Bulan Tanam',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
-  {
-    accessorKey: 'periodeMusimTanam',
-    header: 'Musim Tanam',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
+  // {
+  //   accessorKey: 'periodeMusimTanam',
+  //   header: 'Musim Tanam',
+  //   cell: (props) => <span>{`${props.getValue()}`}</span>
+  // },
   {
     accessorKey: 'prakiraanBulanPanen',
     header: 'Prakiraan Bulan Panen',
@@ -50,11 +50,11 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
     header: 'Prakiraan Produksi Panen',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
-  {
-    accessorKey: 'statusKepemilikanLahan',
-    header: 'Status Kepemilikan Lahan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
+  // {
+  //   accessorKey: 'statusKepemilikanLahan',
+  //   header: 'Status Kepemilikan Lahan',
+  //   cell: (props) => <span>{`${props.getValue()}`}</span>
+  // },
   {
     accessorKey: 'createdAt',
     header: 'Ditambahkan pada',
@@ -67,7 +67,25 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
         minute: 'numeric'
       })}`}</span>
     )
-  }
+  },
+// Nama Kelompok Tani, Daerah (Kecamatan), Nomor WA/ Nomor HP petani
+  {
+    accessorKey: '',
+    header: 'Nama Kelompok Tani',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+
+  {
+    accessorKey: '',
+    header: 'Daerah (Kecamatan)',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+
+  {
+    accessorKey: '',
+    header: 'Nomor WA/ Nomor HP Petani',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
 ];
 
 export default function Tabel({ apiData }: { apiData: TTanamanPetani[] }) {
@@ -98,8 +116,8 @@ export default function Tabel({ apiData }: { apiData: TTanamanPetani[] }) {
     <div className="flex justify-center pt-12 w-full">
       <div className="container rounded-lg">
         <div className="pt-10">
-          <div className="text-center text-lg font-semibold !capitalize">
-            5 data terbaru statistik pertumbuhan pertanian
+          <div className="text-center text-lg lg:text-xl font-semibold !capitalize">
+            30 Tertinggi produk komoditas
           </div>
           <Table data={dataTable} columns={columns} />
         </div>

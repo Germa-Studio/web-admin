@@ -7,7 +7,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
     <div>
       <UserNavbar />
       <div className="my-28 -z-50">{children}</div>
-      <Footer isFull={true} />
+      <Footer isFull={true} sidebarOpen={false} />
     </div>
   );
 }

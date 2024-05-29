@@ -1,56 +1,79 @@
 import TextInput from '../../components/uiComponents/inputComponents/textInput';
 import InputImage from '../../components/inputImage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoadingAnimation from '../../components/loading';
 import { BsPersonGear } from 'react-icons/bs';
 import { CiLocationArrow1 } from 'react-icons/ci';
 import { GiVillage } from 'react-icons/gi';
+import { GetFooterDetail, UploadFooter } from '../../infrastucture/footer';
 
 export default function UbahLogo() {
   const [loading, setLoading] = useState(false);
-  const [logo, setLogo] = useState('');
+  const [file, setFile] = useState();
+  const [fileBaru, setFileBaru] = useState();
   const [judul, setJudul] = useState('');
   const [alt, setAlt] = useState('');
   const [meta, setMeta] = useState('');
+  const [resp, setResp] = useState();
+  const [key, setKey] = useState();
+  const [isNull, setIsnull] = useState(false)
+
+  useEffect(() => {
+    GetFooterDetail('logo').then((data) => {
+      if (data) {
+        console.log('get ', data);
+        setKey(data.footer.key);
+        setFile(data.footer.value);
+        setAlt(data.footer.category);
+      } else {
+        UploadFooter('logo', '', 'logo', '').then(() => {
+          setLoading(false);
+          GetFooterDetail('logo').then((data) => {
+            if (data) {
+              // console.log('socmed ', data);
+              setKey(data.footer.key);
+              setFile(data.footer.value);
+              setAlt(data.footer.category);
+              setLoading(false);
+              // setClickAdd(true);
+            }
+          });
+        });
+      }
+    });
+  }, [isNull]);
 
   const handleSubmit = () => {
     setLoading(true);
-    const data = {
-      logo,
-      judul,
-      alt,
-      meta
-    };
-    const formData = new FormData();
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-    // AddEventTani(formData).then(()=>setLoading(false))
+    // console.log("data ", key, fileBaru,alt)
+    UploadFooter(key, fileBaru, key, alt).then(() => setLoading(false));
   };
 
   return (
     <div>
       {loading && <LoadingAnimation />}
+      {console.log(key, file, judul, alt)}
       <div className="flex justify-between">
         <InputImage
           id="logo"
           name="logo"
-          value={logo}
+          imageActive={file}
           title="Upload Logo"
-          onChange={(e) => setLogo(e)}
+          onChange={(e) => setFileBaru(e)}
         />
         <div className="w-[45%]">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 text-red-600">
             <BsPersonGear size="30px" />
             <TextInput
               id="judul"
               name="judul"
               label="Judul Gambar"
-              value={judul}
-              onChange={(e) => setJudul(e.target.value)}
+              disabled
+              value={key}
+              // onChange={(e) => setJudul(e.target.value)}
             />
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 text-green-600">
             <CiLocationArrow1 size="30px" />
             <TextInput
               id="alt"
@@ -58,16 +81,6 @@ export default function UbahLogo() {
               label="Alt Gambar"
               value={alt}
               onChange={(e) => setAlt(e.target.value)}
-            />
-          </div>
-          <div className="flex space-x-2">
-            <GiVillage size="30px" />
-            <TextInput
-              id="meta"
-              name="meta"
-              label="Meta Gambar"
-              value={meta}
-              onChange={(e) => setMeta(e.target.value)}
             />
           </div>
         </div>

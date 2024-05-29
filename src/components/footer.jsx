@@ -5,125 +5,20 @@ import { MdWhatsapp, MdAttachEmail, MdOutlineFax } from 'react-icons/md';
 import { GiRotaryPhone } from 'react-icons/gi';
 import { FaInstagram, FaFacebook, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-
-// const socialMedia = [
-//   {
-//     name: 'Tiktok',
-//     url: 'https://tiktok.com',
-//     icon: '/icons/brand/tiktok.svg'
-//   },
-//   {
-//     name: 'Facebook',
-//     url: 'https://facebook.com',
-//     icon: '/icons/brand/facebook.svg'
-//   },
-//   {
-//     name: 'Instagram',
-//     url: 'https://instagram.com',
-//     icon: '/icons/brand/instagram.svg'
-//   },
-//   {
-//     name: 'Twitter',
-//     url: 'https://twitter.com',
-//     icon: '/icons/brand/x-twitter.svg'
-//   },
-//   {
-//     name: 'Youtube',
-//     url: 'https://youtube.com',
-//     icon: '/icons/brand/youtube.svg'
-//   }
-// ];
-
-// const menuPage = [
-//   {
-//     name: 'FAQ',
-//     url: '/faq'
-//   },
-//   {
-//     name: 'Term of use',
-//     url: '/term-of-use'
-//   },
-//   {
-//     name: 'Privacy Policy',
-//     url: '/privacy-policy'
-//   },
-//   {
-//     name: 'About Us',
-//     url: '/about-us'
-//   },
-//   {
-//     name: 'Contact',
-//     url: '/contact'
-//   }
-// ];
-
-// const feature = [
-//   {
-//     name: 'Statistik Pertanian',
-//     url: '/statistik-pertanian'
-//   },
-//   {
-//     name: 'Data Pertanian',
-//     url: '/data-pertanian'
-//   },
-//   {
-//     name: 'Info Pertanian',
-//     url: '/info-pertanian'
-//   },
-//   {
-//     name: 'Toko Pertanian',
-//     url: '/toko-pertanian'
-//   },
-//   {
-//     name: 'Info Penyuluh',
-//     url: '/info-penyuluh'
-//   },
-//   {
-//     name: 'Hak Akses User',
-//     url: '/hak-akses-user'
-//   },
-//   {
-//     name: 'Riwayat Aktivitas',
-//     url: '/riwayat-aktivitas'
-//   },
-//   {
-//     name: 'List Data Operator',
-//     url: '/list-data-operator'
-//   }
-// ];
-
-// const GetFeatures = () => {
-//   // round up the size
-//   const size = Math.ceil(feature.length / 2);
-//   return (
-//     <div className="grid grid-cols-2">
-//       <ol className="list-decimal mx-4">
-//         {feature.slice(0, size).map((item, index) => {
-//           return (
-//             <li key={index}>
-//               <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
-//                 {item.name}
-//               </a>
-//             </li>
-//           );
-//         })}
-//       </ol>
-//       <ol className="list-decimal mx-4" start={size + 1}>
-//         {feature.slice(size).map((item, index) => {
-//           return (
-//             <li key={index}>
-//               <a href={item.url} target="_blank" rel="noreferrer" className="text-sm font-bold">
-//                 {item.name}
-//               </a>
-//             </li>
-//           );
-//         })}
-//       </ol>
-//     </div>
-//   );
-// };
+import { useEffect, useState } from 'react';
+import { GetFooterDetail } from '../infrastucture/footer';
 
 const Footer = ({ sidebarOpen, isFull = false }) => {
+  const [file,setFile] = useState('')
+
+  useEffect(() => {
+    GetFooterDetail("logo").then((data) => {
+      if(data){
+        setFile(data.footer.value)
+      }
+    });
+  }, []);
+
   return (
     <footer className="relative left-0 right-0 z-[0] w-full flex justify-end">
       <div
@@ -137,7 +32,7 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
         )}>
         <div className="mx-[5%] flex flex-row justify-between text-white flex-wrap gap-6 md:gap-0">
           <div className="flex flex-col w-[100%] md:w-[30%] justify-between mr-15">
-            <Image src="/image/logo-navbar.png" alt="Logo Siketan" className='w-[70%]' />
+            <Image src={file} alt="Logo Siketan" className='w-[70%]' />
             <p className="text-[10px] text-justify">
               Sebuah inovasi website penyuluhan pertanian. Berbagi wawasan terbaru, praktik terbaik,
               dan solusi agraris. Antarmuka intuitif untuk akses mudah dan pembaruan informasi yang
@@ -155,7 +50,7 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
             </ul>
           </div>
           <div className="flex flex-col w-fit space-y-3">
-            <div className="text-sm font-bold">Hubungan Kami</div>
+            <div className="text-sm font-bold">Hubungi Kami</div>
             <div className="grid grid-rows-2 grid-flow-col gap-3 xl:gap-5 w-fit">
               <div className="flex flex-row gap-3 items-center w-fit">
                 <div className="w-8 h-8 bg-white rounded-md content-center flex items-center justify-center">
@@ -209,8 +104,3 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
   );
 };
 export default Footer;
-
-Footer.propTypes = {
-  sidebarOpen: PropTypes.bool,
-  isFull: PropTypes.bool
-};
