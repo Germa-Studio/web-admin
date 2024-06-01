@@ -119,7 +119,7 @@ export default function Tabel({ apiData }: { apiData: TTanamanPetani[] }) {
           <div className="text-center text-lg lg:text-xl font-semibold !capitalize">
             30 Tertinggi produk komoditas
           </div>
-          <Table data={dataTable} columns={columns} />
+          <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl/>
         </div>
       </div>
     </div>
