@@ -114,6 +114,7 @@ const VerifikasiUser = () => {
             </h3>
           </div>
           <div className="pt-0">
+            {loading && <LoadingAnimation />}
             <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
               <table className="min-w-full shadow-md">
                 <thead className="bg-[#079073] text-white">
@@ -180,7 +181,6 @@ const VerifikasiUser = () => {
                   ))}
                 </tbody>
               </table>
-              {loading && <LoadingAnimation />}
             </div>
           </div>
         </div>
