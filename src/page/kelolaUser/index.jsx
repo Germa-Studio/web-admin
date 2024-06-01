@@ -106,16 +106,10 @@ const VerifikasiUser = () => {
             </Button>
           </div>
         </Modal>
-        <div className="bg-[#D9D9D9] rounded-lg w-full">
-          <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
-            <h3 className="text-white text-2xl font-bold px-3">
-              {/* DATA TABEL PETANI */}
-              TABEL LIST USER
-            </h3>
-          </div>
+        <div className="w-full">
           <div className="pt-0">
             {loading && <LoadingAnimation />}
-            <div className="h-[calc(100vh-200px) p-6 flex justify-between items-center">
+            <div className="h-[calc(100vh-200px) flex justify-between items-center">
               <table className="min-w-full shadow-md">
                 <thead className="bg-[#079073] text-white">
                   <tr>

@@ -175,7 +175,7 @@ useEffect(() => {
                 </div>
                 <div className='rounded-es-lg rounded-ee-lg p-4 drop-shadow-xl border border-solid border-gray-400'>
                     { filter==='role' && 
-                        <div>
+                        <div className='flex flex-col gap-6'>
                             <SearchInput placeholder="Cari NIK User" />
                             <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
                         </div>
