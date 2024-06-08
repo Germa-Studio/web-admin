@@ -70,19 +70,19 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
   },
 // Nama Kelompok Tani, Daerah (Kecamatan), Nomor WA/ Nomor HP petani
   {
-    accessorKey: '',
+    accessorKey: 'dataPetani.kelompok.namaKelompok',
     header: 'Nama Kelompok Tani',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
 
   {
-    accessorKey: '',
+    accessorKey: 'dataPetani.kelompok.desa',
     header: 'Daerah (Kecamatan)',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
 
   {
-    accessorKey: '',
+    accessorKey: 'dataPetani.noTelp',
     header: 'Nomor WA/ Nomor HP Petani',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
