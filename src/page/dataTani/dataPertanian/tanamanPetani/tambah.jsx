@@ -114,6 +114,18 @@ export default function TambahTanamanPetani() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
 
+  // const tanamanPangan = ['Padi', 'Jagung', 'Kedelai'];
+  // const tanamanPerkebunan = ['Kopi', 'Karet', 'Kelapa'];
+  // const komoditasSemusim = ['Tomat', 'Wortel', 'Bawang'];
+  // const komoditasTahunan = ['Mangga', 'Durian', 'Apel'];
+
+  const isSemusimEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
+    kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
+    (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'BUAH');
+  const isTahunanEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
+    kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
+    (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'SAYUR');
+
   // const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(10);
   const location = useLocation();
@@ -324,7 +336,12 @@ export default function TambahTanamanPetani() {
                   <Radio.Group
                     className="[&>*]:mt-1 first:mt-0"
                     value={kategori}
-                    onChange={(value) => setKategori(value)}>
+                    onChange={(value) => {
+                      setKategori(value);
+                      setJenis('');
+                      setKomoditas('');
+                    }}
+                  >
                     <Radio label="Tanaman Pangan" value="TANAMAN PANGAN" />
                     <Radio label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
                     <Radio label="Tanaman Hortikultura" value="TANAMAN HORTIKULTURA" />
@@ -332,7 +349,11 @@ export default function TambahTanamanPetani() {
                       <Radio.Group
                         className="ml-8 [&>*]:mt-1"
                         value={jenis}
-                        onChange={(value) => setJenis(value)}>
+                        onChange={(value) => {
+                          setJenis(value);
+                          setKomoditas('');
+                        }}
+                      >
                         <Radio label="Jenis Buah" value="BUAH" />
                         <Radio label="Jenis Sayur" value="SAYUR" />
                       </Radio.Group>
@@ -342,11 +363,10 @@ export default function TambahTanamanPetani() {
                 <p className="mt-4">Komoditas Tanaman</p>
                 <Tabs defaultValue="semusim">
                   <Tabs.List>
-                    <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
+                    <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>Semusim</Tabs.Tab>
+                    <Tabs.Tab value="tahunan" disabled={!isTahunanEnabled}>Tahunan</Tabs.Tab>
                   </Tabs.List>
 
-                  {/* {periodeMusimTanam?.toLowerCase === 'tanaman semusim' ? ( */}
                   <Tabs.Panel value="semusim">
                     <Select
                       className="mt-2"
@@ -360,9 +380,10 @@ export default function TambahTanamanPetani() {
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
+                      disabled={!kategori}
                     />
                   </Tabs.Panel>
-                  {/* ) : ( */}
+
                   <Tabs.Panel value="tahunan">
                     <Select
                       className="mt-2"
@@ -371,14 +392,14 @@ export default function TambahTanamanPetani() {
                         kategori?.toUpperCase() === 'TANAMAN PANGAN'
                           ? tanamanPangan
                           : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
-                            ? ['Perkebunan Tembakau', 'Perkebunan Tebu'].map((buah) => `${buah}`)
-                            : komoditasTahunan.map((buah) => `${buah}`)
+                            ? ['Perkebunan Tembakau', 'Perkebunan Tebu']
+                            : komoditasTahunan
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
+                      disabled={!kategori}
                     />
                   </Tabs.Panel>
-                  {/* )} */}
                 </Tabs>
               </div>
             </div>
