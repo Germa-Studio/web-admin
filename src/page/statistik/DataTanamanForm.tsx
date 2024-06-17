@@ -33,7 +33,12 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { TKelompokTani } from '../../types/kelompokTani';
 import { SearchPoktan } from '../../infrastucture/searchApi';
 import { GetKelompokTaniById } from '../../infrastucture/kelompokTani';
-import { komoditasSemusim, komoditasTahunan } from '../../types/const';
+import {
+  komoditasSemusim,
+  komoditasTahunan,
+  tanamanPangan,
+  tanamanPerkebunan
+} from '../../types/const';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -313,12 +318,17 @@ export default function DataTanamanForm({
                   </Radio.Group>
                 </div>
                 <p className="mt-4">Komoditas Tanaman</p>
+
                 <Tabs
                   defaultValue={
                     komoditasSemusim.includes(newData.komoditas) ? 'semusim' : 'tahunan'
                   }>
                   <Tabs.List>
-                    <Tabs.Tab value="semusim" disabled={type === 'realisasi' || type === 'detail'}>
+                    <Tabs.Tab
+                      value="semusim"
+                      disabled={
+                        type === 'realisasi' || type === 'detail' || newData.kategori === 'sayur'
+                      }>
                       Semusim
                     </Tabs.Tab>
                     <Tabs.Tab value="tahunan" disabled={type === 'realisasi' || type === 'detail'}>
@@ -329,7 +339,6 @@ export default function DataTanamanForm({
                   <Tabs.Panel value="semusim">
                     <Select
                       className="mt-2"
-                      placeholder="-Tanaman Hortikultura Buah-"
                       value={newData.komoditas}
                       onChange={(e) =>
                         setNewData((prev) => ({
@@ -337,14 +346,22 @@ export default function DataTanamanForm({
                           komoditas: e ?? ''
                         }))
                       }
-                      disabled={type === 'realisasi' || type === 'detail'}
-                      data={komoditasSemusim.map((buah) => `Buah ${buah}`)}
+                      disabled={
+                        type === 'realisasi' || type === 'detail' || newData.kategori === 'sayur'
+                      }
+                      placeholder="Jenis Hasil Panen"
+                      data={
+                        newData.kategori?.toUpperCase() === 'PANGAN'
+                          ? tanamanPangan
+                          : newData.kategori?.toUpperCase() === 'PERKEBUNAN'
+                            ? tanamanPerkebunan
+                            : komoditasSemusim.slice(0, 4)
+                      }
                     />
                   </Tabs.Panel>
                   <Tabs.Panel value="tahunan">
                     <Select
                       className="mt-2"
-                      placeholder="-Tanaman Hortikultura Sayur-"
                       value={newData.komoditas}
                       onChange={(e) =>
                         setNewData((prev) => ({
@@ -353,7 +370,16 @@ export default function DataTanamanForm({
                         }))
                       }
                       disabled={type === 'realisasi' || type === 'detail'}
-                      data={komoditasTahunan.map((sayur) => `Sayur ${sayur}`)}
+                      placeholder="Jenis Hasil Panen"
+                      data={
+                        newData.kategori?.toUpperCase() === 'PANGAN'
+                          ? tanamanPangan
+                          : newData.kategori?.toUpperCase() === 'PERKEBUNAN'
+                            ? ['Perkebunan Tembakau', 'Perkebunan Tebu'].map((buah) => `${buah}`)
+                            : newData.kategori === 'sayur'
+                              ? komoditasTahunan.map((buah) => `${buah}`)
+                              : komoditasSemusim.slice(4)
+                      }
                     />
                   </Tabs.Panel>
                 </Tabs>
