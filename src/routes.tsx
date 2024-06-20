@@ -70,6 +70,7 @@ import LogActivity from './page/logAktivitas';
 import IndexOperator from './page/operator';
 import EditOperator from './page/operator/edit';
 import DetailOperator from './page/operator/detail';
+import IndexKelompok from './page/kelompok';
 import Profil from './page/profil/profil';
 import Pengaturan from './page/pengaturan/pengaturan';
 import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
@@ -83,6 +84,7 @@ import EditTokoTani from './page/tokoTani/edit';
 import UbahAkses from './page/kelolaUser/ubahAkses';
 import DetailPenyuluh from './page/penyuluhanTani/detailPenyuluh';
 import { GetFooterDetail } from './infrastucture/footer';
+// import IndexKelompok from './page/kelompok';
 
 const menu = [
   {
@@ -278,6 +280,20 @@ const menu = [
         name: 'Data Operator',
         icon: '/icons/edit-menu.svg',
         path: '/list-operator',
+        list_sub_roles: ['operator super admin', 'operator admin']
+      }
+    ],
+    list_roles: ['operator super admin', 'operator admin']
+  },
+  {
+    id: 'list-kelompok',
+    name: 'Info Kelompok',
+    icon: '/icons/users.svg',
+    sub: [
+      {
+        name: 'Data Kelompok',
+        icon: '/icons/edit-menu.svg',
+        path: '/list-kelompok',
         list_sub_roles: ['operator super admin', 'operator admin']
       }
     ],
@@ -620,6 +636,8 @@ const RoutesPath = () => {
           <Route path="/data-operator/edit/:id" element={<EditOperator />} />
           <Route path="/data-operator/detail/:id" element={<DetailOperator />} />
           <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
+          {/*All about Kelompok*/}
+          <Route path="/list-kelompok" element={<IndexKelompok />} />
           {/* Log Aktivitas */}
           <Route path="/log-aktivitas/" element={<LogActivity />} />
           <Route path="/log-aktivitas/data-sampah" element={<DataSampah />} />

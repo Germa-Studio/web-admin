@@ -105,6 +105,12 @@ export default function EditTanamanPetani() {
   const [luasLahan, setLuasLahan] = useState();
   const [kategori, setKategori] = useState('');
   const [jenis, setJenis] = useState('');
+  const isSemusimEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
+  kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
+  (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'BUAH');
+  const isTahunanEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
+  kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
+  (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'SAYUR');
   const [komoditas, setKomoditas] = useState('');
   const [periodeMusimTanam, setPeriodeMusimTanam] = useState('');
   const [periodeBulanTanam, setPeriodeBulanTanam] = useState('');
@@ -392,13 +398,13 @@ export default function EditTanamanPetani() {
                 <p className="mt-4">Komoditas Tanaman</p>
                 <Tabs defaultValue="semusim">
                   <Tabs.List>
-                    <Tabs.Tab value="semusim">Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
+                    <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>Semusim</Tabs.Tab>
+                    <Tabs.Tab value="tahunan" >Tahunan</Tabs.Tab>
                   </Tabs.List>
 
-                  {/* {periodeMusimTanam?.toLowerCase === 'tanaman semusim' ? ( */}
                   <Tabs.Panel value="semusim">
-                    <Select
+                    <Select 
+                      disabled={!isSemusimEnabled}
                       className="mt-2"
                       placeholder="Jenis Hasil Panen"
                       data={
@@ -406,13 +412,14 @@ export default function EditTanamanPetani() {
                           ? tanamanPangan
                           : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
                             ? tanamanPerkebunan
-                            : komoditasSemusim
+                            : komoditasSemusim.slice(0, 4)
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
+                      // disabled={!kategori}
                     />
                   </Tabs.Panel>
-                  {/* ) : ( */}
+
                   <Tabs.Panel value="tahunan">
                     <Select
                       className="mt-2"
@@ -421,14 +428,16 @@ export default function EditTanamanPetani() {
                         kategori?.toUpperCase() === 'TANAMAN PANGAN'
                           ? tanamanPangan
                           : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
-                            ? ['Perkebunan Tembakau', 'Perkebunan Tebu'].map((buah) => `${buah}`)
-                            : komoditasTahunan.map((buah) => `${buah}`)
+                            ? ['Perkebunan Tembakau', 'Perkebunan Tebu']
+                            : jenis?.toUpperCase() === 'BUAH'
+                              ? komoditasSemusim.slice(4)
+                              : komoditasTahunan
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
+                      disabled={!kategori}
                     />
                   </Tabs.Panel>
-                  {/* )} */}
                 </Tabs>
               </div>
             </div>

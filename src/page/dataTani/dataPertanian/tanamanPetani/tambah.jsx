@@ -364,11 +364,12 @@ export default function TambahTanamanPetani() {
                 <Tabs defaultValue="semusim">
                   <Tabs.List>
                     <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan" disabled={!isTahunanEnabled}>Tahunan</Tabs.Tab>
+                    <Tabs.Tab value="tahunan" >Tahunan</Tabs.Tab>
                   </Tabs.List>
 
                   <Tabs.Panel value="semusim">
-                    <Select
+                    <Select 
+                      disabled={!isSemusimEnabled}
                       className="mt-2"
                       placeholder="Jenis Hasil Panen"
                       data={
@@ -376,11 +377,11 @@ export default function TambahTanamanPetani() {
                           ? tanamanPangan
                           : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
                             ? tanamanPerkebunan
-                            : komoditasSemusim
+                            : komoditasSemusim.slice(0, 4)
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
-                      disabled={!kategori}
+                      // disabled={!kategori}
                     />
                   </Tabs.Panel>
 
@@ -393,7 +394,9 @@ export default function TambahTanamanPetani() {
                           ? tanamanPangan
                           : kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN'
                             ? ['Perkebunan Tembakau', 'Perkebunan Tebu']
-                            : komoditasTahunan
+                            : jenis?.toUpperCase() === 'BUAH'
+                              ? komoditasSemusim.slice(4)
+                              : komoditasTahunan
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
