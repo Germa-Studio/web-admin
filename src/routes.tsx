@@ -550,7 +550,7 @@ const Path = () => {
           </div>
         </div>
       </div>
-      <Footer sidebarOpen={sidebarOpen} />
+      {/* <Footer sidebarOpen={sidebarOpen} /> */}
     </div>
   );
 };

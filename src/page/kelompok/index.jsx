@@ -114,7 +114,7 @@ const IndexKelompok = () => {
       <h3 className="text-white text-2xl font-bold mt-4">DATA KELOMPOK</h3>
       <div className="relativemt-6 mt-4 flex items-center w-full">
         
-        <div className="bg-[#D9D9D9] rounded-lg w-full">
+        <div className="rounded-lg w-full">
           <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
             <h3 className="text-white text-2xl font-bold px-3">TABEL DATA KELOMPOK</h3>
             <div className="flex gap-4 items-center">

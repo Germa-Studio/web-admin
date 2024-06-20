@@ -125,27 +125,33 @@ export default function UbahDesain() {
 
   const handleAdd = () => {
     const index = data2.length+1;
-    UploadFooter(`banner-${index}`, '', `link ${index}`, 'banner').then(() => {
+    UploadFooter(`banner-${index}`, '', `banner ${index}`, 'banner').then(() => {
       setLoading(false);
       setClickAdd(!clickAdd);
     });
   };
 
-  const handleChange = (id, key, value) => {
+  const handleChange = (id, key,file, value) => {
     const index = data2.findIndex((item) => item.id === id);
-    console.log("change ", id, key, value)
+    console.log("change ", id, key, file, value)
     if (index !== -1) {
+      console.log("masuk")
       setData2((prevData) => {
         const newData = [...prevData];
-        newData[index][key] = value;
+        newData[index].file = file;
+        console.log("file",newData[index].file)
+        console.log("tes",newData[index])
+        console.log("new",newData)
         return newData;
       });
+      // console.log(data2)
     }
   };
 
   const handleSubmit2 = () => {
     setLoading(true);
     // console.log("data ", key, fileBaru,alt)
+    console.log("new",data2)
     data2.map(data=>(
       UploadFooter(data.key, data.file, data.value, data.category).then(()=>setLoading(false))
     ))
@@ -203,8 +209,8 @@ export default function UbahDesain() {
         {loading && <LoadingAnimation />}
         <div className="text-lg text-green-primary font-extrabold mb-4">BANNER WEBSITE</div>
         <div className="flex flex-col gap-2">
-          {data2?.map((data2, index) => (
-            <Banner key={data2.id} data={data2} onChange={handleChange} onDelete={handleDeleteBanner} idx={index} />
+          {data2?.map((dataa2, index) => (
+            <Banner key={dataa2.id} data={dataa2} onChange={handleChange} onDelete={handleDeleteBanner} idx={index} />
           ))}
         </div>
         <div className="mt-4 flex gap-3 justify-end">

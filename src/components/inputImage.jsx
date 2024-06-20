@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IconPhoto } from '@tabler/icons-react';
 import PropTypes from 'prop-types';
 
-function InputImage({ imageActive, onChange, title }) {
+function InputImage({ imageActive, onChange, title, id }) {
   const [image, setImage] = useState('');
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -11,7 +11,7 @@ function InputImage({ imageActive, onChange, title }) {
   };
   return (
     <label
-      htmlFor="imageInput"
+      htmlFor={`imageInput-${id}`}
       className="cursor-pointer border-solid border-2 border-slate-800 w-80 h-60 rounded-2xl">
       {image ? (
         <img src={image} className="w-full h-full rounded-2xl object-cover" />
@@ -28,7 +28,7 @@ function InputImage({ imageActive, onChange, title }) {
       )}
       <input
         type="file"
-        id="imageInput"
+        id={`imageInput-${id}`}
         accept="image/*"
         className="hidden"
         onChange={(e) => handleImageChange(e)}

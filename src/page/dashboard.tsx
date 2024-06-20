@@ -151,7 +151,7 @@ export default function Dashboard() {
     }
   }, [resp]);
   return (
-    <div className="h-screen">
+    <div className="">
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold my-4">Dashboard</h3>
       <div className="grid gap-8 grid-cols-2">
@@ -232,7 +232,9 @@ export default function Dashboard() {
           <FaPlus />
         </Link>
       </div>
-      <Table data={dataTable} columns={columns} />
+      <div className="pt-0">
+        <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
+      </div>
     </div>
   );
 }

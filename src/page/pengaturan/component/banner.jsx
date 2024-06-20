@@ -22,11 +22,11 @@ export default function Banner(props) {
       </div>
       {/* <div>{data.id}</div> */}
       <InputImage
-        id="logo"
+        id={data.id}
         name="logo"
-        value={data.file}
+        imageActive={data.value}
         title="Masukkan Foto"
-        onChange={(e) => onChange(data.id,"file",e.target.value)}
+        onChange={(e) => onChange(data.id,"file",e,data.value)}
       />
       <div className="w-[45%] flex flex-col items-end gap-6">
         <div className='w-[30%]'>

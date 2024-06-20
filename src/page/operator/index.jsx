@@ -187,7 +187,7 @@ const IndexOperator = () => {
             </Button>
           </div>
         </Modal>
-        <div className="bg-[#D9D9D9] rounded-lg w-full">
+        <div className="rounded-lg w-full">
           <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
             <h3 className="text-white text-2xl font-bold px-3">TABEL DATA OPERATOR</h3>
             <div className="flex gap-4 items-center">

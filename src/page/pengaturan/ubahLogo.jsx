@@ -45,7 +45,7 @@ export default function UbahLogo() {
 
   const handleSubmit = () => {
     setLoading(true);
-    // console.log("data ", key, fileBaru,alt)
+    console.log("data ", key, fileBaru,alt)
     UploadFooter(key, fileBaru, key, alt).then(() => setLoading(false));
   };
 
