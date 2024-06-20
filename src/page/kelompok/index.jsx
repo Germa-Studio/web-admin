@@ -2,23 +2,19 @@ import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
-import { GetDaftarOperator, DeleteOperator, UploadDataOperator } from '@/infrastruture';
+import { GetDataKelompok, UploadKelompok } from '@/infrastruture';
 // import ExcelComponent from '../../components/exelComponent';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
 // import LoadingAnimation from '../../components/loadingSession';
 import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
-import { ImPencil } from 'react-icons/im';
-import { IoEyeOutline } from 'react-icons/io5';
-import { MdDeleteOutline } from 'react-icons/md';
-import { setUser } from '../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
-  { title: 'Data Operator' },
-  { title: 'Tabel Daftar Operator' }
+  { title: 'Data Kelompok' },
+  { title: 'Tabel Daftar Kelompok' }
 ].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
     {item.title}
@@ -32,38 +28,32 @@ const columns = [
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'nik',
-    header: 'NIK Operator',
+    accessorKey: 'gapoktan',
+    header: 'Gapoktan',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'nama',
-    header: 'Nama Operator',
+    accessorKey: 'namaKelompok',
+    header: 'Nama Kelompok',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'noTelp',
-    header: 'Kontak Operator',
+    accessorKey: 'desa',
+    header: 'Desa',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'alamat',
-    header: 'Alamat Operator',
+    accessorKey: 'kecamatan',
+    header: 'Kecamatan',
     cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'actions',
-    header: 'Aksi',
-    cell: (props) => props.row.original.actions
   }
 ];
 
-const IndexOperator = () => {
+const IndexKelompok = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   // const [datas, setDatas] = useState([]);
   // const [loading, setLoading] = useState(true);
-  const [modalDeleteData, setModalDeleteData] = useState(false);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
   const fileInputRef = useRef();
@@ -84,33 +74,24 @@ const IndexOperator = () => {
   // const sortType = searchParams.get('sort_type') ?? '';
 
   useEffect(() => {
-    // setLoading(true);
-    GetDaftarOperator(page, limit)
+    GetDataKelompok(page, limit)
       .then((res) => {
-        setResp(res);
-        // console.log(res)
-        // setDatas(res.data);
-        // setLoading(false);
+        if (res) {
+          setResp(res);
+          console.log(res);
+        } else {
+          console.log("Response is undefined");
+        }
       })
-      .catch(() => {
-        //   console.log(err);
-        // setLoading(false);
+      .catch((error) => {
+        console.error("API call failed:", error);
       });
-  }, [limit, page]);
-  // const handleFilterChange = (e, column) => {
-  //   setFilters((prevFilters) => ({
-  //     ...prevFilters,
-  //     [column]: e.target.value
-  //   }));
-  // };
-  const handleDeleteOperator = (ids) => {
-    DeleteOperator(ids);
-  };
+  }, [page, limit]);
   function handleFileChange(event) {
     if (!event.target.files) return;
 
     const file = event.target.files[0];
-    UploadDataOperator(file).then(() => {
+    UploadKelompok(file).then(() => {
       window.location.reload();
     });
   }
@@ -122,31 +103,6 @@ const IndexOperator = () => {
         data: resp.data.map((item, index) => ({
           ...item,
           no: resp.from + index,
-          actions: (
-            <div className="flex gap-4">
-              <Link to={`/data-operator/detail/${item.id}`}>
-                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                  <IoEyeOutline className="h-6 w-6 text-white" />
-                </div>
-              </Link>
-              <Link to={`/data-operator/edit/${item.id}`}>
-                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
-                  <ImPencil className="h-[18px] w-[18px] text-white" />
-                </div>
-              </Link>
-              
-              {user?.peran === 'operator super admin' &&(
-                <button
-                  onClick={() => {
-                    setModalDeleteData(item?.id);
-                  }}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                    <MdDeleteOutline className="h-6 w-6 text-white" />
-                  </div>
-                </button>
-              )}
-            </div>
-          )
         }))
       });
     }
@@ -155,41 +111,12 @@ const IndexOperator = () => {
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
-      <h3 className="text-white text-2xl font-bold mt-4">DATA OPERATOR</h3>
-      <SearchInput placeholder="Cari NIK PETANI / POKTAN" />
+      <h3 className="text-white text-2xl font-bold mt-4">DATA KELOMPOK</h3>
       <div className="relativemt-6 mt-4 flex items-center w-full">
-        <Modal
-          opened={modalDeleteData}
-          onClose={() => setModalDeleteData(false)}
-          withCloseButton={false}
-          centered>
-          <Text>Apakah Kamu Yakin Akan Menghapus Data Ini ?</Text>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
-            <Button
-              color="cyan"
-              style={{
-                color: 'white',
-                backgroundColor: '#303A47',
-                marginRight: 8
-              }}
-              onClick={() => setModalDeleteData(false)}>
-              Cancel
-            </Button>
-            <Button
-              color="cyan"
-              style={{ color: 'white', backgroundColor: 'red' }}
-              type="submit"
-              onClick={() => {
-                handleDeleteOperator(modalDeleteData);
-                setModalDeleteData(false);
-              }}>
-              Delete
-            </Button>
-          </div>
-        </Modal>
+        
         <div className="bg-[#D9D9D9] rounded-lg w-full">
           <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
-            <h3 className="text-white text-2xl font-bold px-3">TABEL DATA OPERATOR</h3>
+            <h3 className="text-white text-2xl font-bold px-3">TABEL DATA KELOMPOK</h3>
             <div className="flex gap-4 items-center">
               <input
                 type="file"
@@ -198,11 +125,11 @@ const IndexOperator = () => {
                 onChange={handleFileChange}
                 accept=".xlsx,.xls"
               />
-              <Link to={`/list-operator/tambah`}>
+              {/* <Link to={`/list-operator/tambah`}>
                 <button className="ms-5 rounded-md bg-[#86BA34] text-white p-1 px-5 w-30 h-10">
                   <FontAwesomeIcon className="text-xl" icon={faPlus} />
                 </button>
-              </Link>
+              </Link> */}
               <Button
                 className="bg-[#F29D0E]"
                 onClick={() => {
@@ -225,4 +152,4 @@ const IndexOperator = () => {
   );
 };
 
-export default IndexOperator;
+export default IndexKelompok;

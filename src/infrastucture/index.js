@@ -126,6 +126,35 @@ export const GetKelompok = async () =>{
   }
 }
 
+export const GetDataKelompok = async  (page, limit) => {
+  try {
+    const response = await Api.get(`/daftar-kelompok?page=${page}&limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error in GetDataKelompok:", error);
+    if (error.response) {
+      console.error("Error response:", error.response.data.message);
+    }
+    SweatAlert(String(error.response ? error.response.data.message : "Unknown error"), 'error');
+    throw error;
+  }
+}
+
+export const UploadKelompok = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await Api.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    SweatAlert(String(response.data.message), 'success');
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
 
 // data tani
 export const DaftarTaniAdd = async (data) => {
@@ -257,6 +286,8 @@ export const UploadTanamanPetani = async (file) => {
     SweatAlert(String(error.response.data.message), 'error');
   }
 };
+
+
 // opsi penyuluh untuk pendaftaran petani
 export const GetOpsiPenyuluh = async () => {
   try {
