@@ -5,6 +5,7 @@ import Table from './table/Table';
 import { getLogActivity } from '../../infrastucture/logActivity';
 import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import { DataPerson } from '../../@types/toko';
+import { useLocation } from 'react-router-dom';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }, { title: 'Log Aktivitas' }].map(
   (item, index) => (
@@ -88,6 +89,8 @@ const LogActivity = () => {
     | undefined
   >();
 
+  const location = useLocation();
+
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
@@ -116,7 +119,7 @@ const LogActivity = () => {
           const time = dateArr[1].split('.')[0];
 
           return {
-            no: index + 1,
+            no: resp.from + index,
             nama: item.tbl_akun.nama,
             role: item.tbl_akun.peran,
             aktivitas: msg + msg2,
