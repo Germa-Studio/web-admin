@@ -1,17 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 // import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
-import Loading from '../../components/loading';
-import { AddPenjual, CekNiP, CekNik, DetailProductsPetani, EditPenjual } from '../../infrastucture';
-import MainCard from '../../components/MainCard';
-import { TPenyuluh, TPetani } from '../../types/petani';
+import { faClose, faSave, faSearch } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
 import { Link, useParams } from 'react-router-dom';
 import { TokoTani } from '../../@types/toko';
-import clsx from 'clsx';
+import MainCard from '../../components/MainCard';
+import Loading from '../../components/loading';
+import { AddPenjual, CekNiP, CekNik, DetailProductsPetani, EditPenjual } from '../../infrastucture';
+import { TPenyuluh, TPetani } from '../../types/petani';
 
 const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
   const [NIK, setNIK] = React.useState('');
@@ -176,8 +174,11 @@ const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
               type="button"
               onClick={() => handleCLick()}
               className={clsx(
-                'text-white h-fit bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ml-auto',
-                type === 'detail' && 'hidden'
+                'text-white h-fit bg-green-500 dark:bg-green-600 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ml-auto disabled:opacity-50 disabled:cursor-not-allowed',
+                type === 'detail' && 'hidden',
+                NIK &&
+                  profesiPenjual &&
+                  'hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
               )}
               disabled={!NIK || !profesiPenjual}>
               <FontAwesomeIcon icon={faSearch} className="mr-2" />
