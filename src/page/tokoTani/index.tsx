@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import { Button, Modal, Text } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
-import { Modal, Text, Button } from '@mantine/core';
-import { Link } from 'react-router-dom';
-import { IoEyeOutline } from 'react-icons/io5';
+import React, { useEffect } from 'react';
 import { ImPencil } from 'react-icons/im';
+import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { TableTokoTani, TokoTani } from '../../@types/toko';
-import { PaginatedRespApiData } from '../../types/paginatedRespApi';
-import { deleteTokoTani, getTokoTani } from '../../infrastucture/toko';
 import Table from '../../components/table/Table';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../infrastucture/redux/state/stateSlice';
+import API from '../../infrastucture/base';
 import { RootState } from '../../infrastucture/redux/store';
+import { deleteTokoTani } from '../../infrastucture/toko';
+import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 
 const columns: ColumnDef<TableTokoTani>[] = [
   {
@@ -77,12 +77,22 @@ function TokoPetani() {
   const [resp, setResp] = React.useState<PaginatedRespApiData<TokoTani> | undefined>();
 
   // const [loading, setLoading] = useState(true);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get('page') || 1;
+  const limit = searchParams.get('limit') || 10;
+  const search_query = searchParams.get('search_query') || '';
+  const sort_key = searchParams.get('sort_key') || 'created_at';
+  const sort_type = searchParams.get('sort_type') || 'desc';
+
   useEffect(() => {
-    getTokoTani().then((res) => {
+    const url = `/product-petani-no-auth?page=${page}&limit=${limit}&search_query=${search_query}&sort_key=${sort_key}&sort_type=${sort_type}`;
+    API.get(url).then((res) => {
       setResp(res.data);
-      // setLoading(false);
     });
-  }, []);
+  }, [limit, page, search_query, sort_key, sort_type]);
 
   useEffect(() => {
     if (resp) {
@@ -103,21 +113,23 @@ function TokoPetani() {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              {user?.peran !== 'penyuluh' && (<button
-                onClick={() => {
-                  setModalDeleteData(true);
-                  setSelectedId(item.id);
-                }}>
-                <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                  <MdDeleteOutline className="h-6 w-6 text-white" />
-                </div>
-              </button>)}
+              {user?.peran !== 'penyuluh' && (
+                <button
+                  onClick={() => {
+                    setModalDeleteData(true);
+                    setSelectedId(item.id);
+                  }}>
+                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                    <MdDeleteOutline className="h-6 w-6 text-white" />
+                  </div>
+                </button>
+              )}
             </div>
           )
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
 
   const handleDelete = () => {
     if (selectedId) deleteTokoTani(selectedId);
