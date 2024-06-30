@@ -10,6 +10,7 @@ import {
   restoreTrashActivity
 } from '../../infrastucture/logActivity';
 import { MdDeleteOutline, MdOutlineRestore } from 'react-icons/md';
+import { useLocation } from 'react-router-dom';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }, { title: 'Data Sampah' }].map(
   (item, index) => (
@@ -78,6 +79,8 @@ const DataSampah = () => {
       }>
     | undefined
   >();
+
+  const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
 
