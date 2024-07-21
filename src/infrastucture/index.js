@@ -30,9 +30,9 @@ export const Login = async (data) => {
     SweatAlert(String(error.response.data.message), 'error');
   }
 };
-export const ListUser = async () => {
+export const ListUser = async (page, limit) => {
   try {
-    const response = await Api.get('/verify');
+    const response = await Api.get(`/verify?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');

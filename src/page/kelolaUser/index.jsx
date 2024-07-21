@@ -26,13 +26,18 @@ const VerifikasiUser = () => {
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [modalVerifikasiUser, setVerifikasiUser] = useState(false);
+  
   useEffect(() => {
-    ListUser().then((data) => {
-      setDatas(data.data);
-      setLoading(false);
-    });
-  }, []);
-  console.log(user)
+		const searchParams = new URLSearchParams(location.search);
+		const page = searchParams.get('page') ?? 1;
+		const limit = searchParams.get('limit') ?? 10;
+
+		ListUser(page, limit).then((data) => {
+			setDatas(data.data);
+			setLoading(false);
+			console.log(data.data);
+		});
+	}, [location.search]);
 
   const handleDeleteUser = (ids) => {
     DeleteUser(ids);
