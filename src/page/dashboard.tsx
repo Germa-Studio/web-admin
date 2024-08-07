@@ -9,7 +9,7 @@ import { SearchPoktan } from '../infrastucture/searchApi';
 import { PaginatedRespApiData } from '../types/paginatedRespApi';
 import { TDataTanaman, TTableDataTanaman } from '../types/dataTanaman';
 import { DeleteStatistikTanamanById, GetStatistikTanamanAll } from '../infrastucture/statistic';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { IoEyeOutline } from 'react-icons/io5';
 import { ImPencil } from 'react-icons/im';
 import { MdDeleteOutline, MdOutlineTipsAndUpdates } from 'react-icons/md';
@@ -95,17 +95,27 @@ export default function Dashboard() {
     tips: 0
   });
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get('page') ?? 1;
+  const limit = searchParams.get('limit') ?? 10;
+
+  const searchQuery = searchParams.get('search_query') ?? '';
+  const sortKey = searchParams.get('sort_key') ?? '';
+  const sortType = searchParams.get('sort_type') ?? '';
+
   useEffect(() => {
     GetStatistikTanamanAll(poktan?.id, {
-      page: 1,
-      limit: 10,
+      page: Number(page),
+      limit: Number(limit),
       search: '',
       sortType: 'ASC',
       sortBy: ''
     }).then((res) => {
       setResp(res?.data);
     });
-  }, [poktan]);
+  }, [poktan, page, limit, searchQuery, sortKey, sortType]);
 
   useEffect(() => {
     GetDashboardInfo().then((res) => {
@@ -119,7 +129,7 @@ export default function Dashboard() {
         ...resp,
         data: resp.data.map((item, index) => ({
           ...item,
-          no: index + 1,
+          no: resp.from + index,
           actions: (
             <div className="flex gap-4">
               <Link to={`/statistik/${item.id}`}>

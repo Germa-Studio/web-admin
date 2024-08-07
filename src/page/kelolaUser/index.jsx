@@ -8,6 +8,8 @@ import { VerifyingUser, DeleteUser } from '../../infrastucture';
 import { setUser } from '../../infrastucture/redux/state/stateSlice';
 // import { RootState } from './infrastucture/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import Table from '../../components/table/Table';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -22,37 +24,103 @@ const breadcrumbItems = [
 const VerifikasiUser = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
-  const [datas, setDatas] = useState([]);
+  const [resp, setResp] = useState();
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [modalVerifikasiUser, setVerifikasiUser] = useState(false);
-  
-  useEffect(() => {
-		const searchParams = new URLSearchParams(location.search);
-		const page = searchParams.get('page') ?? 1;
-		const limit = searchParams.get('limit') ?? 10;
+  const [searchParams, setSearchParams] = useSearchParams();
 
-		ListUser(page, limit).then((data) => {
-			setDatas(data.data);
-			setLoading(false);
-			console.log(data.data);
-		});
-	}, [location.search]);
+  const page = searchParams.get('page') ?? 1;
+  const limit = searchParams.get('limit') ?? 10;
+
+  useEffect(() => {
+    ListUser(page, limit).then((data) => {
+      setResp(data);
+      setLoading(false);
+    });
+  }, [page, limit]);
 
   const handleDeleteUser = (ids) => {
     DeleteUser(ids);
-  };
-  const handleVerify = (ids) => {
-    VerifyingUser(ids);
-    // refresh page
     window.location.reload();
   };
+
+  const handleVerify = (ids) => {
+    VerifyingUser(ids);
+    window.location.reload();
+  };
+
+  const columns = [
+    {
+      accessorKey: 'no',
+      header: 'NO',
+      cell: (info) => info.row.index + 1,
+    },
+    {
+      accessorKey: 'nama',
+      header: 'NAMA',
+    },
+    {
+      accessorKey: 'NIK',
+      header: 'NIK',
+    },
+    {
+      accessorKey: 'peran',
+      header: 'PROFESI',
+    },
+    {
+      accessorKey: 'no_wa',
+      header: 'NOMOR TELEPON',
+    },
+    {
+      accessorKey: 'email',
+      header: 'EMAIL',
+    },
+    {
+      accessorKey: 'isVerified',
+      header: 'STATUS AKUN',
+      cell: (info) => (info.getValue() ? 'Verified' : 'Not Verified'),
+    },
+    {
+      accessorKey: 'actions',
+      header: 'Action',
+      cell: (info) => {
+        const item = info.row.original;
+        return user?.peran !== 'operator poktan' ? (
+          item.isVerified ? (
+            <Tooltip label="Sudah Terverifikasi">
+              <button className="disabled cursor-pointer text-green-800">
+                Sudah Terverifikasi
+              </button>
+            </Tooltip>
+          ) : (
+            <>
+              <Tooltip label="Terima">
+                <FontAwesomeIcon
+                  onClick={() => setVerifikasiUser(item.id)}
+                  icon={faCheck}
+                  className="cursor-pointer text-green-500 hover:text-green-600 mr-2"
+                />
+              </Tooltip>
+              <Tooltip label="Tolak">
+                <FontAwesomeIcon
+                  onClick={() => setModalDeleteData(item.id)}
+                  icon={faXmark}
+                  className="cursor-pointer text-red-500 hover:text-red-600"
+                />
+              </Tooltip>
+            </>
+          )
+        ) : null;
+      },
+    },
+  ];
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">AKSES USER</h3>
-      {/* <SearchInput placeholder="Cari NIK PETANI / POKTAN" /> */}
-      <div className="relativemt-6 mt-4 flex items-center w-full">
+      <div className="relative mt-4 flex items-center w-full">
         <Modal
           opened={modalDeleteData}
           onClose={() => setModalDeleteData(false)}
@@ -112,76 +180,15 @@ const VerifikasiUser = () => {
           </div>
         </Modal>
         <div className="w-full">
-          <div className="pt-0">
-            {loading && <LoadingAnimation />}
-            <div className="h-[calc(100vh-200px) flex justify-between items-center">
-              <table className="min-w-full shadow-md">
-                <thead className="bg-[#079073] text-white">
-                  <tr>
-                    <th className="sticky top-0 px-4 py-2 truncate">NO</th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">NAMA</th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">NIK</th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">PROFESI</th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">NOMOR TELEPON</th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">EMAIL</th>
-                    <th className="sticky top-0 px-4 py-2 truncate ">STATUS AKUN</th>
-                    {/* <th className="sticky top-0 px-4 py-2 truncate ">
-                      PEMBINA
-                    </th> */}
-                    {user?.peran !== 'operator poktan' && (
-                      <th className="sticky top-0 px-4 py-2 truncate">Action</th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {datas?.map((item, index) => (
-                    <tr
-                      key={item?.id}
-                      className={`${index % 2 === 0 ? 'bg-white text-black font-medium' : 'bg-[#D1D9D3] text-emerald-800 font-medium'}`}>
-                      <td className="px-4 py-2 text-center ">{index + 1}</td>
-                      <td className="px-4 py-2 text-center ">{item?.nama}</td>
-                      <td className="px-4 py-2 text-center ">{item?.NIK}</td>
-                      <td className="px-4 py-2 text-center ">{item?.peran}</td>
-                      <td className="px-4 py-2 text-center ">{item?.no_wa}</td>
-                      <td className="px-4 py-2 text-center ">{item.email}</td>
-                      <td className="px-4 py-2 text-center ">
-                        {item?.isVerified == true ? 'Verified' : 'Not Verified'}
-                      </td>
-                      {/* <td className="px-4 py-2 text-center ">{item?.penyuluh}</td> */}
-                      {user?.peran !== 'operator poktan'  && (  
-                        <td className="px-2 py-2 text-center">
-                          {item?.isVerified ? (
-                            <Tooltip label="Sudah Terverifikasi">
-                              <button className="disabled cursor-pointer text-green-800">
-                                Sudah Terverifikasi
-                              </button>
-                            </Tooltip>
-                          ) : (
-                            <>
-                              <Tooltip label="Terima">
-                                <FontAwesomeIcon
-                                  onClick={() => setVerifikasiUser(item?.id)}
-                                  icon={faCheck}
-                                  className="cursor-pointer text-green-500 hover:text-green-600 mr-2"
-                                />
-                              </Tooltip>
-                              <Tooltip label="Tolak">
-                                <FontAwesomeIcon
-                                  onClick={() => setModalDeleteData(item?.id)}
-                                  icon={faXmark}
-                                  className="cursor-pointer text-red-500 hover:text-red-600"
-                                />
-                              </Tooltip>
-                            </>
-                          )}
-                        </td>
-                      )}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          {loading && <LoadingAnimation />}
+          <Table
+            className="pt-0"
+            data={resp}
+            columns={columns}
+            isLoading={loading}
+            withPaginationCount
+            withPaginationControl
+          />
         </div>
       </div>
     </div>
