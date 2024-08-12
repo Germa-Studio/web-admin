@@ -78,7 +78,9 @@ export const Logout = () => {
   window.location = '/login';
 };
 
-{/* @description Routes for Hak Akses */}
+{
+  /* @description Routes for Hak Akses */
+}
 
 export const GetPeran = async (page, limit) => {
   try {
@@ -96,7 +98,7 @@ export const UbahPeran = async (id, data) => {
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }
-}
+};
 
 // cekNik
 export const CekNik = async (data) => {
@@ -116,29 +118,31 @@ export const CekNiP = async (data) => {
   }
 };
 
-{/* @description All about Kelompok*/}
-export const GetKelompok = async () =>{
+{
+  /* @description All about Kelompok*/
+}
+export const GetKelompok = async () => {
   try {
     const response = await Api.get('/kelompok');
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }
-}
+};
 
-export const GetDataKelompok = async  (page, limit) => {
+export const GetDataKelompok = async (page, limit) => {
   try {
     const response = await Api.get(`/daftar-kelompok?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
-    console.error("Error in GetDataKelompok:", error);
+    console.error('Error in GetDataKelompok:', error);
     if (error.response) {
-      console.error("Error response:", error.response.data.message);
+      console.error('Error response:', error.response.data.message);
     }
-    SweatAlert(String(error.response ? error.response.data.message : "Unknown error"), 'error');
+    SweatAlert(String(error.response ? error.response.data.message : 'Unknown error'), 'error');
     throw error;
   }
-}
+};
 
 export const UploadKelompok = async (file) => {
   try {
@@ -154,7 +158,6 @@ export const UploadKelompok = async (file) => {
     SweatAlert(String(error.response.data.message), 'error');
   }
 };
-
 
 // data tani
 export const DaftarTaniAdd = async (data) => {
@@ -287,7 +290,6 @@ export const UploadTanamanPetani = async (file) => {
   }
 };
 
-
 // opsi penyuluh untuk pendaftaran petani
 export const GetOpsiPenyuluh = async () => {
   try {
@@ -310,6 +312,15 @@ export const GetDaftarTaniById = async (id) => {
   try {
     const response = await Api.get(`/daftar-tani/${id}`);
     return response.data.detailTani;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
+export const GetTopTanmanPetani = async (page, limit) => {
+  try {
+    const response = await Api.get(`/tanaman-petani?page=${page}&limit=${limit}`);
+    return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }

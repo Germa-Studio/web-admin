@@ -3,6 +3,7 @@ import { TTableTanamanPetani, TTanamanPetani } from '../../../../types/tanamanPe
 import { PaginatedRespApiData } from '../../../../types/paginatedRespApi';
 import Table from '../../../../components/table/Table';
 import { ColumnDef } from '@tanstack/react-table';
+import { GetTopTanmanPetani } from '../../../../infrastucture';
 
 const columns: ColumnDef<TTableTanamanPetani>[] = [
   {
@@ -68,58 +69,70 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
       })}`}</span>
     )
   },
-// Nama Kelompok Tani, Daerah (Kecamatan), Nomor WA/ Nomor HP petani
+  // Nama Kelompok Tani, Daerah (Kecamatan), Nomor WA/ Nomor HP petani
   {
     accessorKey: 'dataPetani.kelompok.namaKelompok',
     header: 'Nama Kelompok Tani',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
 
   {
     accessorKey: 'dataPetani.kelompok.desa',
     header: 'Daerah (Kecamatan)',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
 
   {
     accessorKey: 'dataPetani.noTelp',
     header: 'Nomor WA/ Nomor HP Petani',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
+  }
 ];
 
-export default function Tabel({ apiData }: { apiData: TTanamanPetani[] }) {
+export default function Tabel() {
+  const searchParams = new URLSearchParams(location.search);
+
+  const page = searchParams.get('page') ?? 1;
+  const limit = searchParams.get('limit') ?? 10;
+
   const [dataTable, setDataTable] = React.useState<
     PaginatedRespApiData<TTableTanamanPetani> | undefined
   >();
 
   useEffect(() => {
-    if (apiData) {
+    GetTopTanmanPetani(page, limit).then((res) => {
       setDataTable({
-        total: 5,
-        currentPages: 1,
-        limit: 5,
-        maxPages: 1,
-        from: 1,
-        to: 1,
-        sortBy: 'no',
-        sortType: 'ASC',
-        data: apiData.map((item, index) => ({
+        ...res,
+        data: res.data.map((item: TTanamanPetani, index: number) => ({
           no: index + 1,
           ...item
         }))
       });
-    }
-  }, [apiData]);
+    });
+    // setDataTable({
+    //   total: 5,
+    //   currentPages: 1,
+    //   limit: 5,
+    //   maxPages: 1,
+    //   from: 1,
+    //   to: 1,
+    //   sortBy: 'no',
+    //   sortType: 'ASC',
+    //   data: apiData.map((item, index) => ({
+    //     no: index + 1,
+    //     ...item
+    //   }))
+    // });
+  }, [page, limit]);
 
   return (
     <div className="flex justify-center pt-12 w-full">
       <div className="container rounded-lg">
         <div className="pt-10">
           <div className="text-center text-lg lg:text-xl font-semibold !capitalize">
-            30 Tertinggi produk komoditas
+            Menampilkan {dataTable?.from}-{dataTable?.to} Tertinggi produk komoditas
           </div>
-          <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl/>
+          <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl />
         </div>
       </div>
     </div>
