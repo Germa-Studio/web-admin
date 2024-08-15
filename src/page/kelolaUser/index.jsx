@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ListUser } from '@/infrastruture';
-import { Text, Button, Modal, Tooltip, Anchor, Breadcrumbs } from '@mantine/core';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Anchor, Breadcrumbs, Button, Modal, Text, Tooltip } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import LoadingAnimation from '../../components/loadingSession';
-import { VerifyingUser, DeleteUser } from '../../infrastucture';
-import { setUser } from '../../infrastucture/redux/state/stateSlice';
+import { DeleteUser, VerifyingUser } from '../../infrastucture';
 // import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// import { useSearchParams } from 'react-router-dom';
 import Table from '../../components/table/Table';
+import { useLocation } from 'react-router-dom';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -22,19 +22,23 @@ const breadcrumbItems = [
 ));
 
 const VerifikasiUser = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [resp, setResp] = useState();
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [modalVerifikasiUser, setVerifikasiUser] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
 
   useEffect(() => {
     ListUser(page, limit).then((data) => {
+      console.log('res', data);
       setResp(data);
       setLoading(false);
     });
@@ -54,32 +58,32 @@ const VerifikasiUser = () => {
     {
       accessorKey: 'no',
       header: 'NO',
-      cell: (info) => info.row.index + 1,
+      cell: (info) => info.row.index + 1
     },
     {
       accessorKey: 'nama',
-      header: 'NAMA',
+      header: 'NAMA'
     },
     {
       accessorKey: 'NIK',
-      header: 'NIK',
+      header: 'NIK'
     },
     {
       accessorKey: 'peran',
-      header: 'PROFESI',
+      header: 'PROFESI'
     },
     {
       accessorKey: 'no_wa',
-      header: 'NOMOR TELEPON',
+      header: 'NOMOR TELEPON'
     },
     {
       accessorKey: 'email',
-      header: 'EMAIL',
+      header: 'EMAIL'
     },
     {
       accessorKey: 'isVerified',
       header: 'STATUS AKUN',
-      cell: (info) => (info.getValue() ? 'Verified' : 'Not Verified'),
+      cell: (info) => (info.getValue() ? 'Verified' : 'Not Verified')
     },
     {
       accessorKey: 'actions',
@@ -112,8 +116,8 @@ const VerifikasiUser = () => {
             </>
           )
         ) : null;
-      },
-    },
+      }
+    }
   ];
 
   return (
