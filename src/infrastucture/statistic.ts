@@ -24,7 +24,7 @@ export const GetStatistikTanamanAll = async (poktan_id?: number, query?: TReques
         `/statistik?poktan_id=${poktan_id}&limit=${query?.limit ?? 10}&page=${
           query?.page ?? 1
         }&sortBy=${query?.sortBy ?? 'id'}&sortType=${
-          query?.sortType ?? 'ASC'
+          query?.sortType ?? 'DESC'
         }&search=${query?.search ?? ''}`
       );
       return response.data as PaginatedRespApi<TDataTanaman>;
