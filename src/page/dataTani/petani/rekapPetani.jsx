@@ -3,15 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
 import { GetDaftarTani, DeleteDaftarTani, UploadDataPetani } from '@/infrastruture';
-import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
+import { Text, Button, Modal, Anchor, Breadcrumbs, Tooltip } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
-import SearchInput from '../../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { FaCheckDouble } from 'react-icons/fa6';
 import { VerifyingUser } from '../../../infrastucture';
+import SearchInput from '../../../components/uiComponents/inputComponents/searchInput';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -120,14 +120,16 @@ const RekapPetani = () => {
               </Link>
               {user?.peran === 'operator super admin' && (
                 <>
-                  <button
-                    onClick={() => {
-                      VerifyingUser(item?.tbl_akun?.id);
-                    }}
-                    className="flex h-7 w-7 items-center justify-center bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={item?.tbl_akun?.isVerified}>
-                    <FaCheckDouble className="h-6 w-6 text-white" />
-                  </button>
+                  <Tooltip label="Sudah Terverifikasi">
+                    <button
+                      onClick={() => {
+                        VerifyingUser(item?.tbl_akun?.id);
+                      }}
+                      className="flex h-7 w-7 items-center justify-center bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={item?.tbl_akun?.isVerified}>
+                      <FaCheckDouble className="h-6 w-6 text-white" />
+                    </button>
+                  </Tooltip>
                   <button
                     onClick={() => {
                       setModalDeleteData(item?.id);

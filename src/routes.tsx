@@ -33,6 +33,7 @@ import {
   TambahLaporanTanam,
   TambahLaporanAhir,
   EditPenyuluhan,
+  VerifikasiUser,
   DataSampah,
   TambahPenyuluhanTani
 } from './page';
@@ -74,6 +75,7 @@ import TokoTani from './page/tokoTani';
 import TambahTokoTani from './page/tokoTani/tambah';
 import DetailTokoTani from './page/tokoTani/detail';
 import EditTokoTani from './page/tokoTani/edit';
+import UbahAkses from './page/kelolaUser/ubahAkses';
 import DetailPenyuluh from './page/penyuluhanTani/detailPenyuluh';
 import { GetFooterDetail } from './infrastucture/footer';
 
@@ -562,6 +564,8 @@ const RoutesPath = () => {
         <Route path="/info-pertanian" element={<InfoPertanian />} />
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
+          <Route path="/verifikasi" element={<VerifikasiUser />} />
+          <Route path="/hak-akses/ubah" element={<UbahAkses />} />
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/export" element={<ExportTable />} />

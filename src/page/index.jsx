@@ -32,6 +32,7 @@ import DetailTanamanPetani from './dataTani/dataPertanian/laporanTanaman';
 import EditLaporanTanam from './dataTani/dataPertanian/laporanTanaman/edit';
 import TambahLaporanTanam from './dataTani/dataPertanian/laporanTanaman/tambah';
 import TambahLaporanAhir from './dataTani/dataPertanian/laporanTanaman/laporanAkhir';
+import VerifikasiUser from './kelolaUser';
 import DataSampah from './logAktivitas/dataSampah';
 import TambahOperator from './operator/tambah';
 
@@ -86,6 +87,7 @@ export {
   EditInfoTani,
   TambahLaporanAhir,
   EditPenyuluhan,
+  VerifikasiUser,
   DataSampah,
   TambahOperator
 };
