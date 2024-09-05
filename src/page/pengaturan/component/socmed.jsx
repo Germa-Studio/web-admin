@@ -1,11 +1,10 @@
 import TextInput from '../../../components/uiComponents/inputComponents/textInput';
-import InputImage from '../../../components/inputImage';
 import { BsPersonGear } from 'react-icons/bs';
 import { CiLocationArrow1 } from 'react-icons/ci';
 import InputCrud from '@/components/page/infoTani/IconCrud';
 import { MdPlayArrow } from 'react-icons/md';
-import { Text, Button, Modal, Card } from '@mantine/core';
-import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
+import { Text, Button, Modal } from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -31,7 +30,7 @@ export default function Socmed(props) {
             </InputCrud>
           )}
         </div>
-        <div className='w-full '>
+        <div className="w-full ">
           <div className="flex space-x-2 text-green-600">
             <BsPersonGear size="30px" />
             <TextInput
@@ -80,7 +79,6 @@ export default function Socmed(props) {
           </Button>
         </div>
       </Modal>
-
     </div>
   );
 }

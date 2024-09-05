@@ -6,17 +6,17 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
 import { UpdateProfile } from '../../infrastucture';
 
-export default function DataKontak({data}) {
+export default function DataKontak({ data }) {
   const [whatsapp, setWhatsapp] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(data){
+    if (data) {
       setEmail(data?.email);
       setWhatsapp(data?.noTelp);
     }
-  },[data]);
+  }, [data]);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -28,7 +28,7 @@ export default function DataKontak({data}) {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    UpdateProfile(formData).then(()=>setLoading(false))
+    UpdateProfile(formData).then(() => setLoading(false));
     // AddEventTani(formData).then(()=>setLoading(false))
   };
 

@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import InputImage from '@/components/inputImage';
 import MainCard from '@/components/MainCard';
 import { GetDaftarTaniById, select, GetOpsiPenyuluh } from '@/infrastruture';
-import { fecthKecamatan, fecthDesa } from '../../../infrastucture/daerah';
+import { fecthKecamatan } from '../../../infrastucture/daerah';
 import { useParams } from 'react-router-dom';
-// import { postLogActivity } from '../../../infrastucture/logActivity';
 
 const ViewDetailDataPetani = () => {
   const [NIK, setNIK] = useState('');
@@ -12,7 +11,6 @@ const ViewDetailDataPetani = () => {
   const [NoWa, setNoWa] = useState('');
   const [email, setEmail] = useState('');
   const [nama, setNama] = useState('');
-  const [password, setPassword] = useState('');
   const [kecamatan, setKecamatan] = useState('');
   const [desa, setDesa] = useState('');
   const [namaKelompok, setNamaKelompok] = useState('');
@@ -20,15 +18,12 @@ const ViewDetailDataPetani = () => {
   const [alamat, setAlamat] = useState('');
   const [gapoktan, setGapoktan] = useState('');
   const [foto, setFoto] = useState('');
-  // const [disable, setDisable] = useState(false);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState('');
-  const [dafatarDesa, setDafatarDesa] = useState([]);
   const [daftarNamaKelompok, setDaftarNamaKelompok] = useState([]);
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([]);
-  const [idKecamatan, setIdKecamanan] = useState('');
-  // const [loading, setLoading] = useState(true);
   const { id } = useParams();
+
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
@@ -39,7 +34,6 @@ const ViewDetailDataPetani = () => {
       setNoWa(data?.noTelp);
       setEmail(data?.email);
       setNama(data?.nama);
-      // setPassword(data?.password);
       setKecamatan(data?.kecamatan);
       setDesa(data?.desa);
       setFoto(data?.foto);
@@ -47,9 +41,9 @@ const ViewDetailDataPetani = () => {
       setPenyuluh(data?.dataPenyuluh?.id);
       setAlamat(data?.alamat);
       setGapoktan(data?.kelompok?.gapoktan);
-      // setLoading(false);
     });
   }, [id]);
+
   useEffect(() => {
     GetOpsiPenyuluh().then((data) => {
       const filterData = data.map((obj) => {
@@ -65,6 +59,7 @@ const ViewDetailDataPetani = () => {
       setDaftarPenyuluh(filterData);
     });
   }, []);
+
   useEffect(() => {
     if (daftarKecamatan && kecamatan && !kecamatanActive) {
       const filteredData = daftarKecamatan?.filter((item) => {
@@ -72,16 +67,10 @@ const ViewDetailDataPetani = () => {
         return parts[0] == kecamatan;
       });
       const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`;
-      setIdKecamanan(filteredData[0]?.id);
       setKecamatanActive(kecamatanActivate);
     }
-    // if(kecamatan){
-    //   selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
-    // }
   }, [daftarKecamatan, kecamatan, kecamatanActive]);
-  useEffect(() => {
-    fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
-  }, [idKecamatan]);
+
   useEffect(() => {
     if (desa) {
       select(desa).then((data) => {
@@ -90,49 +79,17 @@ const ViewDetailDataPetani = () => {
       });
     }
   }, [desa]);
+
   const handleselect = (e) => {
     setDesa(e);
   };
 
-  // const handleSubmit = (e) => {
-  //   setLoading(true);
-  //   e.preventDefault();
-  //   const data = {
-  //     NIK,
-  //     nokk,
-  //     NoWa,
-  //     email,
-  //     nama,
-  //     password,
-  //     kecamatan,
-  //     desa,
-  //     namaKelompok,
-  //     penyuluh,
-  //     gapoktan,
-  //     alamat,
-  //     foto
-  //   };
-  //   const formData = new FormData();
-  //   for (const key in data) {
-  //     formData.append(key, data[key]);
-  //   }
-  //   editDaftarTani(id, formData).then(() => {
-  //     postLogActivity({
-  //       user_id: localStorage.getItem('user_id'),
-  //       activity: 'EDIT',
-  //       type: 'PETANI',
-  //       detail_id: id
-  //     });
-  //     setLoading(false);
-  //   });
-  // };
-
   const handleSelectKecamatan = (e) => {
-    setIdKecamanan(e?.split('-')[1]);
     const nama = e?.split('-')[0];
     setKecamatanActive(e);
     setKecamatan(nama);
   };
+
   return (
     <div className="px-10 md:px-40 py-10 z-1">
       {/* <form onSubmit={(e) => handleSubmit(e)}>

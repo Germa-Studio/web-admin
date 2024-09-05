@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
-import {
-    Button,
-  } from '@mantine/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCancel } from '@fortawesome/free-solid-svg-icons';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@mantine/core';
 import InputImage from '@/components/inputImage';
-import { updatePenyuluhById, getPenyuluhById } from '@/infrastruture';
+import { getPenyuluhById } from '@/infrastruture';
 import { MultiSelect } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -17,7 +12,6 @@ const DetailPenyuluh = () => {
   const [NoWa, setNoWa] = useState('');
   const [nama, setNama] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [kecamatan, setKecamatan] = useState('');
   const [kecamatanBinaan, setKecamatanBinaan] = useState('');
   const [desa, setDesa] = useState('');
@@ -35,30 +29,6 @@ const DetailPenyuluh = () => {
   const [loading, setLoading] = useState(true);
   const [kelompokData, setKelompokData] = useState([]);
   const { id } = useParams();
-//   const handleSubmit = (e) => {
-//     setLoading(true);
-//     e.preventDefault();
-//     const data = {
-//       NIP,
-//       NoWa,
-//       email,
-//       nama,
-//       password,
-//       kecamatan,
-//       desa,
-//       foto,
-//       namaProduct,
-//       desaBinaan: desaBinaan.join(', '),
-//       alamat,
-//       kecamatanBinaan
-//     };
-//     const formData = new FormData();
-//     for (const key in data) {
-//       formData.append(key, data[key]);
-//     }
-//     // console.log(formData)
-//     updatePenyuluhById(formData, id).then(() => setLoading(false));
-//   };
   useEffect(() => {
     fecthKecamatan().then((data) => {
       setDaftarKecamatan(data.kecamatan);
@@ -79,7 +49,7 @@ const DetailPenyuluh = () => {
         setKecamatan(data?.kecamatan);
         setKecamatanBinaan(data?.kecamatanBinaan);
         // setDesa(data?.desa)
-        setFoto(data?.foto)
+        setFoto(data?.foto);
         setAlamat(data?.alamat);
         setNamaProduct(data?.namaProduct);
         setDesaBinaan(data?.desaBinaan?.split(', '));
@@ -145,19 +115,17 @@ const DetailPenyuluh = () => {
       });
     }
   }, [idKecamatanBinaan]);
-  const handleClick = () => {
-    window.location.href = '/data-penyuluh/rekap-penyuluh';
-  };
+
   return (
     <div className="px-10 md:px-40 py-10">
       <div className="shadow-xl rounded-xl px-5 py-5 bg-white">
         {loading && <LoadingAnimation />}
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form>
           <div className="flex items-center justify-center">
             <InputImage
               id="foto"
               name="foto"
-              imageActive={foto} 
+              imageActive={foto}
               onChange={(e) => setFoto(e)}
               title="Foto Profil"
               isDisabled
@@ -263,7 +231,7 @@ const DetailPenyuluh = () => {
                 id="desa"
                 value={desa}
                 onChange={(e) => setDesa(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown" 
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                 disabled>
                 {dafatarDesa?.map((item, i) => (
                   <option value={item.nama} key={i}>
@@ -325,7 +293,7 @@ const DetailPenyuluh = () => {
                 name="kecamatan"
                 value={kecamatanBinaanActive}
                 onChange={(e) => handleSelectKecamatanBinaan(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown" 
+                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                 disabled>
                 {/* <option value="">--Silahkan Pilih Kecamatan--</option> */}
                 {daftarKecamatan?.map((item, i) => (
@@ -373,10 +341,11 @@ const DetailPenyuluh = () => {
               className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
               <strong>Kelompok: </strong>
             </label>
-            <div >
+            <div>
               {kelompokData.map((kelompok, index) => (
                 <span key={kelompok.id}>
-                  {kelompok.namaKelompok} - {kelompok.gapoktan} - {kelompok.desa} - {kelompok.kecamatan}
+                  {kelompok.namaKelompok} - {kelompok.gapoktan} - {kelompok.desa} -{' '}
+                  {kelompok.kecamatan}
                   {index !== kelompokData.length - 1 && ' ; '}
                 </span>
               ))}

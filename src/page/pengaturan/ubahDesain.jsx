@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-import NumberInput from '../../components/uiComponents/inputComponents/numberInput';
 import LoadingAnimation from '../../components/loading';
 import { BsPersonGear } from 'react-icons/bs';
 import { CiLocationArrow1 } from 'react-icons/ci';
 import Banner from './component/banner';
-import { DeleteFooter, GetFooterCategory, GetFooterDetail, UploadFooter } from '../../infrastucture/footer';
+import {
+  DeleteFooter,
+  GetFooterCategory,
+  GetFooterDetail,
+  UploadFooter
+} from '../../infrastucture/footer';
 import TextInput from '../../components/uiComponents/inputComponents/textInput';
 
 export default function UbahDesain() {
@@ -13,7 +17,6 @@ export default function UbahDesain() {
   const [sekunder, setSekunder] = useState('');
   const [clickAdd, setClickAdd] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [handleNull, setHandleNull] = useState(false)
   const [data2, setData2] = useState([
     {
       id: '1',
@@ -40,7 +43,7 @@ export default function UbahDesain() {
       if (data) {
         console.log('get ', data);
         setPrimer(data.footer.value);
-      }else {
+      } else {
         UploadFooter('warnaPrimer', '', 'kode', 'warna').then(() => {
           setLoading(false);
           GetFooterDetail('warnaPrimer').then((data) => {
@@ -90,7 +93,7 @@ export default function UbahDesain() {
         });
       }
     });
-  }, [handleNull]);
+  }, []);
 
   useEffect(() => {
     GetFooterCategory('banner', false).then((data) => {
@@ -124,24 +127,24 @@ export default function UbahDesain() {
   };
 
   const handleAdd = () => {
-    const index = data2.length+1;
+    const index = data2.length + 1;
     UploadFooter(`banner-${index}`, '', `banner ${index}`, 'banner').then(() => {
       setLoading(false);
       setClickAdd(!clickAdd);
     });
   };
 
-  const handleChange = (id, key,file, value) => {
+  const handleChange = (id, key, file, value) => {
     const index = data2.findIndex((item) => item.id === id);
-    console.log("change ", id, key, file, value)
+    console.log('change ', id, key, file, value);
     if (index !== -1) {
-      console.log("masuk")
+      console.log('masuk');
       setData2((prevData) => {
         const newData = [...prevData];
         newData[index].file = file;
-        console.log("file",newData[index].file)
-        console.log("tes",newData[index])
-        console.log("new",newData)
+        console.log('file', newData[index].file);
+        console.log('tes', newData[index]);
+        console.log('new', newData);
         return newData;
       });
       // console.log(data2)
@@ -151,10 +154,10 @@ export default function UbahDesain() {
   const handleSubmit2 = () => {
     setLoading(true);
     // console.log("data ", key, fileBaru,alt)
-    console.log("new",data2)
-    data2.map(data=>(
-      UploadFooter(data.key, data.file, data.value, data.category).then(()=>setLoading(false))
-    ))
+    console.log('new', data2);
+    data2.map((data) =>
+      UploadFooter(data.key, data.file, data.value, data.category).then(() => setLoading(false))
+    );
     // UploadFooter(key,fileBaru,key,alt).then(()=>setLoading(false))
   };
 
@@ -210,7 +213,13 @@ export default function UbahDesain() {
         <div className="text-lg text-green-primary font-extrabold mb-4">BANNER WEBSITE</div>
         <div className="flex flex-col gap-2">
           {data2?.map((dataa2, index) => (
-            <Banner key={dataa2.id} data={dataa2} onChange={handleChange} onDelete={handleDeleteBanner} idx={index} />
+            <Banner
+              key={dataa2.id}
+              data={dataa2}
+              onChange={handleChange}
+              onDelete={handleDeleteBanner}
+              idx={index}
+            />
           ))}
         </div>
         <div className="mt-4 flex gap-3 justify-end">

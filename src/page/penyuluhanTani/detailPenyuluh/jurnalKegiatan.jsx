@@ -6,22 +6,15 @@ import { GatJurnalKegiatan, DeleteJurnalKegiatan } from '@/infrastruture';
 import { BsPersonCircle } from 'react-icons/bs';
 import { Text, Button, Modal, Card } from '@mantine/core';
 import { FaClock } from 'react-icons/fa6';
-// import { Image } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import LoadingAnimation from '../../../components/loadingSession';
 import { IoMdListBox } from 'react-icons/io';
 import { BiCategoryAlt } from 'react-icons/bi';
-import { IoEyeOutline, IoPencilOutline } from 'react-icons/io5';
-import { setUser } from '../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function JurnalKegiatan() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
-  // console.log(user?.peran)
   const [datas, setDatas] = useState([]);
-  const [checekd, setChecekd] = useState([false]);
   const [id, setId] = useState();
   const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
@@ -149,7 +142,6 @@ function JurnalKegiatan() {
                   <input
                     className="h-[20px] w-[20px] cursor-pointer"
                     type="checkbox"
-                    checked={checekd == true ? true : id == item.id ? true : false}
                     onChange={() => handleCheckdOne(item.id)}
                   />
                   <div className="flex flex-col space-y-1 max-h-fit">

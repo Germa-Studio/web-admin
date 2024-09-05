@@ -1,35 +1,33 @@
 import TextInput from '../../../components/uiComponents/inputComponents/textInput';
 import InputImage from '../../../components/inputImage';
 import { BsPersonGear } from 'react-icons/bs';
-import { CiLocationArrow1 } from 'react-icons/ci';
 import InputCrud from '@/components/page/infoTani/IconCrud';
 import { MdPlayArrow } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { Text, Button, Modal, Card } from '@mantine/core';
-import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
+import { Text, Button, Modal } from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Banner(props) {
   const user = useSelector((state) => state.state.user);
   const [modalDeleteData, setModalDeleteData] = useState(false);
-  const { data , onChange, onDelete, idx } = props;
+  const { data, onChange, onDelete, idx } = props;
 
   return (
     <div className="flex justify-between p-4 border border-solid border-gray-400 rounded-lg">
       <div className="flex gap-1 h-fit items-center">
-        <div>{idx+1}</div>
+        <div>{idx + 1}</div>
         <MdPlayArrow />
       </div>
-      {/* <div>{data.id}</div> */}
       <InputImage
         id={data.id}
         name="logo"
         imageActive={data.value}
         title="Masukkan Foto"
-        onChange={(e) => onChange(data.id,"file",e,data.value)}
+        onChange={(e) => onChange(data.id, 'file', e, data.value)}
       />
       <div className="w-[45%] flex flex-col items-end gap-6">
-        <div className='w-[30%]'>
+        <div className="w-[30%]">
           {user?.peran === 'operator super admin' && (
             <InputCrud
               onClick={() => setModalDeleteData(data.key)}

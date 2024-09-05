@@ -28,21 +28,16 @@ import {
   EditRekapPetani,
   TambahTanamanPetani,
   EditTanamanPetani,
-  // DetailTanamanPetani,
   TambahOperator,
-  // DetailDataTanamanPetani,
   EditLaporanTanam,
   TambahLaporanTanam,
   TambahLaporanAhir,
   EditPenyuluhan,
-  VerifikasiUser,
   DataSampah,
   TambahPenyuluhanTani
-  // EditPenyuluhanTani
 } from './page';
 import { clsx } from 'clsx';
 
-import Footer from './components/footer';
 import ProtectedRoute from './page/protectedRoute';
 import { Image, Menu, Group, Avatar, Text, UnstyledButton } from '@mantine/core';
 import { IconMenu2 } from '@tabler/icons-react';
@@ -79,12 +74,8 @@ import TokoTani from './page/tokoTani';
 import TambahTokoTani from './page/tokoTani/tambah';
 import DetailTokoTani from './page/tokoTani/detail';
 import EditTokoTani from './page/tokoTani/edit';
-// import TableAkses from './page/kelolaUser/component/tableAkses';
-// import HakAkses from './page/kelolaUser/component/hakAkses';
-import UbahAkses from './page/kelolaUser/ubahAkses';
 import DetailPenyuluh from './page/penyuluhanTani/detailPenyuluh';
 import { GetFooterDetail } from './infrastucture/footer';
-// import IndexKelompok from './page/kelompok';
 
 const menu = [
   {
@@ -326,7 +317,7 @@ const Path = () => {
     'ml-3 transition-all duration-200 text-left whitespace-nowrap font-bold text-lg capitalize';
   const stackedMenuClasses = clsx('w-full transition duration-75 group', mainMenuClasses);
   const subMenuClasses = stackedMenuClasses;
-  const [file,setFile] = useState('')
+  const [file, setFile] = useState('');
 
   const user = useSelector((state: RootState) => state.state.user);
   const perans = user?.peran;
@@ -342,9 +333,9 @@ const Path = () => {
     window.location.pathname === '/toko-pertanian';
 
   useEffect(() => {
-    GetFooterDetail("logo").then((data) => {
-      if(data){
-        setFile(data.footer.value)
+    GetFooterDetail('logo').then((data) => {
+      if (data) {
+        setFile(data.footer.value);
       }
     });
   }, []);
@@ -384,11 +375,12 @@ const Path = () => {
               alt="Logo Siketan"
               className={sidebarOpen ? 'hidden lg:block w-52 lg:w-60' : 'hidden'}
             />
-            <button className='lg:hidden h-16 block'
+            <button
+              className="lg:hidden h-16 block"
               onClick={() => {
                 setSidebarOpen(!sidebarOpen);
               }}>
-              <FaX className={sidebarOpen ? 'w-6 h-6 ml-5 mt-5' : 'hidden' }/>
+              <FaX className={sidebarOpen ? 'w-6 h-6 ml-5 mt-5' : 'hidden'} />
             </button>
           </div>
           <div className="h-full px-6 py-2 overflow-y-auto">
@@ -404,7 +396,7 @@ const Path = () => {
                             mainMenuClasses,
                             activePage === item.id && activeClasses
                           )}>
-                          <Image src={item.icon} alt={item.name} className='w-3 lg:w-4 xl:w-6' />
+                          <Image src={item.icon} alt={item.name} className="w-3 lg:w-4 xl:w-6" />
                           <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                             {item.name}
                           </span>
@@ -416,7 +408,7 @@ const Path = () => {
                             if (activeMenu === item.id) setActiveMenu('');
                             else setActiveMenu(item.id);
                           }}>
-                          <Image src={item.icon} alt={item.name} className='w-3 lg:w-4 xl:w-6' />
+                          <Image src={item.icon} alt={item.name} className="w-3 lg:w-4 xl:w-6" />
                           <span className={clsx(textMenuClasses, sidebarOpen ? 'block' : 'hidden')}>
                             {item.name}
                           </span>
@@ -435,7 +427,11 @@ const Path = () => {
                                       subMenuClasses,
                                       activePage === 'bpup' && activeClasses
                                     )}>
-                                    <Image src={sub.icon} alt={sub.name} className='w-3 lg:w-4 xl:w-6'/>
+                                    <Image
+                                      src={sub.icon}
+                                      alt={sub.name}
+                                      className="w-3 lg:w-4 xl:w-6"
+                                    />
                                     <span
                                       className={clsx(
                                         textMenuClasses,
@@ -566,12 +562,6 @@ const RoutesPath = () => {
         <Route path="/info-pertanian" element={<InfoPertanian />} />
         <Route path="/info-pertanian/:id" element={<Berita />} />
         <Route element={<ProtectedRoute />}>
-          {/*if  user is operator, show this route else hide it*/}
-
-          {/* // <Route path="/live-chat" element={<LiveChat />} /> */}
-          <Route path="/verifikasi" element={<VerifikasiUser />} />
-          <Route path="/hak-akses/ubah" element={<UbahAkses />} />
-          {/* <Route index element={<Dashboard />}></Route> */}
           {/* Statistik */}
           <Route path="/statistik" element={<Statistik />} />
           <Route path="/statistik/export" element={<ExportTable />} />

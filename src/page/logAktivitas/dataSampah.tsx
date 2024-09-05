@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { Anchor, Breadcrumbs, Button, Modal, Text } from '@mantine/core';
-import Table from './table/Table';
 import { DataPerson } from '../../@types/toko';
 import { PaginatedRespApiData } from '../../types/paginatedRespApi';
 import {
@@ -11,6 +10,7 @@ import {
 } from '../../infrastucture/logActivity';
 import { MdDeleteOutline, MdOutlineRestore } from 'react-icons/md';
 import { useLocation } from 'react-router-dom';
+import Table from '../../components/table/Table';
 
 const breadcrumbItems = [{ title: 'Dashboard', href: '/' }, { title: 'Data Sampah' }].map(
   (item, index) => (

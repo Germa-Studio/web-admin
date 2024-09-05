@@ -3,18 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
 import { GetDaftarTani, DeleteDaftarTani, UploadDataPetani } from '@/infrastruture';
-// import ExcelComponent from '../../../components/exelComponent';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
-// import LoadingAnimation from '../../../components/loadingSession';
 import SearchInput from '../../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
-
-import { setUser } from '../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { FaCheckDouble } from 'react-icons/fa6';
+import { VerifyingUser } from '../../../infrastucture';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -45,22 +42,22 @@ const columns = [
   {
     accessorKey: 'noTelp',
     header: 'Kontak Petani',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
     accessorKey: 'kecamatan',
     header: 'Kecamatan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
     accessorKey: 'desa',
     header: 'Desa',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
     accessorKey: 'dataPenyuluh.nama',
     header: 'Pembina',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
     accessorKey: 'actions',
@@ -70,75 +67,29 @@ const columns = [
 ];
 
 const RekapPetani = () => {
-  // const [datas, setDatas] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
   const fileInputRef = useRef();
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
   const location = useLocation();
-  // const history = useHistory();
 
-  // useEffect(() => {
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
   const verified = searchParams.get('verified') ?? '';
 
-  // const searchQuery = searchParams.get('search_query') ?? '';
-  // const sortKey = searchParams.get('sort_key') ?? '';
-  // const sortType = searchParams.get('sort_type') ?? '';
-
   useEffect(() => {
     GetDaftarTani(page, limit, verified).then((data) => {
       setResp(data);
-      // setLoading(false);
     });
   }, [limit, page, verified]);
-  // const handleFilterChange = (e, column) => {
-  //   setFilters((prevFilters) => ({
-  //     ...prevFilters,
-  //     [column]: e.target.value
-  //   }));
-  // };
+
   const handleDeleteUser = (ids) => {
     DeleteDaftarTani(ids);
   };
-  // const filteredData = datas.filter((item) => {
-  //   return Object.keys(filters).every((key) => {
-  //     if (filters[key] !== '') {
-  //       if (typeof item[key] === 'number') {
-  //         return item[key] === Number(filters[key]);
-  //       } else if (typeof item[key] === 'string') {
-  //         return item[key].toLowerCase().includes(filters[key].toLowerCase());
-  //       }
-  //     }
-  //     return true;
-  //   });
-  // });
-  // const handleDownlod = () => {
-  //   const dataExel = filteredData.map((item) => {
-  //     return {
-  //       NIK: item.NIK,
-  //       ['No Wa']: item.NoWa,
-  //       Alamat: item.alamat,
-  //       Kecamatan: item.kecamatan,
-  //       Desa: item.desa,
-  //       nama: item.nama,
-  //       password: item.password,
-  //       namaKelompok: item?.kelompok?.namaKelompok,
-  //       gapoktan: item?.kelompok?.gapoktan,
-  //       penyuluh: item?.dataPenyuluh?.nama
-  //     };
-  //   });
-  //   ExcelComponent(dataExel, 'data.xlsx', 'Sheet1');
-  // };
-  // const totalData = filteredData.length;
+
   function handleFileChange(event) {
     if (!event.target.files) return;
 
@@ -147,11 +98,11 @@ const RekapPetani = () => {
       window.location.reload();
     });
   }
+
   useEffect(() => {
     if (resp) {
       setDataTable({
         ...resp,
-
         data: resp.data.map((item, index) => ({
           ...item,
           no: resp.from + index,
@@ -168,21 +119,32 @@ const RekapPetani = () => {
                 </div>
               </Link>
               {user?.peran === 'operator super admin' && (
-                <button
-                  onClick={() => {
-                    setModalDeleteData(item?.id);
-                  }}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                    <MdDeleteOutline className="h-6 w-6 text-white" />
-                  </div>
-                </button>
+                <>
+                  <button
+                    onClick={() => {
+                      VerifyingUser(item?.tbl_akun?.id);
+                    }}
+                    className="flex h-7 w-7 items-center justify-center bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={item?.tbl_akun?.isVerified}>
+                    <FaCheckDouble className="h-6 w-6 text-white" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setModalDeleteData(item?.id);
+                    }}>
+                    <div className="flex h-7 w-7 items-center justify-center bg-red-500">
+                      <MdDeleteOutline className="h-6 w-6 text-white" />
+                    </div>
+                  </button>
+                </>
               )}
             </div>
           )
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
+
   return (
     <div>
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
@@ -247,7 +209,6 @@ const RekapPetani = () => {
                   }
                 }}>
                 <FontAwesomeIcon className="text-xl" icon={faUpload} />
-                {/* <faUpload /> */}
                 <span className="ml-2">Upload File</span>
               </Button>
             </div>

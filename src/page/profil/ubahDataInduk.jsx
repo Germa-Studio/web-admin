@@ -5,21 +5,21 @@ import { RiContactsBook2Line } from 'react-icons/ri';
 import { GoNumber } from 'react-icons/go';
 import { UpdateProfile } from '../../infrastucture';
 
-export default function DataInduk({data}) {
+export default function DataInduk({ data }) {
   const [nokk, setNokk] = useState('');
   const [nik, setNik] = useState('');
   const [indukData, setIndukData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-    if (data){
+  useEffect(() => {
+    if (data) {
       setIndukData(data);
       setNokk(data?.nkk);
       setNik(data?.nik);
     }
     // console.log(data.data)
-  }, [data])
-  console.log(indukData)
+  }, [data]);
+  console.log(indukData);
   const handleSubmit = () => {
     setLoading(true);
     const data = {
@@ -30,7 +30,7 @@ export default function DataInduk({data}) {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    UpdateProfile(formData).then(()=>setLoading(false))
+    UpdateProfile(formData).then(() => setLoading(false));
     // AddEventTani(formData).then(()=>setLoading(false))
   };
 
@@ -38,7 +38,7 @@ export default function DataInduk({data}) {
     <div>
       {/* <form onSubmit={(e) => handleSubmit(e)}> */}
       {loading && <LoadingAnimation />}
-      {indukData?.nkk &&(
+      {indukData?.nkk && (
         <div className="flex space-x-2">
           <RiContactsBook2Line size="30px" />
           <NumberInput
@@ -50,7 +50,7 @@ export default function DataInduk({data}) {
           />
         </div>
       )}
-      {indukData?.nik &&(
+      {indukData?.nik && (
         <div className="flex space-x-2">
           <GoNumber size="30px" />
           <NumberInput

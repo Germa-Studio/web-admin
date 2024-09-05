@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Anchor,
   Breadcrumbs,
@@ -12,19 +12,10 @@ import {
   Text,
   Modal
 } from '@mantine/core';
-import Table from '@/components/table/Table';
-import { ImPencil } from 'react-icons/im';
-import { IoEyeOutline } from 'react-icons/io5';
-import { MdDeleteOutline } from 'react-icons/md';
-import { Link, useLocation } from 'react-router-dom';
 import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
 import { FaRegRectangleList } from 'react-icons/fa6';
 import { SearchPetani } from '../../../../infrastucture/searchApi';
-import {
-  AddTanamanPetani,
-  DeleteTanamanPetani,
-  GetListTanaman
-} from '../../../../infrastucture/index';
+import { AddTanamanPetani, DeleteTanamanPetani } from '../../../../infrastucture/index';
 import Loading from '../../../../components/loading';
 import {
   komoditasSemusim,
@@ -32,10 +23,6 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
-// import { postLogActivity } from '../../../../infrastucture/logActivity';
-import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -62,39 +49,6 @@ const loadOptions = (inputValue, callback) => {
   }, 1000);
 };
 
-const columns = [
-  {
-    accessorKey: 'no',
-    header: 'No',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'kategori',
-    header: 'Kategori Tanaman',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'komoditas',
-    header: 'Jenis Komoditas',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'statusKepemilikanLahan',
-    header: 'Status Lahan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'prakiraanBulanPanen',
-    header: 'Prakiraan Panen',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
-  },
-  {
-    accessorKey: 'actions',
-    header: 'Aksi',
-    cell: (props) => props.row.original.actions
-  }
-];
-
 export default function TambahTanamanPetani() {
   const [petani, setPetani] = useState([]);
   const [statusKepemilikanLahan, setStatusKepemilikanLahan] = useState('');
@@ -109,80 +63,11 @@ export default function TambahTanamanPetani() {
   const [prakiraanBulanPanen, setPrakiraanBulanPanen] = useState('');
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [dataTable, setDataTable] = useState();
-  const [resp, setResp] = useState();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.state.user);
 
-  // const tanamanPangan = ['Padi', 'Jagung', 'Kedelai'];
-  // const tanamanPerkebunan = ['Kopi', 'Karet', 'Kelapa'];
-  // const komoditasSemusim = ['Tomat', 'Wortel', 'Bawang'];
-  // const komoditasTahunan = ['Mangga', 'Durian', 'Apel'];
-
-  const isSemusimEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
+  const isSemusimEnabled =
+    kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
     kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
     (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'BUAH');
-  const isTahunanEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
-    kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
-    (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'SAYUR');
-
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
-  const location = useLocation();
-  // const history = useHistory();
-
-  // useEffect(() => {
-  const searchParams = new URLSearchParams(location.search);
-
-  const page = searchParams.get('page') ?? 1;
-  const limit = searchParams.get('limit') ?? 10;
-
-  useEffect(() => {
-    GetListTanaman(page, limit, petani).then((data) => {
-      setResp(data);
-      setLoading(false);
-    });
-  }, [page, limit, petani]);
-
-  useEffect(() => {
-    // console.log(dataTable)
-  }, [dataTable]);
-  useEffect(() => {
-    if (resp) {
-      setDataTable({
-        ...resp,
-
-        data: resp.data.map((item, index) => ({
-          ...item,
-          no: resp.from + index,
-          actions: (
-            <div className="flex gap-4">
-              <Link to={`/tanaman-petani/edit/${item.id}`}>
-                <div className="flex h-7 w-7 items-center justify-center bg-green-500">
-                  <IoEyeOutline className="h-6 w-6 text-white" />
-                </div>
-              </Link>
-              <Link to={`/tanaman-petani/edit/${item.id}`}>
-                <div className="flex h-7 w-7 items-center justify-center bg-yellow-500">
-                  <ImPencil className="h-[18px] w-[18px] text-white" />
-                </div>
-              </Link>
-              {user?.peran === 'operator super admin' && (
-                <button
-                  onClick={() => {
-                    setModalDeleteData(item?.id);
-                  }}>
-                  <div className="flex h-7 w-7 items-center justify-center bg-red-500">
-                    <MdDeleteOutline className="h-6 w-6 text-white" />
-                  </div>
-                </button>
-              )}
-            </div>
-          )
-        }))
-      });
-    }
-  }, [resp]);
 
   const handleTanaman = (ids) => {
     DeleteTanamanPetani(ids);
@@ -203,14 +88,10 @@ export default function TambahTanamanPetani() {
       prakiraanBulanPanen,
       fk_petaniId: petani?.id
     };
-    // console.log(data)
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    // console.log({formData})
-    // add window.history.push('/tanaman-petani')
-    // AddTanamanPetani(formData).then(()=>{window.history.push('/tanaman-petani'), setLoading(false)});
     AddTanamanPetani(data).then(() => {
       setLoading(false);
     });
@@ -340,8 +221,7 @@ export default function TambahTanamanPetani() {
                       setKategori(value);
                       setJenis('');
                       setKomoditas('');
-                    }}
-                  >
+                    }}>
                     <Radio label="Tanaman Pangan" value="TANAMAN PANGAN" />
                     <Radio label="Tanaman Perkebunan" value="TANAMAN PERKEBUNAN" />
                     <Radio label="Tanaman Hortikultura" value="TANAMAN HORTIKULTURA" />
@@ -352,8 +232,7 @@ export default function TambahTanamanPetani() {
                         onChange={(value) => {
                           setJenis(value);
                           setKomoditas('');
-                        }}
-                      >
+                        }}>
                         <Radio label="Jenis Buah" value="BUAH" />
                         <Radio label="Jenis Sayur" value="SAYUR" />
                       </Radio.Group>
@@ -363,12 +242,14 @@ export default function TambahTanamanPetani() {
                 <p className="mt-4">Komoditas Tanaman</p>
                 <Tabs defaultValue="semusim">
                   <Tabs.List>
-                    <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan" >Tahunan</Tabs.Tab>
+                    <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>
+                      Semusim
+                    </Tabs.Tab>
+                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
                   </Tabs.List>
 
                   <Tabs.Panel value="semusim">
-                    <Select 
+                    <Select
                       disabled={!isSemusimEnabled}
                       className="mt-2"
                       placeholder="Jenis Hasil Panen"
@@ -501,12 +382,10 @@ export default function TambahTanamanPetani() {
         </div>
       )}
       <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
-        {/* <h3 className="text-white text-2xl font-bold mx-auto">TABEL DATA TANAMAN PERTANIAN</h3> */}
         <button className="absolute right-4 text-[#0FA958] text-xl">
           <FaRegRectangleList />
         </button>
       </div>
-      {/* <Table data={dataTable} columns={columns} withPaginationCount withPaginationControl /> */}
     </div>
   );
 }

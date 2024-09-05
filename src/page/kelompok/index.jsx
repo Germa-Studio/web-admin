@@ -1,15 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
 import { GetDataKelompok, UploadKelompok } from '@/infrastruture';
-// import ExcelComponent from '../../components/exelComponent';
-import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
-import { Link, useLocation } from 'react-router-dom';
-// import LoadingAnimation from '../../components/loadingSession';
-import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Anchor, Breadcrumbs } from '@mantine/core';
+import { useLocation } from 'react-router-dom';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -50,28 +45,14 @@ const columns = [
 ];
 
 const IndexKelompok = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.state.user);
-  // const [datas, setDatas] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
   const fileInputRef = useRef();
-  // const [filters, setFilters] = useState({});
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
   const location = useLocation();
-  // const history = useHistory();
-
-  // useEffect(() => {
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
-
-  // const searchQuery = searchParams.get('search_query') ?? '';
-  // const sortKey = searchParams.get('sort_key') ?? '';
-  // const sortType = searchParams.get('sort_type') ?? '';
 
   useEffect(() => {
     GetDataKelompok(page, limit)
@@ -80,11 +61,11 @@ const IndexKelompok = () => {
           setResp(res);
           console.log(res);
         } else {
-          console.log("Response is undefined");
+          console.log('Response is undefined');
         }
       })
       .catch((error) => {
-        console.error("API call failed:", error);
+        console.error('API call failed:', error);
       });
   }, [page, limit]);
   function handleFileChange(event) {
@@ -102,7 +83,7 @@ const IndexKelompok = () => {
 
         data: resp.data.map((item, index) => ({
           ...item,
-          no: resp.from + index,
+          no: resp.from + index
         }))
       });
     }
@@ -113,7 +94,6 @@ const IndexKelompok = () => {
       <Breadcrumbs>{breadcrumbItems}</Breadcrumbs>
       <h3 className="text-white text-2xl font-bold mt-4">DATA KELOMPOK</h3>
       <div className="relativemt-6 mt-4 flex items-center w-full">
-        
         <div className="rounded-lg w-full">
           <div className="relative bg-[#136B09] p-4 flex w-full justify-between rounded-t-lg shadow-lg">
             <h3 className="text-white text-2xl font-bold px-3">TABEL DATA KELOMPOK</h3>

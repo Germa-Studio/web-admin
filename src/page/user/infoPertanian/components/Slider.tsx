@@ -7,7 +7,6 @@ import { GetFooterCategory } from '../../../../infrastucture/footer';
 
 const Slider = () => {
   const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
-  const [loading, setLoading] = useState(false);
   const [data2, setData2] = useState([
     {
       id: '1',
@@ -30,15 +29,14 @@ const Slider = () => {
     GetFooterCategory('banner', false).then((data) => {
       if (data) {
         setData2(data.footer);
-        setLoading(false);
       }
     });
-  },[]);
+  }, []);
 
   return (
     <div className="embla overflow-hidden max-h-[80vh]" ref={emblaRef}>
       <div className="embla__container flex">
-        {data2?.map((dataa2,index)=>(
+        {data2?.map((dataa2) => (
           <Image
             key={dataa2.id}
             src={dataa2.value}

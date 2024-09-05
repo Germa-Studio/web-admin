@@ -36,10 +36,12 @@ function InputImage({ imageActive, onChange, title, id }) {
     </label>
   );
 }
+
 InputImage.propTypes = {
   imageActive: PropTypes.string,
   onChange: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.string,
+  id: PropTypes.string
 };
 
 export default InputImage;

@@ -9,14 +9,10 @@ import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
 import { FaBuilding } from 'react-icons/fa';
 import { IoMdListBox, IoMdPerson } from 'react-icons/io';
-// import { postLogActivity } from '../../../infrastucture/logActivity';
-import { setUser } from '../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 function EventTani() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [datas, setDatas] = useState([]);
   const [modalDeleteData, setModalDeleteData] = useState(false);

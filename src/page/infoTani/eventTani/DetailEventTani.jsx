@@ -5,12 +5,9 @@ import { GetEventTaniById } from '@/infrastruture';
 import MainCard from '@/components/MainCard';
 import LoadingAnimation from '../../../components/loading';
 import { DeleteInfoTani } from '@/infrastruture';
-import { setUser } from '../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function DetailEventTani() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [data, setData] = useState(null);
   const location = useLocation();

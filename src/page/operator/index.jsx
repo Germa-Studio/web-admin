@@ -3,17 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/components/table/Table';
 import { GetDaftarOperator, DeleteOperator, UploadDataOperator } from '@/infrastruture';
-// import ExcelComponent from '../../components/exelComponent';
 import { Text, Button, Modal, Anchor, Breadcrumbs } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
-// import LoadingAnimation from '../../components/loadingSession';
 import SearchInput from '../../components/uiComponents/inputComponents/SearchInput';
 import { ImPencil } from 'react-icons/im';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
-import { setUser } from '../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -59,50 +55,22 @@ const columns = [
 ];
 
 const IndexOperator = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
-  // const [datas, setDatas] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [resp, setResp] = useState();
   const [dataTable, setDataTable] = useState();
   const fileInputRef = useRef();
-  // const [filters, setFilters] = useState({});
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
   const location = useLocation();
-  // const history = useHistory();
-
-  // useEffect(() => {
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
   const limit = searchParams.get('limit') ?? 10;
 
-  // const searchQuery = searchParams.get('search_query') ?? '';
-  // const sortKey = searchParams.get('sort_key') ?? '';
-  // const sortType = searchParams.get('sort_type') ?? '';
-
   useEffect(() => {
-    // setLoading(true);
-    GetDaftarOperator(page, limit)
-      .then((res) => {
-        setResp(res);
-        // console.log(res)
-        // setDatas(res.data);
-        // setLoading(false);
-      })
-      .catch(() => {
-        //   console.log(err);
-        // setLoading(false);
-      });
+    GetDaftarOperator(page, limit).then((res) => {
+      setResp(res);
+    });
   }, [limit, page]);
-  // const handleFilterChange = (e, column) => {
-  //   setFilters((prevFilters) => ({
-  //     ...prevFilters,
-  //     [column]: e.target.value
-  //   }));
-  // };
   const handleDeleteOperator = (ids) => {
     DeleteOperator(ids);
   };
@@ -134,8 +102,8 @@ const IndexOperator = () => {
                   <ImPencil className="h-[18px] w-[18px] text-white" />
                 </div>
               </Link>
-              
-              {user?.peran === 'operator super admin' &&(
+
+              {user?.peran === 'operator super admin' && (
                 <button
                   onClick={() => {
                     setModalDeleteData(item?.id);
@@ -150,7 +118,7 @@ const IndexOperator = () => {
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
 
   return (
     <div>

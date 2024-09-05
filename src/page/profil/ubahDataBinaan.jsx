@@ -4,20 +4,20 @@ import LoadingAnimation from '../../components/loading';
 import { GiVillage } from 'react-icons/gi';
 import { SlLocationPin } from 'react-icons/sl';
 
-export default function DataBinaan({data}) {
+export default function DataBinaan({ data }) {
   const [kec, setKec] = useState('');
   const [desa, setDesa] = useState('');
   const [loading, setLoading] = useState(false);
   const [binaanData, setBinaanData] = useState([]);
 
-  useEffect(()=>{
-    if(data){
+  useEffect(() => {
+    if (data) {
       setBinaanData(data.data);
       setKec(data.data?.kecamatanBinaan);
       setDesa(data.data?.desaBinaan);
-      setLoading(true)
+      setLoading(true);
     }
-    setLoading(false)
+    setLoading(false);
   }, [data]);
 
   const handleSubmit = () => {
@@ -35,7 +35,7 @@ export default function DataBinaan({data}) {
 
   return (
     <>
-      {binaanData.kecamatanBinaan &&(
+      {binaanData.kecamatanBinaan && (
         <div>
           {loading && <LoadingAnimation />}
           <div className="flex space-x-2">

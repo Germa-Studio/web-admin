@@ -14,11 +14,8 @@ import {
 } from '@mantine/core';
 import Table from '@/components/table/Table';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-// import React, { useEffect } from "react";
-// import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
 import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
 import { FaRegRectangleList } from 'react-icons/fa6';
-// import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from 'react-icons/io5';
 import { SearchPetani } from '../../../../infrastucture/searchApi';
 import {
@@ -37,10 +34,7 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
-// import { postLogActivity } from '../../../../infrastucture/logActivity';
-import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -105,19 +99,16 @@ export default function EditTanamanPetani() {
   const [luasLahan, setLuasLahan] = useState();
   const [kategori, setKategori] = useState('');
   const [jenis, setJenis] = useState('');
-  const isSemusimEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
-  kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
-  (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'BUAH');
-  const isTahunanEnabled = kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
-  kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
-  (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'SAYUR');
+  const isSemusimEnabled =
+    kategori?.toUpperCase() === 'TANAMAN PANGAN' ||
+    kategori?.toUpperCase() === 'TANAMAN PERKEBUNAN' ||
+    (kategori?.toUpperCase() === 'TANAMAN HORTIKULTURA' && jenis === 'BUAH');
   const [komoditas, setKomoditas] = useState('');
   const [periodeMusimTanam, setPeriodeMusimTanam] = useState('');
   const [periodeBulanTanam, setPeriodeBulanTanam] = useState('');
   const [prakiraanLuasPanen, setPrakiraanLuasPanen] = useState();
   const [prakiraanProduksiPanen, setPrakiraanProduksiPanen] = useState(0);
   const [prakiraanBulanPanen, setPrakiraanBulanPanen] = useState('');
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -127,12 +118,7 @@ export default function EditTanamanPetani() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
   const location = useLocation();
-  // const history = useHistory();
-
-  // useEffect(() => {
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
@@ -211,13 +197,14 @@ export default function EditTanamanPetani() {
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
+
   const handleDeleteTanaman = () => {
-    // delay 6 seconds
     setTimeout(() => {
       window.location.reload();
     }, 4000);
   };
+
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -234,13 +221,12 @@ export default function EditTanamanPetani() {
       prakiraanBulanPanen,
       fk_petaniId: tanaman?.fk_petaniId
     };
-    // console.log(data)
+
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    // console.log({formData})
-    // console.log(data);
+
     UpdateTanamanPetani(id, data).then(() => {
       setLoading(false);
     });
@@ -398,12 +384,14 @@ export default function EditTanamanPetani() {
                 <p className="mt-4">Komoditas Tanaman</p>
                 <Tabs defaultValue="semusim">
                   <Tabs.List>
-                    <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>Semusim</Tabs.Tab>
-                    <Tabs.Tab value="tahunan" >Tahunan</Tabs.Tab>
+                    <Tabs.Tab value="semusim" disabled={!isSemusimEnabled}>
+                      Semusim
+                    </Tabs.Tab>
+                    <Tabs.Tab value="tahunan">Tahunan</Tabs.Tab>
                   </Tabs.List>
 
                   <Tabs.Panel value="semusim">
-                    <Select 
+                    <Select
                       disabled={!isSemusimEnabled}
                       className="mt-2"
                       placeholder="Jenis Hasil Panen"

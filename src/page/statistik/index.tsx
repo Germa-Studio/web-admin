@@ -18,8 +18,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { TKelompokTani } from '../../types/kelompokTani';
 import { SearchPoktan } from '../../infrastucture/searchApi';
 import { FaCheckDouble } from 'react-icons/fa6';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../infrastucture/redux/state/stateSlice';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../infrastucture/redux/store';
 
 const breadcrumbItems = [
@@ -174,7 +173,7 @@ export default function Index() {
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
     if (!event.target.files) return;

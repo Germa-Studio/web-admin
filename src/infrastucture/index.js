@@ -49,7 +49,7 @@ export const DeleteUser = async (id) => {
 export const VerifyingUser = async (id) => {
   try {
     const response = await Api.put(`/verify/${id}`);
-    return response.data;
+    SweatAlert(String(response.data.message), 'success', 'reload');
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');
   }

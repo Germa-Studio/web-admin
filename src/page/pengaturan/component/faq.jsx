@@ -4,8 +4,8 @@ import { CiLocationArrow1 } from 'react-icons/ci';
 import { MdPlayArrow } from 'react-icons/md';
 import InputCrud from '@/components/page/infoTani/IconCrud';
 import { useSelector } from 'react-redux';
-import { Text, Button, Modal, Card } from '@mantine/core';
-import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
+import { Text, Button, Modal } from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Faq(props) {

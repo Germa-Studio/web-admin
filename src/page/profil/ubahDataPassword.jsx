@@ -27,7 +27,7 @@ export default function DataPassword() {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    UpdateProfile(formData).then(()=>setLoading(false))
+    UpdateProfile(formData).then(() => setLoading(false));
     // AddEventTani(formData).then(()=>setLoading(false))
   };
 

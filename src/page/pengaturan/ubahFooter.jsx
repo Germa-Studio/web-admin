@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import NumberInput from '../../components/uiComponents/inputComponents/numberInput';
 import LoadingAnimation from '../../components/loading';
 import { BsPersonGear } from 'react-icons/bs';
 import { CiLocationArrow1 } from 'react-icons/ci';
@@ -327,7 +326,13 @@ export default function UbahFooter() {
           <div className="flex flex-col gap-2">
             {filter === 'faq' ? (
               faq?.map((faq, index) => (
-                <Faq key={faq.id} data={faq} onChange={handleChange} onDelete={handleDeleteFAQ} idx={index} />
+                <Faq
+                  key={faq.id}
+                  data={faq}
+                  onChange={handleChange}
+                  onDelete={handleDeleteFAQ}
+                  idx={index}
+                />
               ))
             ) : (
               <textarea

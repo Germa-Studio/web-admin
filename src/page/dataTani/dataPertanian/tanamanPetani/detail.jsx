@@ -14,11 +14,8 @@ import {
 } from '@mantine/core';
 import Table from '@/components/table/Table';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-// import React, { useEffect } from "react";
-// import SearchInput from "../../../../components/uiComponents/inputComponents/SearchInput";
 import SearchInput from '../../../../components/uiComponents/inputComponents/SearchInput';
 import { FaRegRectangleList } from 'react-icons/fa6';
-// import { GetStatistikTanamanAll } from "../../infrastucture";
 import { IoImageOutline } from 'react-icons/io5';
 import { SearchPetani } from '../../../../infrastucture/searchApi';
 import {
@@ -38,9 +35,7 @@ import {
   tanamanPangan,
   tanamanPerkebunan
 } from '../../../../types/const';
-import { setUser } from '../../../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
@@ -111,7 +106,6 @@ export default function DetailDataTanaman() {
   const [prakiraanLuasPanen, setPrakiraanLuasPanen] = useState();
   const [prakiraanProduksiPanen, setPrakiraanProduksiPanen] = useState(0);
   const [prakiraanBulanPanen, setPrakiraanBulanPanen] = useState('');
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [modalDeleteData, setModalDeleteData] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -121,12 +115,7 @@ export default function DetailDataTanaman() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(10);
   const location = useLocation();
-  // const history = useHistory();
-
-  // useEffect(() => {
   const searchParams = new URLSearchParams(location.search);
 
   const page = searchParams.get('page') ?? 1;
@@ -152,22 +141,12 @@ export default function DetailDataTanaman() {
   }, [tanaman]);
 
   useEffect(() => {
-    GetListTanaman(
-      page,
-      limit,
-      tanaman?.fk_petaniId
-      // search,
-      // sortKey,
-      // sortType
-    ).then((data) => {
+    GetListTanaman(page, limit, tanaman?.fk_petaniId).then((data) => {
       setResp(data);
       setLoading(false);
     });
   }, [page, limit, tanaman]);
 
-  useEffect(() => {
-    // console.log(dataTable)
-  }, [dataTable]);
   useEffect(() => {
     if (resp) {
       setDataTable({
@@ -203,7 +182,8 @@ export default function DetailDataTanaman() {
         }))
       });
     }
-  }, [resp]);
+  }, [resp, user?.peran]);
+
   const handleDeleteTanaman = (ids) => {
     DeleteTanamanPetani(ids);
     // delay 6 seconds
@@ -211,6 +191,7 @@ export default function DetailDataTanaman() {
       window.location.reload();
     }, 4000);
   };
+
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -227,12 +208,12 @@ export default function DetailDataTanaman() {
       prakiraanBulanPanen,
       fk_petaniId: tanaman?.fk_petaniId
     };
-    // console.log(data)
+
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    // console.log({formData})
+
     UpdateTanamanPetani(id, data).then(() => setLoading(false));
     window.history.push('/tanaman-petani');
   };

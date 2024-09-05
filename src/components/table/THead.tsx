@@ -1,7 +1,7 @@
 import { RowData, Table, flexRender } from '@tanstack/react-table';
 import React from 'react';
 import clsx from 'clsx';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { VscTriangleDown, VscTriangleUp } from 'react-icons/vsc';
 
 type THeadProps<T extends RowData> = {
@@ -16,13 +16,10 @@ export default function THead<T extends RowData>({
   table,
   ...rest
 }: THeadProps<T>) {
-  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const sortKey = searchParams.get('sortBy');
   const sortType = searchParams.get('sortType');
-  const perPage = searchParams.get('limit');
-  const searchQuery = searchParams.get('search');
 
   return (
     <thead
@@ -39,11 +36,7 @@ export default function THead<T extends RowData>({
                 !omitSort && header.column.getCanSort() ? 'pl-4' : 'pl-[30px]'
               )}>
               {header.isPlaceholder ? null : (
-                <div
-                  className={clsx(
-                    'relative flex items-center gap-2 py-1'
-                  )}
-                  >
+                <div className={clsx('relative flex items-center gap-2 py-1')}>
                   <p className="text-sm" color="white">
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </p>

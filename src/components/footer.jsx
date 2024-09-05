@@ -9,12 +9,12 @@ import { useEffect, useState } from 'react';
 import { GetFooterDetail } from '../infrastucture/footer';
 
 const Footer = ({ sidebarOpen, isFull = false }) => {
-  const [file,setFile] = useState('')
+  const [file, setFile] = useState('');
 
   useEffect(() => {
-    GetFooterDetail("logo").then((data) => {
-      if(data){
-        setFile(data.footer.value)
+    GetFooterDetail('logo').then((data) => {
+      if (data) {
+        setFile(data.footer.value);
       }
     });
   }, []);
@@ -32,7 +32,7 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
         )}>
         <div className="mx-[5%] flex flex-row justify-between text-white flex-wrap gap-6 md:gap-0">
           <div className="flex flex-col w-[100%] md:w-[30%] justify-between mr-15">
-            <Image src={file} alt="Logo Siketan" className='w-[70%]' />
+            <Image src={file} alt="Logo Siketan" className="w-[70%]" />
             <p className="text-[10px] text-justify">
               Sebuah inovasi website penyuluhan pertanian. Berbagi wawasan terbaru, praktik terbaik,
               dan solusi agraris. Antarmuka intuitif untuk akses mudah dan pembaruan informasi yang
@@ -103,4 +103,10 @@ const Footer = ({ sidebarOpen, isFull = false }) => {
     </footer>
   );
 };
+
+Footer.propTypes = {
+  sidebarOpen: PropTypes.bool,
+  isFull: PropTypes.bool
+};
+
 export default Footer;

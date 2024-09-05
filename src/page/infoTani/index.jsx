@@ -10,13 +10,9 @@ import { FaClock } from 'react-icons/fa6';
 import { BsPersonCircle } from 'react-icons/bs';
 import { IoMdListBox } from 'react-icons/io';
 import { BiCategoryAlt } from 'react-icons/bi';
-// import { postLogActivity } from '../../infrastucture/logActivity';
-import { setUser } from '../../infrastucture/redux/state/stateSlice';
-// import { RootState } from './infrastucture/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const InfoTani = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(true);
