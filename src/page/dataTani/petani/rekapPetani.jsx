@@ -120,7 +120,10 @@ const RekapPetani = () => {
               </Link>
               {user?.peran === 'operator super admin' && (
                 <>
-                  <Tooltip label="Sudah Terverifikasi">
+                  <Tooltip
+                    label={
+                      item?.tbl_akun?.isVerified ? 'Sudah Terverifikasi' : 'Belum Terverifikasi'
+                    }>
                     <button
                       onClick={() => {
                         VerifyingUser(item?.tbl_akun?.id);
