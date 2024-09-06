@@ -576,7 +576,6 @@ export default function HakAkses() {
                     <input
                       type="checkbox"
                       checked={dataa.access.petani ? true : false}
-                      onChange={handleChange}
                       className="w-4 h-4 fill-green-primary"
                     />
                   </td>
@@ -584,7 +583,6 @@ export default function HakAkses() {
                     <input
                       type="checkbox"
                       checked={dataa.access.penyuluh ? true : false}
-                      onChange={handleChange}
                       className="scale-125"
                     />
                   </td>
@@ -592,7 +590,6 @@ export default function HakAkses() {
                     <input
                       type="checkbox"
                       checked={dataa.access.oprPoktan ? true : false}
-                      onChange={handleChange}
                       className="scale-125"
                     />
                   </td>
@@ -600,7 +597,6 @@ export default function HakAkses() {
                     <input
                       type="checkbox"
                       checked={dataa.access.adm ? true : false}
-                      onChange={handleChange}
                       className="scale-125"
                     />
                   </td>
@@ -608,7 +604,6 @@ export default function HakAkses() {
                     <input
                       type="checkbox"
                       checked={dataa.access.sAdm ? true : false}
-                      onChange={handleChange}
                       className="scale-125"
                     />
                   </td>
