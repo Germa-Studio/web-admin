@@ -67,6 +67,7 @@ import IndexOperator from './page/operator';
 import EditOperator from './page/operator/edit';
 import DetailOperator from './page/operator/detail';
 import IndexKelompok from './page/kelompok';
+import EditKelompok from './page/kelompok/edit';
 import Profil from './page/profil/profil';
 import Pengaturan from './page/pengaturan/pengaturan';
 import DetailJurnalKegiatan from './page/penyuluhanTani/detailPenyuluh/detail';
@@ -632,6 +633,7 @@ const RoutesPath = () => {
           <Route path="/data-penyuluh/rekap-penyuluh" element={<RekapDataPenyuluh />} />
           {/*All about Kelompok*/}
           <Route path="/list-kelompok" element={<IndexKelompok />} />
+          <Route path="/list-kelompok/edit/:id" element={<EditKelompok />} />
           {/* Log Aktivitas */}
           <Route path="/log-aktivitas/" element={<LogActivity />} />
           <Route path="/log-aktivitas/data-sampah" element={<DataSampah />} />

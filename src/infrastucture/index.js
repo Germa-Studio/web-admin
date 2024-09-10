@@ -118,21 +118,11 @@ export const CekNiP = async (data) => {
   }
 };
 
-{
-  /* @description All about Kelompok*/
-}
-export const GetKelompok = async () => {
-  try {
-    const response = await Api.get('/kelompok');
-    return response.data;
-  } catch (error) {
-    SweatAlert(String(error.response.data.message), 'error');
-  }
-};
+/* @description All about Kelompok*/
 
 export const GetDataKelompok = async (page, limit) => {
   try {
-    const response = await Api.get(`/daftar-kelompok?page=${page}&limit=${limit}`);
+    const response = await Api.get(`/kelompok?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
     console.error('Error in GetDataKelompok:', error);
@@ -141,6 +131,51 @@ export const GetDataKelompok = async (page, limit) => {
     }
     SweatAlert(String(error.response ? error.response.data.message : 'Unknown error'), 'error');
     throw error;
+  }
+};
+
+export const GetKelompokById = async (id) => {
+  try {
+    const response = await Api.get(`/kelompok/${id}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
+export const UpdateKelompok = async (id, data) => {
+  try {
+    const response = await Api.put(`/kelompok/${id}`, data);
+    SweatAlert(String(response.data.message), 'success', '/list-kelompok');
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
+export const DeleteKelompok = async (id) => {
+  try {
+    const response = await Api.delete(`/kelompok/${id}`);
+    SweatAlert(String(response.data.message), 'success', 'reload');
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
+export const GetKecamatan = async () => {
+  try {
+    const response = await Api.get('/kelompok/kecamatan');
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
+
+export const GetDesaByKecamatan = async (kecamatan) => {
+  try {
+    const response = await Api.get(`/kelompok/desa?kecamatan=${kecamatan}`);
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
   }
 };
 
@@ -371,7 +406,7 @@ export const AddInfoTani = async (data) => {
 };
 export const GetInfoTani = async (search) => {
   try {
-    const response = await Api.get(`/info-tani?${search}`);
+    const response = await Api.get(`/info-tani${search}`);
     return response.data;
   } catch (error) {
     SweatAlert(String(error.response.data.message), 'error');

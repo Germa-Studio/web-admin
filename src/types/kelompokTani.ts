@@ -8,3 +8,11 @@ export type TKelompokTani = {
   createdAt: string | null;
   updatedAt: string | null;
 };
+
+export type EditableKelompokTani = {
+  gapoktan?: string;
+  namaKelompok?: string;
+  desa?: string;
+  kecamatan?: string;
+  penyuluh?: string | null;
+};

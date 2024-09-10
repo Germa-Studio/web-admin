@@ -112,7 +112,7 @@ const InfoTani = () => {
                       </div>
                       <div
                         dangerouslySetInnerHTML={{ __html: item.isi }}
-                        className="text-justify text-sm sm:text-base"
+                        className="text-justify text-sm sm:text-base line-clamp-5"
                       />
                     </div>
                   </div>
