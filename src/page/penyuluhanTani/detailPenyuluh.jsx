@@ -38,7 +38,6 @@ const DetailPenyuluh = () => {
     if (id) {
       getPenyuluhById(id).then((item) => {
         const data = item?.dataDaftarPenyuluh;
-        console.log(data);
         setLoading(false);
         setNIP(data?.nik);
         setNoWa(data?.noTelp);

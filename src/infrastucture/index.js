@@ -119,6 +119,14 @@ export const CekNiP = async (data) => {
 };
 
 /* @description All about Kelompok*/
+export const GetKelompok = async () => {
+  try {
+    const response = await Api.get('/kelompok-all');
+    return response.data;
+  } catch (error) {
+    SweatAlert(String(error.response.data.message), 'error');
+  }
+};
 
 export const GetDataKelompok = async (page, limit) => {
   try {
