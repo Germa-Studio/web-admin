@@ -45,5 +45,6 @@ export const komoditasTahunan = [
   'Bayam',
   'Kangkung',
   'Sawi',
-  'Kacang Panjang'
+  'Kacang Panjang',
+  'Timun'
 ];

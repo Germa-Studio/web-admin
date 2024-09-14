@@ -5,7 +5,6 @@ import Table from '@/components/table/Table';
 import { GetDataKelompok, UploadKelompok, DeleteKelompok } from '@/infrastruture';
 import { Button, Anchor, Breadcrumbs, Modal } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
-import { IoEyeOutline } from 'react-icons/io5';
 import { ImPencil } from 'react-icons/im';
 import { MdDeleteOutline } from 'react-icons/md';
 
@@ -23,6 +22,11 @@ const columns = [
   {
     accessorKey: 'no',
     header: 'No',
+    cell: (props) => <span>{`${props.getValue()}`}</span>
+  },
+  {
+    accessorKey: 'id',
+    header: 'ID Kelompok',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {

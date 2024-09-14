@@ -40,7 +40,7 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
   {
     accessorKey: 'fk_kelompokId',
     header: 'No. Poktan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
     accessorKey: 'kategori',
@@ -179,9 +179,7 @@ export default function Index() {
     if (!event.target.files) return;
 
     const file = event.target.files[0];
-    UploadStatistikTanaman(file).then(() => {
-      window.location.reload();
-    });
+    UploadStatistikTanaman(file);
   }
 
   return (

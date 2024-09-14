@@ -155,6 +155,7 @@ export default function ExportTable() {
           </thead>
           <tbody>
             {resp?.data.map((item) => {
+              const kategori = item.kategori.toLocaleLowerCase();
               return (
                 <tr key={item.id}>
                   <td className="border p-2">{item.fk_kelompokId}</td>
@@ -166,7 +167,7 @@ export default function ExportTable() {
                   <td className="border p-2">{item.kelompok?.gapoktan}</td>
                   <td className="border p-2">{item.kelompok?.namaKelompok}</td>
                   {/* Tanaman Pangan */}
-                  {item.kategori.includes('pangan') ? (
+                  {kategori.includes('pangan') ? (
                     <>
                       <td className="border p-2 capitalize">{item.komoditas}</td>
                       <td className="border p-2">{item.luasLahan}</td>
@@ -181,7 +182,7 @@ export default function ExportTable() {
                     <BlankCell numberOfCol={8} />
                   )}
                   {/* Tanaman Perkebunan Semusim */}
-                  {item.kategori.includes('kebun') &&
+                  {kategori.includes('kebun') &&
                   komoditasSemusim.includes(item.komoditas.replace('Buah ', '')) ? (
                     <>
                       <td className="border p-2 capitalize">{item.komoditas}</td>
@@ -197,7 +198,7 @@ export default function ExportTable() {
                     <BlankCell numberOfCol={8} />
                   )}
                   {/* Tanaman Perkebunan Tahunan */}
-                  {item.kategori.includes('kebun') &&
+                  {kategori.includes('kebun') &&
                   komoditasTahunan.includes(item.komoditas.replace('Sayur ', '')) ? (
                     <>
                       <td className="border p-2 capitalize">{item.komoditas}</td>
@@ -213,7 +214,7 @@ export default function ExportTable() {
                     <BlankCell numberOfCol={6} />
                   )}
                   {/* Tanaman Hortikurtira Semusim */}
-                  {(item.kategori.includes('sayur') || item.kategori.includes('buah')) &&
+                  {(kategori.includes('sayur') || kategori.includes('buah')) &&
                   komoditasSemusim.includes(item.komoditas.replace('Buah ', '')) ? (
                     <>
                       <td className="border p-2 capitalize">{item.komoditas}</td>
@@ -230,7 +231,7 @@ export default function ExportTable() {
                     <BlankCell numberOfCol={9} />
                   )}
                   {/* Tanaman Hortikurtira Tahunan */}
-                  {(item.kategori.includes('sayur') || item.kategori.includes('buah')) &&
+                  {(kategori.includes('sayur') || kategori.includes('buah')) &&
                   komoditasTahunan.includes(item.komoditas.replace('Sayur ', '')) ? (
                     <>
                       <td className="border p-2 capitalize">{item.komoditas}</td>

@@ -82,7 +82,7 @@ const columns: ColumnDef<TTableDataTanaman>[] = [
   {
     accessorKey: 'fk_kelompokId',
     header: 'No. Poktan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
     accessorKey: 'kategori',
@@ -321,7 +321,12 @@ export default function DataTanamanForm({
 
                 <Tabs
                   defaultValue={
-                    komoditasSemusim.includes(newData.komoditas) ? 'semusim' : 'tahunan'
+                    komoditasSemusim
+                      .slice(0, 4)
+                      .concat(...tanamanPerkebunan)
+                      .includes(newData.komoditas)
+                      ? 'semusim'
+                      : 'tahunan'
                   }>
                   <Tabs.List>
                     <Tabs.Tab

@@ -97,9 +97,9 @@ export const UploadStatistikTanaman = async (file: File) => {
         'Content-Type': 'multipart/form-data'
       }
     });
-    SweatAlert(String(response.data.message), 'success');
+    SweatAlert(String(response.data.message), 'success', 'reload');
     return response.data;
   } catch (error) {
-    SweatAlert(String(error.response.data.message), 'error');
+    SweatAlert(String(error.response.data.message), 'error', 'reload');
   }
 };
