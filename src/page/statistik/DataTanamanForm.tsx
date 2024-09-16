@@ -181,7 +181,6 @@ export default function DataTanamanForm({
 
         GetKelompokTaniById(dataResult.fk_kelompokId).then((e) => {
           setPoktan(e?.kelompokTani);
-          console.log(e.kelompokTani);
         });
         if (e) setNewData(dataResult);
         if (dataResult.kategori === 'buah' || dataResult.kategori === 'sayur')

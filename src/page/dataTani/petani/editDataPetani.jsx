@@ -15,8 +15,8 @@ const EditRekapPetani = () => {
   const [email, setEmail] = useState('');
   const [nama, setNama] = useState('');
   const [password, setPassword] = useState('');
-  const [kecamatan, setKecamatan] = useState('');
-  const [desa, setDesa] = useState('');
+  const [kecamatan, setKecamatan] = useState();
+  const [desa, setDesa] = useState();
   const [namaKelompok, setNamaKelompok] = useState('');
   const [penyuluh, setPenyuluh] = useState('');
   const [alamat, setAlamat] = useState('');
@@ -42,8 +42,8 @@ const EditRekapPetani = () => {
       setEmail(data?.email);
       setNama(data?.nama);
       setPassword(data?.password);
-      setKecamatan(data?.kecamatan);
-      setDesa(data?.desa);
+      setKecamatan(data?.kecamatanData);
+      setDesa(data?.desaData.id);
       setFoto(data?.foto);
       setNamaKelompok(data?.kelompok?.namaKelompok);
       setPenyuluh(data?.dataPenyuluh?.id);
@@ -52,6 +52,7 @@ const EditRekapPetani = () => {
       setLoading(false);
     });
   }, [id]);
+
   useEffect(() => {
     GetOpsiPenyuluh().then((data) => {
       const filterData = data.map((obj) => {
@@ -67,16 +68,11 @@ const EditRekapPetani = () => {
       setDaftarPenyuluh(filterData);
     });
   }, []);
+
   useEffect(() => {
     if (daftarKecamatan && kecamatan && !kecamatanActive) {
-      console.log({ daftarKecamatan, kecamatan, kecamatanActive });
-
-      const filteredData = daftarKecamatan?.filter((item) => {
-        const parts = item?.nama?.split('-');
-        return parts[0] == kecamatan;
-      });
-      const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`;
-      setIdKecamanan(filteredData[0]?.id);
+      const kecamatanActivate = `${kecamatan.nama}-${kecamatan.id}`;
+      setIdKecamanan(kecamatan.id);
       setKecamatanActive(kecamatanActivate);
     }
   }, [daftarKecamatan, kecamatan, kecamatanActive]);
@@ -84,14 +80,15 @@ const EditRekapPetani = () => {
   useEffect(() => {
     fecthDesa(idKecamatan).then((res) => setDafatarDesa(res.data));
   }, [idKecamatan]);
+
   useEffect(() => {
     if (desa) {
       select(desa).then((data) => {
-        setGapoktan(data?.kelompokTani[0]?.gapoktan || '');
         setDaftarNamaKelompok(data?.kelompokTani);
       });
     }
   }, [desa]);
+
   const handleselect = (e) => {
     setDesa(e);
   };
@@ -99,6 +96,7 @@ const EditRekapPetani = () => {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
+
     const data = {
       NIK,
       nokk,
@@ -106,8 +104,8 @@ const EditRekapPetani = () => {
       email,
       nama,
       password,
-      kecamatan,
-      desa,
+      kecamatanId: kecamatan.id,
+      desaId: desa,
       namaKelompok,
       penyuluh,
       gapoktan,
@@ -271,12 +269,12 @@ const EditRekapPetani = () => {
             <div className="relative z-0 w-full mb-6 group">
               <select
                 id="desa"
-                value={desa}
+                value={desa ?? ''}
                 onChange={(e) => handleselect(e.target.value)}
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown">
                 <option value="">--Silahkan Pilih Desa--</option>
                 {dafatarDesa?.map((item, i) => (
-                  <option value={item.nama} key={i}>
+                  <option value={item.id} key={i}>
                     {item.nama}
                   </option>
                 ))}

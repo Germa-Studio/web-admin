@@ -25,8 +25,8 @@ const ViewDetailDataPetani = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fecthKecamatan().then((data) => {
-      setDaftarKecamatan(data.kecamatan);
+    fecthKecamatan().then((res) => {
+      setDaftarKecamatan(res.data);
     });
     GetDaftarTaniById(id).then((data) => {
       setNIK(data?.nik);
@@ -34,8 +34,8 @@ const ViewDetailDataPetani = () => {
       setNoWa(data?.noTelp);
       setEmail(data?.email);
       setNama(data?.nama);
-      setKecamatan(data?.kecamatan);
-      setDesa(data?.desa);
+      setKecamatan(data?.kecamatanData.nama);
+      setDesa(data?.desaData.nama);
       setFoto(data?.foto);
       setNamaKelompok(data?.kelompok?.namaKelompok);
       setPenyuluh(data?.dataPenyuluh?.id);
@@ -74,7 +74,6 @@ const ViewDetailDataPetani = () => {
   useEffect(() => {
     if (desa) {
       select(desa).then((data) => {
-        setGapoktan(data?.kelompokTani[0]?.gapoktan || '');
         setDaftarNamaKelompok(data?.kelompokTani);
       });
     }
@@ -101,7 +100,7 @@ const ViewDetailDataPetani = () => {
             imageActive={foto}
             onChange={(e) => setFoto(e)}
             title="Foto Profil"
-            isDisabled
+            disabled
           />
         </div>
         <div className="grid md:grid-cols-2 md:gap-6 mt-6">

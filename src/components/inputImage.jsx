@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { IconPhoto } from '@tabler/icons-react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
-function InputImage({ imageActive, onChange, title, id }) {
+function InputImage({ imageActive, onChange, title, id, disabled }) {
   const [image, setImage] = useState('');
   const handleImageChange = (e) => {
+    if (disabled) return;
     const file = e.target.files[0];
     setImage(URL.createObjectURL(file));
     onChange(file);
@@ -12,7 +14,10 @@ function InputImage({ imageActive, onChange, title, id }) {
   return (
     <label
       htmlFor={`imageInput-${id}`}
-      className="cursor-pointer border-solid border-2 border-slate-800 w-80 h-60 rounded-2xl">
+      className={clsx(
+        'border-solid border-2 border-slate-800 w-80 h-60 rounded-2xl',
+        disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+      )}>
       {image ? (
         <img src={image} className="w-full h-full rounded-2xl object-cover" />
       ) : imageActive ? (
@@ -32,6 +37,7 @@ function InputImage({ imageActive, onChange, title, id }) {
         accept="image/*"
         className="hidden"
         onChange={(e) => handleImageChange(e)}
+        disabled={disabled}
       />
     </label>
   );
