@@ -307,7 +307,7 @@ export default function EditTanamanPetani() {
           <div className="col-span-3 grid grid-cols-2 gap-4">
             <TextInput label="NIK" disabled value={tanaman?.dataPetani?.nik} />
             <TextInput label="Nama Petani" disabled value={tanaman?.dataPetani?.nama} />
-            <TextInput label="Desa Domisili" disabled value={tanaman?.dataPetani?.desa} />
+            <TextInput label="Desa Domisili" disabled value={tanaman?.dataPetani?.desaData?.nama} />
             <TextInput
               label="Nama Gapoktan"
               disabled
@@ -404,7 +404,7 @@ export default function EditTanamanPetani() {
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
-                      // disabled={!kategori}
+                    // disabled={!kategori}
                     />
                   </Tabs.Panel>
 

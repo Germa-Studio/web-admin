@@ -40,7 +40,7 @@ import { useSelector } from 'react-redux';
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
   { title: 'Data Tanaman Petani' },
-  { title: 'Edit' }
+  { title: 'Detail' }
 ].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
     {item.title}
@@ -122,8 +122,8 @@ export default function DetailDataTanaman() {
   const limit = searchParams.get('limit') ?? 10;
 
   useEffect(() => {
-    GetTanamanPetaniById(id).then((data) => {
-      setTanaman(data.data);
+    GetTanamanPetaniById(id).then((res) => {
+      setTanaman(res.data);
     });
   }, [id]);
 
@@ -229,7 +229,7 @@ export default function DetailDataTanaman() {
         isDisabled
         value={tanaman?.dataPetani?.nama}
         // isClearable
-        placeholder={`${tanaman?.dataPetani?.nik} - ${tanaman?.dataPetani?.nama}`}
+        placeholder={`${tanaman?.dataPetani?.nik ?? ''} - ${tanaman?.dataPetani?.nama ?? ''}`}
       />
       <Modal
         opened={modalDeleteData}
@@ -282,7 +282,7 @@ export default function DetailDataTanaman() {
           <div className="col-span-3 grid grid-cols-2 gap-4">
             <TextInput label="NIK" disabled value={tanaman?.dataPetani?.nik} />
             <TextInput label="Nama Petani" disabled value={tanaman?.dataPetani?.nama} />
-            <TextInput label="Desa Domisili" disabled value={tanaman?.dataPetani?.desa} />
+            <TextInput label="Desa Domisili" disabled value={tanaman?.dataPetani?.desaData?.nama} />
             <TextInput
               label="Nama Gapoktan"
               disabled

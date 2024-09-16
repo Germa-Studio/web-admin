@@ -26,7 +26,7 @@ import {
 
 const breadcrumbItems = [
   { title: 'Dashboard', href: '/' },
-  { title: 'Statistik' },
+  { title: 'Data Pertanian', href: '/tanaman-petani' },
   { title: 'Tambah Data' }
 ].map((item, index) => (
   <Anchor href={item.href} key={index} className="text-white opacity-50">
@@ -92,9 +92,8 @@ export default function TambahTanamanPetani() {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    AddTanamanPetani(data).then(() => {
-      setLoading(false);
-    });
+    AddTanamanPetani(data);
+    setLoading(false);
   };
 
   return (
@@ -106,7 +105,10 @@ export default function TambahTanamanPetani() {
         loadOptions={loadOptions}
         defaultOptions
         onChange={(value) => {
+          console.log({ value });
+
           setPetani(value);
+          setLoading(false);
         }}
         value={petani}
         isClearable
@@ -170,7 +172,7 @@ export default function TambahTanamanPetani() {
           <div className="col-span-4 grid grid-cols-2 gap-4">
             <TextInput label="NIK" disabled value={petani?.nik} />
             <TextInput label="Nama Petani" disabled value={petani?.nama} />
-            <TextInput label="Desa Domisili" disabled value={petani?.desa} />
+            <TextInput label="Desa Domisili" disabled value={petani?.desaData?.nama} />
             <TextInput label="Nama Gapoktan" disabled value={petani.kelompok?.gapoktan} />
             <TextInput label="Nama Kelompok" disabled value={petani.kelompok?.namaKelompok} />
             <TextInput label="Nama Penyuluh" disabled value={petani.dataPenyuluh?.nama} />
@@ -262,7 +264,7 @@ export default function TambahTanamanPetani() {
                       }
                       value={komoditas}
                       onChange={(value) => setKomoditas(value)}
-                      // disabled={!kategori}
+                    // disabled={!kategori}
                     />
                   </Tabs.Panel>
 
