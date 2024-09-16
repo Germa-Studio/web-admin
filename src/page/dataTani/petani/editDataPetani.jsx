@@ -32,8 +32,8 @@ const EditRekapPetani = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   useEffect(() => {
-    fecthKecamatan().then((data) => {
-      setDaftarKecamatan(data.kecamatan);
+    fecthKecamatan().then((res) => {
+      setDaftarKecamatan(res.data);
     });
     GetDaftarTaniById(id).then((data) => {
       setNIK(data?.nik);
@@ -69,6 +69,8 @@ const EditRekapPetani = () => {
   }, []);
   useEffect(() => {
     if (daftarKecamatan && kecamatan && !kecamatanActive) {
+      console.log({ daftarKecamatan, kecamatan, kecamatanActive });
+
       const filteredData = daftarKecamatan?.filter((item) => {
         const parts = item?.nama?.split('-');
         return parts[0] == kecamatan;
@@ -77,12 +79,10 @@ const EditRekapPetani = () => {
       setIdKecamanan(filteredData[0]?.id);
       setKecamatanActive(kecamatanActivate);
     }
-    // if(kecamatan){
-    //   selectPenyuluh(kecamatan).then((data)=> setDaftarPenyuluh(data.penyuluh))
-    // }
   }, [daftarKecamatan, kecamatan, kecamatanActive]);
+
   useEffect(() => {
-    fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
+    fecthDesa(idKecamatan).then((res) => setDafatarDesa(res.data));
   }, [idKecamatan]);
   useEffect(() => {
     if (desa) {

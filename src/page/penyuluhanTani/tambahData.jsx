@@ -57,8 +57,8 @@ const TambahPenyuluhanTani = () => {
   // create function to gobackParent
   // const goBackParent = () => window.history.back();
   useEffect(() => {
-    fecthKecamatan().then((data) => {
-      setDaftarKecamatan(data.kecamatan);
+    fecthKecamatan().then((res) => {
+      setDaftarKecamatan(res.data);
     });
   }, []);
 
@@ -67,8 +67,8 @@ const TambahPenyuluhanTani = () => {
     const nama = e?.split('-')[0];
     setKecamatan(nama);
     setKecamatanActive(e);
-    fecthDesa(id).then((data) => {
-      setDafatarDesa(data.kelurahan);
+    fecthDesa(id).then((res) => {
+      setDafatarDesa(res.data);
     });
   };
 
@@ -77,11 +77,11 @@ const TambahPenyuluhanTani = () => {
     const nama = e?.split('-')[0];
     setKecamatanBinaan(nama);
     setKecamatanBinaanActive(e);
-    fecthDesa(id).then((data) => {
-      const dataaa = data?.kelurahan?.map((item) => {
+    fecthDesa(id).then((res) => {
+      const data = res?.data?.map((item) => {
         return { value: item.nama, label: item.nama };
       });
-      setDafatarDesaBinaan(dataaa);
+      setDafatarDesaBinaan(data);
     });
   };
 

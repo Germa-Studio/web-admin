@@ -1,19 +1,25 @@
-import axios from 'axios';
-const fecthKecamatan = async () => {
+import Api from './base';
+
+const fecthKecamatan = async (searchQuery) => {
   try {
-    const response = await axios.get(
-      'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=3521'
-    );
+    const response = await Api.get('/wilayah/kecamatan', {
+      params: {
+        search: searchQuery
+      }
+    });
     return response.data;
   } catch (error) {
     return 'terjadi kesalahan';
   }
 };
-const fecthDesa = async (id) => {
+const fecthDesa = async (kecamatanId, searchQuery) => {
   try {
-    const response = await axios.get(
-      `https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=${id}`
-    );
+    const response = await Api.get('/wilayah/desa', {
+      params: {
+        kecamatanId: kecamatanId,
+        search: searchQuery
+      }
+    });
     return response.data;
   } catch (error) {
     return 'terjadi kesalahan';

@@ -29,8 +29,8 @@ const TambahDataTani = () => {
   const [daftarPenyuluh, setDaftarPenyuluh] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    fecthKecamatan().then((data) => {
-      setDaftarKecamatan(data.kecamatan);
+    fecthKecamatan().then((res) => {
+      setDaftarKecamatan(res.data);
     });
     GetOpsiPenyuluh().then((data) => {
       const filterData = data.map((obj) => {
@@ -56,6 +56,7 @@ const TambahDataTani = () => {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
+
     const data = {
       NIK,
       nokk,
@@ -63,15 +64,15 @@ const TambahDataTani = () => {
       email,
       nama,
       password,
-      kecamatan,
-      desa,
+      kecamatanId: kecamatan,
+      desaId: desa,
       alamat,
       namaKelompok,
       gapoktan,
       penyuluh,
       foto
     };
-    console.log({ data });
+
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
@@ -82,11 +83,9 @@ const TambahDataTani = () => {
   };
   const handleSelectKecamatan = (e) => {
     const id = e?.split('-')[1];
-    const nama = e?.split('-')[0];
-    setKecamatan(nama);
+    setKecamatan(id);
     setKecamatanActive(e);
-    fecthDesa(id).then((data) => setDafatarDesa(data.kelurahan));
-    // selectPenyuluh(nama).then((data) => setDaftarPenyuluh(data.penyuluh))
+    fecthDesa(id).then((res) => setDafatarDesa(res.data));
   };
 
   return (
@@ -238,7 +237,7 @@ const TambahDataTani = () => {
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown">
                 <option value="">--Silahkan Pilih Desa--</option>
                 {dafatarDesa?.map((item, i) => (
-                  <option value={item.nama} key={i}>
+                  <option value={item.id} key={i}>
                     {item.nama}
                   </option>
                 ))}

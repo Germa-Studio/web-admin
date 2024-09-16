@@ -231,7 +231,7 @@ export default function DataTanamanForm({
             <TextInput label="ID Poktan" disabled value={poktan?.id} />
             <TextInput label="Gapoktan" disabled value={poktan?.gapoktan} />
             <TextInput label="Nama Kelompok" disabled value={poktan?.namaKelompok} />
-            <TextInput label="Desa" disabled value={poktan?.desa} />
+            <TextInput label="Desa" disabled value={poktan?.desaData?.nama} />
           </div>
         </div>
       </div>

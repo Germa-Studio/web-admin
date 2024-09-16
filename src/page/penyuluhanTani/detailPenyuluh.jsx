@@ -57,14 +57,14 @@ const DetailPenyuluh = () => {
       });
     }
   }, [id]);
-  console.log(kelompokData);
+
   const handleSelectKecamatan = (e) => {
     const id = e?.split('-')[1];
     const nama = e?.split('-')[0];
     setKecamatan(nama);
     setKecamatanActive(e);
-    fecthDesa(id).then((data) => {
-      setDafatarDesa(data.kelurahan);
+    fecthDesa(id).then((res) => {
+      setDafatarDesa(res.data);
     });
   };
   const handleSelectKecamatanBinaan = (e) => {
@@ -72,11 +72,11 @@ const DetailPenyuluh = () => {
     const nama = e?.split('-')[0];
     setKecamatanBinaan(nama);
     setKecamatanBinaanActive(e);
-    fecthDesa(id).then((data) => {
-      const dataaa = data?.kelurahan?.map((item) => {
+    fecthDesa(id).then((res) => {
+      const data = res?.data?.map((item) => {
         return { value: item.nama, label: item.nama };
       });
-      setDafatarDesaBinaan(dataaa);
+      setDafatarDesaBinaan(data);
     });
   };
   useEffect(() => {
@@ -91,7 +91,7 @@ const DetailPenyuluh = () => {
     }
   }, [daftarKecamatan, kecamatan, kecamatanActive]);
   useEffect(() => {
-    fecthDesa(idKecamatan).then((data) => setDafatarDesa(data.kelurahan));
+    fecthDesa(idKecamatan).then((res) => setDafatarDesa(res.data));
   }, [idKecamatan]);
   useEffect(() => {
     if (daftarKecamatan && kecamatanBinaan && !kecamatanBinaanActive) {
@@ -106,11 +106,11 @@ const DetailPenyuluh = () => {
   }, [daftarKecamatan, kecamatanBinaan, kecamatanBinaanActive]);
   useEffect(() => {
     if (idKecamatanBinaan) {
-      fecthDesa(idKecamatanBinaan).then((data) => {
-        const dataaa = data?.kelurahan?.map((item) => {
+      fecthDesa(idKecamatanBinaan).then((res) => {
+        const data = res?.data?.map((item) => {
           return { value: item.nama, label: item.nama };
         });
-        setDafatarDesaBinaan(dataaa);
+        setDafatarDesaBinaan(data);
       });
     }
   }, [idKecamatanBinaan]);

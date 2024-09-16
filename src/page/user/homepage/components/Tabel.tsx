@@ -77,7 +77,7 @@ const columns: ColumnDef<TTableTanamanPetani>[] = [
   },
 
   {
-    accessorKey: 'dataPetani.kelompok.desa',
+    accessorKey: 'dataPetani.kelompok.kecamatanData.nama',
     header: 'Daerah (Kecamatan)',
     cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
