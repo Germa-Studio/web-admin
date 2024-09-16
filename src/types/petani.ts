@@ -1,4 +1,5 @@
 import { TKelompokTani } from './kelompokTani';
+import { TDataWilayah, TDataWilayahDetail } from './wilayah';
 
 type TAkun = {
   id: number;
@@ -21,10 +22,36 @@ export type TPetani = {
   nkk: string;
 
   kelompok?: TKelompokTani;
-} & TAkun;
+} & TAkun &
+  TDataWilayah;
 
 export type TPenyuluh = {
   desaBinaan: string;
   kecamatanBinaan: string;
   namaProduct: string;
-} & TAkun;
+  kecamatanBinaanData: TKecamatanBinaan[];
+  desaBinaanData: TDesaBinaan[];
+} & TAkun &
+  TDataWilayah;
+
+export type TKecamatanBinaan = {
+  id: number;
+  kecamatan: TDataWilayahDetail;
+  penyuluhId: number;
+};
+
+export type TDesaBinaan = {
+  id: number;
+  desa: TDataWilayahDetail;
+  penyuluhId: number;
+};
+
+export type TTableKecamatanBinaan = {
+  no: number;
+  actions: React.ReactNode;
+} & TKecamatanBinaan;
+
+export type TTableDesaBinaan = {
+  no: number;
+  actions: React.ReactNode;
+} & TDesaBinaan;

@@ -10,6 +10,9 @@ import MainCard from '../../components/MainCard';
 import Loading from '../../components/loading';
 import { AddPenjual, CekNiP, CekNik, DetailProductsPetani, EditPenjual } from '../../infrastucture';
 import { TPenyuluh, TPetani } from '../../types/petani';
+import { Tabs } from '@mantine/core';
+import KecamatanBinaan from './kecamatanBinaan';
+import DesaBinaan from './desaBinaan';
 
 const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
   const [NIK, setNIK] = React.useState('');
@@ -97,13 +100,13 @@ const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    console.log({ type });
+
     if (type === 'add') AddPenjual(formData).then(() => setLoading(false));
     else if (type === 'edit') EditPenjual(id, formData).then(() => setLoading(false));
   };
 
   return (
-    <MainCard transparent row center className="px-10 md:px-40 py-10">
+    <MainCard transparent center className="px-10 md:px-40 py-10">
       <MainCard className="shadow-xl rounded-xl px-5 py-5 w-[80%]">
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="relative z-0 w-full mb-6 group">
@@ -207,32 +210,26 @@ const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <p>
-                <strong>Desa: </strong> {datas?.desa}
+                <strong>Desa: </strong> {datas?.desaData?.nama}
               </p>
             </div>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 gronup">
               <p>
-                <strong>Kecamatan: </strong> {datas?.kecamatan}
+                <strong>Kecamatan: </strong> {datas?.kecamatanData?.nama}
               </p>
             </div>
-            {profesiPenjual == 'petani' ? (
+            {profesiPenjual == 'petani' && (
               <div className="relative z-0 w-full mb-6 gronup">
                 <p>
                   <strong>Gapoktan: </strong> {(datas as TPetani)?.kelompok?.gapoktan}
                 </p>
               </div>
-            ) : (
-              <div className="relative z-0 w-full mb-6 gronup">
-                <p>
-                  <strong>Kecamatan Binaan: </strong> {(datas as TPenyuluh)?.kecamatanBinaan}
-                </p>
-              </div>
             )}
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
-            {profesiPenjual == 'petani' ? (
+            {profesiPenjual == 'petani' && (
               <>
                 <div className="relative z-0 w-full mb-6 group">
                   <p>
@@ -245,12 +242,6 @@ const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
                   </p>
                 </div>
               </>
-            ) : (
-              <div className="relative z-0 w-full mb-6 gronup">
-                <p>
-                  <strong>Desa Binaan: </strong> {(datas as TPenyuluh)?.desaBinaan}
-                </p>
-              </div>
             )}
           </div>
           {loading && <Loading />}
@@ -404,6 +395,28 @@ const TokoTaniForm = ({ type }: { type: 'add' | 'detail' | 'edit' }) => {
           </div>
         </form>
       </MainCard>
+      {datas && profesiPenjual === 'penyuluh' && (
+        <>
+          <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
+            <h3 className="text-white text-2xl font-bold mx-auto">Wilayah Binaan</h3>
+          </div>
+          <div className="w-full bg-white p-4 rounded-lg">
+            <Tabs defaultValue="kecamatan">
+              <Tabs.List>
+                <Tabs.Tab value="kecamatan">Kecamatan</Tabs.Tab>
+                <Tabs.Tab value="desa">Desa</Tabs.Tab>
+              </Tabs.List>
+
+              <Tabs.Panel value="kecamatan">
+                <KecamatanBinaan penyuluh={datas as TPenyuluh} />
+              </Tabs.Panel>
+              <Tabs.Panel value="desa">
+                <DesaBinaan penyuluh={datas as TPenyuluh} />
+              </Tabs.Panel>
+            </Tabs>
+          </div>
+        </>
+      )}
     </MainCard>
   );
 };
