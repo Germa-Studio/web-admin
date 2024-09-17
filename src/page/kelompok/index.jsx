@@ -40,12 +40,12 @@ const columns = [
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'desa',
+    accessorKey: 'desaData.nama',
     header: 'Desa',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'kecamatan',
+    accessorKey: 'kecamatanData.nama',
     header: 'Kecamatan',
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },

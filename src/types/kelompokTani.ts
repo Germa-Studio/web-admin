@@ -15,6 +15,8 @@ export type EditableKelompokTani = {
   gapoktan?: string;
   namaKelompok?: string;
   desa?: string;
+  desaId?: string | number;
   kecamatan?: string;
+  kecamatanId?: string | number;
   penyuluh?: string | null;
 };

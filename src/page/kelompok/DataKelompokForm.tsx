@@ -9,6 +9,8 @@ import {
   GetKecamatan,
   GetDesaByKecamatan
 } from '../../infrastucture';
+import { fecthDesa, fecthKecamatan } from '../../infrastucture/daerah';
+import { TKecamatanBinaan } from '../../types/petani';
 
 export default function DataKelompokForm({ type }: { type: 'add' | 'detail' | 'edit' }) {
   const params = useParams();
@@ -21,9 +23,13 @@ export default function DataKelompokForm({ type }: { type: 'add' | 'detail' | 'e
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    GetKecamatan().then((res) => {
-      const kecamatanList = res.data;
-      setDaftarKecamatan(kecamatanList.map((data: { kecamatan: string }) => data.kecamatan));
+    fecthKecamatan().then((res) => {
+      setDaftarKecamatan(
+        res.data.map((kecamatan: TKecamatanBinaan) => ({
+          value: `${kecamatan.id}`,
+          label: kecamatan.nama
+        }))
+      );
     });
   }, []);
 
@@ -34,13 +40,12 @@ export default function DataKelompokForm({ type }: { type: 'add' | 'detail' | 'e
   }, [id]);
 
   React.useEffect(() => {
-    if (data?.kecamatan) {
-      GetDesaByKecamatan(data.kecamatan).then((res) => {
-        const desaList = res.data;
-        setDaftarDesa(desaList.map((data: { desa: string }) => data.desa));
+    if (data?.kecamatanId) {
+      fecthDesa(data.kecamatanId).then((res) => {
+        setDaftarDesa(res.data.map((desa) => ({ value: `${desa.id}`, label: desa.nama })));
       });
     }
-  }, [data?.kecamatan]);
+  }, [data?.kecamatanId]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,9 +79,9 @@ export default function DataKelompokForm({ type }: { type: 'add' | 'detail' | 'e
           <p>Kecamatan</p>
           <Select
             placeholder="-Pilih Kecamatan-"
-            value={data?.kecamatan}
+            value={`${data?.kecamatanId}`}
             onChange={(value) => {
-              setData((prev) => ({ ...prev, kecamatan: value ?? '' }));
+              setData((prev) => ({ ...prev, kecamatanId: value ?? '' }));
             }}
             data={daftarKecamatan}
           />
@@ -95,12 +100,12 @@ export default function DataKelompokForm({ type }: { type: 'add' | 'detail' | 'e
           <p>Desa</p>
           <Select
             placeholder="-Pilih Desa-"
-            value={data?.desa}
+            value={`${data?.desaId}`}
             onChange={(value) => {
-              setData((prev) => ({ ...prev, desa: value ?? '' }));
+              setData((prev) => ({ ...prev, desaId: value ?? '' }));
             }}
             data={daftarDesa}
-            disabled={!data?.kecamatan}
+            disabled={!data?.kecamatanId}
           />
         </div>
       </div>

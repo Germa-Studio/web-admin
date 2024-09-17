@@ -4,7 +4,7 @@ import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import InputImage from '@/components/inputImage';
 import { updatePenyuluhById, getPenyuluhById } from '@/infrastruture';
-import { MultiSelect, Tabs } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
 import { useParams } from 'react-router-dom';
 import LoadingAnimation from '../../components/loading';
@@ -91,19 +91,6 @@ const EditPenyuluhanTani = () => {
     setKecamatanActive(e);
     fecthDesa(e).then((res) => {
       setDafatarDesa(res.data);
-    });
-  };
-
-  const handleSelectKecamatanBinaan = (e) => {
-    const id = e?.split('-')[1];
-    const nama = e?.split('-')[0];
-    setKecamatanBinaan(nama);
-    setKecamatanBinaanActive(e);
-    fecthDesa(id).then((res) => {
-      const data = res?.data?.map((item) => {
-        return { value: item.nama, label: item.nama };
-      });
-      setDafatarDesaBinaan(data);
     });
   };
 
