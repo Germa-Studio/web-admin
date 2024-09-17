@@ -43,13 +43,13 @@ const columns = [
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
-    accessorKey: 'kecamatanBinaan',
     header: 'Kecamatan Binaan',
-    cell: (props) => <span>{`${props.getValue()}`}</span>
+    accessorFn: (row) => row.kecamatanBinaanData.map((item) => item.kecamatan.nama).join(', '),
+    cell: (props) => <span>{`${props.getValue() ?? '-'}`}</span>
   },
   {
-    accessorKey: 'desaBinaan',
     header: 'Desa Binaan',
+    accessorFn: (row) => row.desaBinaanData.map((item) => item.desa.nama).join(', '),
     cell: (props) => <span>{`${props.getValue()}`}</span>
   },
   {
@@ -83,6 +83,8 @@ const RekapDataPenyuluh = () => {
 
   useEffect(() => {
     if (resp) {
+      console.log({ resp });
+
       setDataTable({
         ...resp,
         data: resp.data.map((item, index) => ({

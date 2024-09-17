@@ -47,7 +47,8 @@ InputImage.propTypes = {
   imageActive: PropTypes.string,
   onChange: PropTypes.func,
   title: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 export default InputImage;

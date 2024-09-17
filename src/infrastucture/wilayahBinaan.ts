@@ -1,13 +1,17 @@
 import SweatAlert from '../components/uiComponents/swetAlert';
 import Api from './base';
 
-const deleteKecamatanBinaan = async (penyuluhId: number, kecamatanId: number) => {
+const deleteWilayahBinaan = async (
+  penyuluhId: number,
+  wilayahId: number | string,
+  type: 'desa' | 'kecamatan'
+) => {
   try {
     const response = await Api.delete('/penyuluh/wilayah-binaan', {
       data: {
-        type: 'kecamatan',
+        type,
         penyuluhId,
-        wilayahId: kecamatanId
+        wilayahId
       }
     });
     SweatAlert(String(response.data.message), 'success', 'reload');
@@ -16,12 +20,24 @@ const deleteKecamatanBinaan = async (penyuluhId: number, kecamatanId: number) =>
   }
 };
 
-const addKecamatanBinaan = async (penyuluhId: number, kecamatanId: number) => {
+const deleteKecamatanBinaan = async (penyuluhId: number, kecamatanId: number | string) => {
+  deleteWilayahBinaan(penyuluhId, kecamatanId, 'kecamatan');
+};
+
+const deleteDesaBinaan = async (penyuluhId: number, desaId: number | string) => {
+  deleteWilayahBinaan(penyuluhId, desaId, 'desa');
+};
+
+const addWilayahBinaan = async (
+  penyuluhId: number,
+  wilayahId: number | string,
+  type: 'desa' | 'kecamatan'
+) => {
   try {
     const response = await Api.post('/penyuluh/wilayah-binaan', {
-      type: 'kecamatan',
+      type,
       penyuluhId,
-      wilayahId: kecamatanId
+      wilayahId
     });
     SweatAlert(String(response.data.message), 'success', 'reload');
   } catch (error) {
@@ -29,4 +45,12 @@ const addKecamatanBinaan = async (penyuluhId: number, kecamatanId: number) => {
   }
 };
 
-export { deleteKecamatanBinaan, addKecamatanBinaan };
+const addKecamatanBinaan = async (penyuluhId: number, kecamatanId: number | string) => {
+  addWilayahBinaan(penyuluhId, kecamatanId, 'kecamatan');
+};
+
+const addDesaBinaan = async (penyuluhId: number, desaId: number | string) => {
+  addWilayahBinaan(penyuluhId, desaId, 'desa');
+};
+
+export { deleteKecamatanBinaan, addKecamatanBinaan, deleteDesaBinaan, addDesaBinaan };

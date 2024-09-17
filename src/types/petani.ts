@@ -38,12 +38,14 @@ export type TKecamatanBinaan = {
   id: number;
   kecamatan: TDataWilayahDetail;
   penyuluhId: number;
+  kecamatanId: number;
 };
 
 export type TDesaBinaan = {
   id: number;
   desa: TDataWilayahDetail;
   penyuluhId: number;
+  desaId: number;
 };
 
 export type TTableKecamatanBinaan = {

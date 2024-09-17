@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@mantine/core';
+import { Button, Tabs } from '@mantine/core';
 import InputImage from '@/components/inputImage';
 import { getPenyuluhById } from '@/infrastruture';
 import { MultiSelect } from '@mantine/core';
 import { fecthKecamatan, fecthDesa } from '../../infrastucture/daerah';
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingAnimation from '../../components/loading';
+import KecamatanBinaan from './kecamatanBinaan';
+import DesaBinaan from './desaBinaan';
 const DetailPenyuluh = () => {
   const navigate = useNavigate();
   const [NIP, setNIP] = useState('');
@@ -18,26 +20,28 @@ const DetailPenyuluh = () => {
   const [alamat, setAlamat] = useState('');
   const [foto, setFoto] = useState('');
   const [namaProduct, setNamaProduct] = useState('');
-  const [desaBinaan, setDesaBinaan] = useState([]);
   const [daftarKecamatan, setDaftarKecamatan] = useState([]);
   const [dafatarDesa, setDafatarDesa] = useState([]);
-  const [dafatarDesaBinaan, setDafatarDesaBinaan] = useState([]);
   const [kecamatanActive, setKecamatanActive] = useState('');
   const [kecamatanBinaanActive, setKecamatanBinaanActive] = useState('');
   const [idKecamatan, setIdKecamanan] = useState('');
-  const [idKecamatanBinaan, setIdKecamananBinaan] = useState('');
   const [loading, setLoading] = useState(true);
   const [kelompokData, setKelompokData] = useState([]);
+  const [penyuluh, setPenyuluh] = useState();
   const { id } = useParams();
+
   useEffect(() => {
-    fecthKecamatan().then((data) => {
-      setDaftarKecamatan(data.kecamatan);
+    fecthKecamatan().then((res) => {
+      setDaftarKecamatan(res.data);
     });
   }, []);
+
   useEffect(() => {
     if (id) {
       getPenyuluhById(id).then((item) => {
         const data = item?.dataDaftarPenyuluh;
+        setPenyuluh(data);
+
         setLoading(false);
         setNIP(data?.nik);
         setNoWa(data?.noTelp);
@@ -45,13 +49,15 @@ const DetailPenyuluh = () => {
         setNama(data?.nama);
         // un-bcrypt password
         // setPassword(data?.password)
-        setKecamatan(data?.kecamatan);
-        setKecamatanBinaan(data?.kecamatanBinaan);
+
+        setKecamatan(data?.kecamatanData.nama);
+        setKecamatanBinaan(data?.kecamatanBinaanData);
+        setKecamatanActive(data?.kecamatanData.id);
+        setDesa(data?.desaId);
         // setDesa(data?.desa)
         setFoto(data?.foto);
         setAlamat(data?.alamat);
         setNamaProduct(data?.namaProduct);
-        setDesaBinaan(data?.desaBinaan?.split(', '));
         setKelompokData(data?.kelompoks);
         // console.log(item);
       });
@@ -62,23 +68,12 @@ const DetailPenyuluh = () => {
     const id = e?.split('-')[1];
     const nama = e?.split('-')[0];
     setKecamatan(nama);
-    setKecamatanActive(e);
+    setKecamatanActive(id);
     fecthDesa(id).then((res) => {
       setDafatarDesa(res.data);
     });
   };
-  const handleSelectKecamatanBinaan = (e) => {
-    const id = e?.split('-')[1];
-    const nama = e?.split('-')[0];
-    setKecamatanBinaan(nama);
-    setKecamatanBinaanActive(e);
-    fecthDesa(id).then((res) => {
-      const data = res?.data?.map((item) => {
-        return { value: item.nama, label: item.nama };
-      });
-      setDafatarDesaBinaan(data);
-    });
-  };
+
   useEffect(() => {
     if (daftarKecamatan && kecamatan && !kecamatanActive) {
       const filteredData = daftarKecamatan?.filter((item) => {
@@ -90,6 +85,7 @@ const DetailPenyuluh = () => {
       setKecamatanActive(kecamatanActivate);
     }
   }, [daftarKecamatan, kecamatan, kecamatanActive]);
+
   useEffect(() => {
     fecthDesa(idKecamatan).then((res) => setDafatarDesa(res.data));
   }, [idKecamatan]);
@@ -100,20 +96,9 @@ const DetailPenyuluh = () => {
         return parts[0] == kecamatanBinaan;
       });
       const kecamatanActivate = `${filteredData[0]?.nama}-${filteredData[0]?.id}`;
-      setIdKecamananBinaan(filteredData[0]?.id);
       setKecamatanBinaanActive(kecamatanActivate);
     }
   }, [daftarKecamatan, kecamatanBinaan, kecamatanBinaanActive]);
-  useEffect(() => {
-    if (idKecamatanBinaan) {
-      fecthDesa(idKecamatanBinaan).then((res) => {
-        const data = res?.data?.map((item) => {
-          return { value: item.nama, label: item.nama };
-        });
-        setDafatarDesaBinaan(data);
-      });
-    }
-  }, [idKecamatanBinaan]);
 
   return (
     <div className="px-10 md:px-40 py-10">
@@ -127,7 +112,7 @@ const DetailPenyuluh = () => {
               imageActive={foto}
               onChange={(e) => setFoto(e)}
               title="Foto Profil"
-              isDisabled
+              disabled
             />
           </div>
           <div className="grid md:grid-cols-2 md:gap-6 mt-3">
@@ -214,7 +199,7 @@ const DetailPenyuluh = () => {
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                 disabled>
                 {daftarKecamatan?.map((item, i) => (
-                  <option value={`${item.nama}-${item.id}`} key={i}>
+                  <option value={item.id} key={i}>
                     {item.nama}
                   </option>
                 ))}
@@ -233,7 +218,7 @@ const DetailPenyuluh = () => {
                 className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
                 disabled>
                 {dafatarDesa?.map((item, i) => (
-                  <option value={item.nama} key={i}>
+                  <option value={item.id} key={i}>
                     {item.nama}
                   </option>
                 ))}
@@ -279,43 +264,6 @@ const DetailPenyuluh = () => {
               className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               <strong>Email</strong> (Contoh: bejo@petani.com)
             </label>
-          </div>
-          <div className="grid md:grid-cols-2 mt-2 md:gap-6">
-            <div className="relative z-0 w-full mb-6 group">
-              <label
-                htmlFor="underline_select"
-                className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
-                <strong>Nama Kecamatan Binaan: </strong>
-              </label>
-              <select
-                id="kecamatan"
-                name="kecamatan"
-                value={kecamatanBinaanActive}
-                onChange={(e) => handleSelectKecamatanBinaan(e.target.value)}
-                className="block py-2.5 px-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer-placeholder-shown"
-                disabled>
-                {/* <option value="">--Silahkan Pilih Kecamatan--</option> */}
-                {daftarKecamatan?.map((item, i) => (
-                  <option value={`${item.nama}-${item.id}`} key={i}>
-                    {item.nama}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <label
-                htmlFor="underline_select"
-                className="text-sm text-gray-500 dark:text-gray-400 pt-5 md:pt-0">
-                <strong>Desa Wilayah Binaan: </strong>
-              </label>
-              <MultiSelect
-                data={dafatarDesaBinaan}
-                placeholder="Pilih desa binaan"
-                value={desaBinaan}
-                onChange={setDesaBinaan}
-                disabled
-              />
-            </div>
           </div>
           <div className="relative z-0 w-[49%] mb-6 group">
             <input
@@ -367,6 +315,22 @@ const DetailPenyuluh = () => {
             </Button>
           </div>
         </form>
+      </div>
+      <div className="relative bg-white bg-opacity-20 mt-6 p-4 flex items-center w-full">
+        <h3 className="text-white text-2xl font-bold mx-auto">Wilayah Binaan</h3>
+      </div>
+      <div className="w-full bg-white p-4 rounded-lg">
+        <Tabs defaultValue="kecamatan">
+          <Tabs.List>
+            <Tabs.Tab value="kecamatan">Kecamatan</Tabs.Tab>
+            <Tabs.Tab value="desa">Desa</Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="kecamatan">
+            {penyuluh && <KecamatanBinaan penyuluh={penyuluh} />}
+          </Tabs.Panel>
+          <Tabs.Panel value="desa">{penyuluh && <DesaBinaan penyuluh={penyuluh} />}</Tabs.Panel>
+        </Tabs>
       </div>
     </div>
   );
