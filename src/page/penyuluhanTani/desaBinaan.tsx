@@ -101,7 +101,7 @@ export default function DesaBinaan({
         opened={showAddModal}
         size="lg"
         onClose={() => setShowAddModal(false)}
-        title="Tambah Kecamatan Binaan">
+        title="Tambah Desa Binaan">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label
