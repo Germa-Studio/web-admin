@@ -191,7 +191,7 @@ export const UploadKelompok = async (file) => {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const response = await Api.post('/upload', formData, {
+    const response = await Api.post('/kelompok/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
