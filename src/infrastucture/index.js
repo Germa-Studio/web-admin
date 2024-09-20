@@ -196,9 +196,9 @@ export const UploadKelompok = async (file) => {
         'Content-Type': 'multipart/form-data'
       }
     });
-    SweatAlert(String(response.data.message), 'success');
+    SweatAlert(String(response.data.message), 'success', 'reload');
   } catch (error) {
-    SweatAlert(String(error.response.data.message), 'error');
+    SweatAlert(String(error.response.data.message), 'error', 'reload');
   }
 };
 

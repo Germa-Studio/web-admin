@@ -348,7 +348,7 @@ const Path = () => {
       GetProfile()
         .then((res) => {
           if (res.status === 200) {
-            dispatch(setUser(res.data.user));
+            dispatch(setUser(res.data.userAccount));
           }
         })
         .catch((err) => {
