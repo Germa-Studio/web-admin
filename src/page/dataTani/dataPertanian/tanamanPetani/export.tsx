@@ -2,7 +2,7 @@ import { Anchor, Breadcrumbs, Button } from '@mantine/core';
 import React, { useEffect } from 'react';
 import { utils, writeFileXLSX } from 'xlsx';
 import { PaginatedRespApiData } from '../../../../types/paginatedRespApi';
-import { komoditasSemusim, komoditasTahunan } from '../../../../types/const';
+import { komoditasSemusim, komoditasTahunan, tanamanPerkebunan } from '../../../../types/const';
 import { GetListTanaman } from '../../../../infrastucture';
 import { TTanamanPetani } from '../../../../types/tanamanPetani';
 
@@ -153,9 +153,9 @@ export default function ExportTableDataPertanian() {
           <tbody>
             {resp?.data.map((item) => (
               <tr key={item.id}>
-                <td className="border p-2">{item.dataPetani?.fk_kelompokId}</td>
-                <td className="border p-2">{item.dataPetani?.kecamatan}</td>
-                <td className="border p-2">{item.dataPetani?.desa}</td>
+                <td className="border p-2">{item.dataPetani?.fk_kelompokId ?? '-'}</td>
+                <td className="border p-2">{item.dataPetani?.kecamatanData?.nama ?? '-'}</td>
+                <td className="border p-2">{item.dataPetani?.desaData?.nama ?? '-'}</td>
                 {/* TODO: Lahan baku itu apa? */}
                 <td className="border p-2">{item.luasLahan}</td>
                 <td className="border p-2">{item.dataPetani?.kelompok?.gapoktan}</td>
@@ -177,7 +177,7 @@ export default function ExportTableDataPertanian() {
                 )}
                 {/* Tanaman Perkebunan Semusim */}
                 {item.kategori.includes('kebun'.toUpperCase()) &&
-                komoditasSemusim.includes(item.komoditas) ? (
+                tanamanPerkebunan.includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     <td className="border p-2">{item.luasLahan}</td>
@@ -193,7 +193,7 @@ export default function ExportTableDataPertanian() {
                 )}
                 {/* Tanaman Perkebunan Tahunan */}
                 {item.kategori.includes('kebun'.toUpperCase()) &&
-                komoditasTahunan.includes(item.komoditas) ? (
+                ['Perkebunan Tembakau', 'Perkebunan Tebu'].includes(item.komoditas) ? (
                   <>
                     <td className="border p-2 capitalize">{item.komoditas}</td>
                     <td className="border p-2">{item.luasLahan}</td>
